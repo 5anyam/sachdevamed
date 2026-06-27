@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -75,45 +75,99 @@ function ImageGallery({ images }: { images: string[] }) {
 
 function VideoGallery({ videos }: { videos: ProductVideo[] }) {
   const [active, setActive] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const driveUrl = `https://drive.google.com/file/d/${videos[active].id}/view`;
+  const embedUrl = `https://drive.google.com/file/d/${videos[active].id}/preview`;
+
   return (
     <div style={{ marginTop: 80 }}>
-      <div style={{ textAlign: 'center', marginBottom: 36 }}>
+      <div style={{ textAlign: 'center', marginBottom: 28 }}>
         <span style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: GREEN, fontWeight: 600, display: 'block', marginBottom: 12 }}>◆ See It In Action</span>
-        <h2 style={{ fontSize: 'clamp(32px,4vw,56px)', fontWeight: 900, letterSpacing: '-0.02em', color: DARK, lineHeight: 1 }}>
+        <h2 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, letterSpacing: '-0.02em', color: DARK, lineHeight: 1 }}>
           PRODUCT<br /><span style={{ color: GREEN }}>VIDEOS.</span>
         </h2>
       </div>
 
-      {/* Tab selector */}
-      <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-        {videos.map((v, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            style={{
-              padding: '7px 14px', fontSize: 11, fontWeight: 700, whiteSpace: 'nowrap', cursor: 'pointer',
-              background: i === active ? GREEN : '#fff', color: i === active ? '#fff' : 'rgba(15,17,23,0.5)',
-              border: `1.5px solid ${i === active ? GREEN : '#e8f0e8'}`, borderRadius: 20,
-              transition: 'all 0.2s', fontFamily: 'inherit',
-            }}
-          >
-            {v.title}
-          </button>
-        ))}
+      {/* Tabs — horizontal scroll only, no wrap, no overflow bleed */}
+      <div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden', paddingBottom: 8, WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
+        <div style={{ display: 'flex', gap: 8, paddingLeft: 4, paddingRight: 4, width: 'max-content' }}>
+          {videos.map((v, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              style={{
+                padding: '7px 14px', fontSize: 11, fontWeight: 700, whiteSpace: 'nowrap', cursor: 'pointer',
+                background: i === active ? GREEN : '#fff', color: i === active ? '#fff' : 'rgba(15,17,23,0.5)',
+                border: `1.5px solid ${i === active ? GREEN : '#e8f0e8'}`, borderRadius: 20,
+                transition: 'all 0.2s', fontFamily: 'inherit', flexShrink: 0,
+              }}
+            >
+              {v.title}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Active video player */}
-      <div style={{ marginTop: 20, maxWidth: 840, margin: '20px auto 0' }}>
-        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 14, border: `2px solid #e8f0e8`, boxShadow: '0 8px 32px rgba(61,170,53,0.12)' }}>
-          <iframe
-            key={videos[active].id}
-            src={`https://drive.google.com/file/d/${videos[active].id}/preview`}
-            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-            allow="autoplay; fullscreen"
-            title={videos[active].title}
-          />
-        </div>
-        <p style={{ textAlign: 'center', marginTop: 12, fontSize: 13, color: 'rgba(15,17,23,0.45)', fontWeight: 600 }}>
+      {/* Video player */}
+      <div style={{ marginTop: 16, maxWidth: 840, margin: '16px auto 0', width: '100%' }}>
+        {isMobile ? (
+          /* Mobile: tappable card opens Drive video full screen */
+          <a
+            href={driveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'block', textDecoration: 'none' }}
+          >
+            <div style={{
+              position: 'relative', paddingBottom: '56.25%', background: DARK,
+              borderRadius: 14, overflow: 'hidden', border: `2px solid #e8f0e8`,
+              boxShadow: '0 8px 32px rgba(61,170,53,0.12)',
+            }}>
+              {/* Play button overlay */}
+              <div style={{
+                position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center', gap: 12,
+              }}>
+                <div style={{
+                  width: 68, height: 68, borderRadius: '50%', background: GREEN,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: '0 4px 20px rgba(61,170,53,0.5)',
+                }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+                <span style={{ color: '#fff', fontSize: 13, fontWeight: 700, letterSpacing: '0.05em', opacity: 0.9 }}>
+                  TAP TO WATCH FULL SCREEN
+                </span>
+              </div>
+            </div>
+          </a>
+        ) : (
+          /* Desktop: embedded Drive player */
+          <div style={{
+            position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden',
+            borderRadius: 14, border: `2px solid #e8f0e8`, boxShadow: '0 8px 32px rgba(61,170,53,0.12)',
+          }}>
+            <iframe
+              key={videos[active].id}
+              src={embedUrl}
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              title={videos[active].title}
+            />
+          </div>
+        )}
+        <p style={{ textAlign: 'center', marginTop: 10, fontSize: 12, color: 'rgba(15,17,23,0.45)', fontWeight: 600 }}>
           {videos[active].title}
         </p>
       </div>
@@ -256,7 +310,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: BG, paddingBottom: 120 }}>
+    <div style={{ minHeight: '100vh', background: BG, paddingBottom: 120, overflowX: 'hidden', maxWidth: '100vw' }}>
 
       {/* Breadcrumb */}
       <div style={{ borderBottom: `1px solid #e8f0e8`, background: '#fff' }}>
@@ -272,7 +326,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
       </div>
 
       {/* Main layout */}
-      <div className="product-container" style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 32px' }}>
+      <div className="product-container" style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 32px', width: '100%', boxSizing: 'border-box' }}>
         <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px 64px' }}>
 
           {/* LEFT: Images */}

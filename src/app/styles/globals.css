@@ -30,11 +30,17 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   color: var(--foreground);
   background: var(--bg);
   font-family: 'Inter', 'DM Sans', sans-serif;
   overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* ━━ FONT UTILITY ━━ */
