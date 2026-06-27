@@ -9,7 +9,7 @@ import {
   Star, ShieldCheck, Truck, Check, RotateCcw,
   ChevronRight, Package, Zap
 } from 'lucide-react';
-import { StaticProduct, PRODUCTS } from '../../../../lib/products-data';
+import { StaticProduct, ProductVideo, PRODUCTS } from '../../../../lib/products-data';
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 
@@ -64,6 +64,54 @@ function ImageGallery({ images }: { images: string[] }) {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function VideoGallery({ videos }: { videos: ProductVideo[] }) {
+  const [active, setActive] = useState(0);
+  return (
+    <div style={{ marginTop: 80 }}>
+      <div style={{ textAlign: 'center', marginBottom: 36 }}>
+        <span style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: GREEN, fontWeight: 600, display: 'block', marginBottom: 12 }}>◆ See It In Action</span>
+        <h2 style={{ fontSize: 'clamp(32px,4vw,56px)', fontWeight: 900, letterSpacing: '-0.02em', color: DARK, lineHeight: 1 }}>
+          PRODUCT<br /><span style={{ color: GREEN }}>VIDEOS.</span>
+        </h2>
+      </div>
+
+      {/* Tab selector */}
+      <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+        {videos.map((v, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            style={{
+              padding: '7px 14px', fontSize: 11, fontWeight: 700, whiteSpace: 'nowrap', cursor: 'pointer',
+              background: i === active ? GREEN : '#fff', color: i === active ? '#fff' : 'rgba(15,17,23,0.5)',
+              border: `1.5px solid ${i === active ? GREEN : '#e8f0e8'}`, borderRadius: 20,
+              transition: 'all 0.2s', fontFamily: 'inherit',
+            }}
+          >
+            {v.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Active video player */}
+      <div style={{ marginTop: 20, maxWidth: 840, margin: '20px auto 0' }}>
+        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 14, border: `2px solid #e8f0e8`, boxShadow: '0 8px 32px rgba(61,170,53,0.12)' }}>
+          <iframe
+            key={videos[active].id}
+            src={`https://drive.google.com/file/d/${videos[active].id}/preview`}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+            allow="autoplay; fullscreen"
+            title={videos[active].title}
+          />
+        </div>
+        <p style={{ textAlign: 'center', marginTop: 12, fontSize: 13, color: 'rgba(15,17,23,0.45)', fontWeight: 600 }}>
+          {videos[active].title}
+        </p>
+      </div>
     </div>
   );
 }
@@ -353,6 +401,11 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
           </div>
         </div>
 
+        {/* Video Gallery */}
+        {product.videos && product.videos.length > 0 && (
+          <VideoGallery videos={product.videos} />
+        )}
+
         {/* Reviews */}
         <div ref={reviewsRef} style={{ marginTop: 80, scrollMarginTop: 96 }}>
           <div style={{ textAlign: 'center', marginBottom: 36 }}>
@@ -423,6 +476,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
           .product-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
           .product-image-sticky { position: relative !important; top: auto !important; }
           .related-grid { grid-template-columns: 1fr 1fr !important; }
+          .video-tabs { justify-content: flex-start !important; }
         }
         @media (max-width: 480px) {
           .related-grid { grid-template-columns: 1fr !important; }
