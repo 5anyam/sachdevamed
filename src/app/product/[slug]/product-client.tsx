@@ -33,33 +33,38 @@ function StarRating({ rating }: { rating: number }) {
 function ImageGallery({ images }: { images: string[] }) {
   const [main, setMain] = useState(0);
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={{ position: 'relative', aspectRatio: '4/3', background: '#edf6ec', overflow: 'hidden', border: `2px solid #e8f0e8`, borderRadius: 12, boxShadow: '0 4px 20px rgba(61,170,53,0.1)' }}>
+    <div>
+      {/* Main image — padding-bottom trick gives reliable square height */}
+      <div style={{ position: 'relative', width: '100%', paddingBottom: '100%', background: '#edf6ec', borderRadius: 14, overflow: 'hidden', border: `2px solid #e8f0e8`, boxShadow: '0 4px 24px rgba(61,170,53,0.10)' }}>
         <Image
           src={images[main]}
           alt="Product"
           fill
-          style={{ objectFit: 'contain', padding: 16, transition: 'opacity 0.3s' }}
-          sizes="(max-width: 1024px) 100vw, 50vw"
+          style={{ objectFit: 'contain', padding: 24, transition: 'opacity 0.25s' }}
+          sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
       </div>
+
+      {/* Thumbnails — 4-column grid, square cells */}
       {images.length > 1 && (
-        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginTop: 10 }}>
           {images.map((src, i) => (
             <button
               key={i}
               onClick={() => setMain(i)}
               style={{
-                position: 'relative', flexShrink: 0, width: 72, height: 72,
+                display: 'block', position: 'relative', width: '100%', paddingTop: '100%',
                 border: `2px solid ${i === main ? GREEN : '#e8f0e8'}`,
-                borderRadius: 8,
-                overflow: 'hidden', opacity: i === main ? 1 : 0.6,
-                cursor: 'pointer', background: '#edf6ec', padding: 0,
+                borderRadius: 8, overflow: 'hidden',
+                opacity: i === main ? 1 : 0.55,
+                cursor: 'pointer', background: '#edf6ec',
                 transition: 'opacity 0.2s, border-color 0.2s',
               }}
             >
-              <Image src={src} alt="" fill style={{ objectFit: 'contain', padding: 6 }} sizes="72px" />
+              <div style={{ position: 'absolute', inset: 0 }}>
+                <Image src={src} alt="" fill style={{ objectFit: 'contain', padding: 4 }} sizes="120px" />
+              </div>
             </button>
           ))}
         </div>
