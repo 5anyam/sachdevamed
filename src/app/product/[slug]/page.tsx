@@ -22,22 +22,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const title = `${product.name} – ${product.tagline} | Amraj`;
-  const description = `Buy ${product.name} online at ₹${product.price}. ${product.tagline}. FSSAI certified, GMP tested. Free delivery across India.`;
+  const title = `${product.name} – ${product.tagline} | Sachdeva Medline`;
+  const description = `Buy ${product.name} online at ₹${product.price}. ${product.tagline}. CE, ISO, FDA, CDSCO & FAA certified. Free pan-India delivery. 2-year warranty.`;
   const imageUrl = product.images[0];
-  const canonical = `https://www.amraj.in/product/${product.slug}`;
+  const canonical = `https://sachdevamedline.com/product/${product.slug}`;
 
   return {
     title,
     description,
-    keywords: [product.name, product.category, 'supplement', 'India', 'buy online'],
+    keywords: [product.name, product.category, 'oxygen concentrator', 'India', 'buy online', 'Sachdeva Medline', 'Longfian'],
     alternates: { canonical },
     openGraph: {
       type: 'website',
       title,
       description,
       url: canonical,
-      siteName: 'Amraj',
+      siteName: 'Sachdeva Medline',
       images: [{ url: imageUrl, width: 1200, height: 630, alt: product.name }],
     },
     twitter: {
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [imageUrl],
     },
     robots: { index: true, follow: true },
-    metadataBase: new URL('https://www.amraj.in'),
+    metadataBase: new URL('https://sachdevamedline.com'),
   };
 }
 
@@ -63,13 +63,18 @@ export default async function Page({ params }: Props) {
     '@context': 'https://schema.org/',
     '@type': 'Product',
     name: product.name,
-    description: `${product.tagline}. FSSAI certified, GMP tested. Free delivery across India.`,
+    description: `${product.tagline}. CE, ISO, FDA, CDSCO & FAA certified. Free pan-India delivery.`,
     image: product.images,
     url: canonical,
-    sku: `AMRAJ-${product.id}`,
+    sku: `SM-${product.id}`,
     brand: {
       '@type': 'Brand',
-      name: 'Amraj Wellness',
+      name: 'Longfian',
+    },
+    seller: {
+      '@type': 'Organization',
+      name: 'Sachdeva Medline',
+      url: 'https://sachdevamedline.com',
     },
     offers: {
       '@type': 'Offer',

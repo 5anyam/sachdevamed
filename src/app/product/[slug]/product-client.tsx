@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -75,101 +75,67 @@ function ImageGallery({ images }: { images: string[] }) {
 
 function VideoGallery({ videos }: { videos: ProductVideo[] }) {
   const [active, setActive] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  const driveUrl = `https://drive.google.com/file/d/${videos[active].id}/view`;
   const embedUrl = `https://drive.google.com/file/d/${videos[active].id}/preview`;
 
   return (
     <div style={{ marginTop: 80 }}>
-      <div style={{ textAlign: 'center', marginBottom: 28 }}>
+
+      {/* Section heading */}
+      <div style={{ textAlign: 'center', marginBottom: 40 }}>
         <span style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: GREEN, fontWeight: 600, display: 'block', marginBottom: 12 }}>◆ See It In Action</span>
         <h2 style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, letterSpacing: '-0.02em', color: DARK, lineHeight: 1 }}>
           PRODUCT<br /><span style={{ color: GREEN }}>VIDEOS.</span>
         </h2>
       </div>
 
-      {/* Tabs — horizontal scroll only, no wrap, no overflow bleed */}
-      <div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden', paddingBottom: 8, WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
-        <div style={{ display: 'flex', gap: 8, paddingLeft: 4, paddingRight: 4, width: 'max-content' }}>
+      {/* Desktop: player left + numbered playlist right | Mobile: player top + list below */}
+      <div className="video-section-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 20, alignItems: 'start' }}>
+
+        {/* Player */}
+        <div>
+          <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 14, border: `2px solid #e8f0e8`, boxShadow: '0 8px 32px rgba(61,170,53,0.10)' }}>
+            <iframe
+              key={videos[active].id}
+              src={embedUrl}
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+              allow="autoplay; fullscreen; encrypted-media"
+              allowFullScreen
+              title={videos[active].title}
+            />
+          </div>
+          <div style={{ marginTop: 12, padding: '10px 14px', background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ width: 28, height: 28, borderRadius: '50%', background: GREEN, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: DARK, lineHeight: 1.3 }}>{videos[active].title}</span>
+          </div>
+        </div>
+
+        {/* Numbered playlist */}
+        <div className="video-playlist" style={{ display: 'flex', flexDirection: 'column', gap: 4, maxHeight: 420, overflowY: 'auto', paddingRight: 2 }}>
+          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(15,17,23,0.35)', marginBottom: 6 }}>ALL VIDEOS ({videos.length})</p>
           {videos.map((v, i) => (
             <button
               key={i}
               onClick={() => setActive(i)}
               style={{
-                padding: '7px 14px', fontSize: 11, fontWeight: 700, whiteSpace: 'nowrap', cursor: 'pointer',
-                background: i === active ? GREEN : '#fff', color: i === active ? '#fff' : 'rgba(15,17,23,0.5)',
-                border: `1.5px solid ${i === active ? GREEN : '#e8f0e8'}`, borderRadius: 20,
-                transition: 'all 0.2s', fontFamily: 'inherit', flexShrink: 0,
+                display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 12px', width: '100%',
+                background: i === active ? `rgba(61,170,53,0.07)` : 'transparent',
+                border: 'none',
+                borderLeft: `3px solid ${i === active ? GREEN : 'transparent'}`,
+                borderRadius: '0 8px 8px 0',
+                cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s', fontFamily: 'inherit',
               }}
             >
-              {v.title}
+              <span style={{ fontSize: 10, fontWeight: 800, color: i === active ? GREEN : 'rgba(15,17,23,0.3)', minWidth: 22, paddingTop: 2, flexShrink: 0 }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span style={{ fontSize: 12, color: i === active ? DARK : 'rgba(15,17,23,0.55)', fontWeight: i === active ? 700 : 400, lineHeight: 1.45 }}>
+                {v.title}
+              </span>
             </button>
           ))}
         </div>
-      </div>
-
-      {/* Video player */}
-      <div style={{ marginTop: 16, maxWidth: 840, margin: '16px auto 0', width: '100%' }}>
-        {isMobile ? (
-          /* Mobile: tappable card opens Drive video full screen */
-          <a
-            href={driveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'block', textDecoration: 'none' }}
-          >
-            <div style={{
-              position: 'relative', paddingBottom: '56.25%', background: DARK,
-              borderRadius: 14, overflow: 'hidden', border: `2px solid #e8f0e8`,
-              boxShadow: '0 8px 32px rgba(61,170,53,0.12)',
-            }}>
-              {/* Play button overlay */}
-              <div style={{
-                position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
-                alignItems: 'center', justifyContent: 'center', gap: 12,
-              }}>
-                <div style={{
-                  width: 68, height: 68, borderRadius: '50%', background: GREEN,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 4px 20px rgba(61,170,53,0.5)',
-                }}>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
-                <span style={{ color: '#fff', fontSize: 13, fontWeight: 700, letterSpacing: '0.05em', opacity: 0.9 }}>
-                  TAP TO WATCH FULL SCREEN
-                </span>
-              </div>
-            </div>
-          </a>
-        ) : (
-          /* Desktop: embedded Drive player */
-          <div style={{
-            position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden',
-            borderRadius: 14, border: `2px solid #e8f0e8`, boxShadow: '0 8px 32px rgba(61,170,53,0.12)',
-          }}>
-            <iframe
-              key={videos[active].id}
-              src={embedUrl}
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-              allow="autoplay; fullscreen"
-              allowFullScreen
-              title={videos[active].title}
-            />
-          </div>
-        )}
-        <p style={{ textAlign: 'center', marginTop: 10, fontSize: 12, color: 'rgba(15,17,23,0.45)', fontWeight: 600 }}>
-          {videos[active].title}
-        </p>
       </div>
     </div>
   );
@@ -535,7 +501,8 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
           .product-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
           .product-image-sticky { position: relative !important; top: auto !important; }
           .related-grid { grid-template-columns: 1fr 1fr !important; }
-          .video-tabs { justify-content: flex-start !important; }
+          .video-section-grid { grid-template-columns: 1fr !important; }
+          .video-playlist { max-height: 220px !important; border: 1.5px solid #e8f0e8; border-radius: 10px; padding: 8px 4px !important; background: #fff; }
         }
         @media (max-width: 480px) {
           .related-grid { grid-template-columns: 1fr !important; }
