@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: 'Product Not Found | Amraj',
+      title: 'Product Not Found | Sachdeva Medline',
       robots: { index: false, follow: false },
     };
   }
@@ -57,7 +57,7 @@ export default async function Page({ params }: Props) {
 
   if (!product) notFound();
 
-  const canonical = `https://www.amraj.in/product/${product.slug}`;
+  const canonical = `https://sachdevamedline.com/product/${product.slug}`;
 
   const jsonLd = {
     '@context': 'https://schema.org/',
