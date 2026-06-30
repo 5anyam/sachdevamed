@@ -16,7 +16,7 @@ import { toast } from '../../../../hooks/use-toast';
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
 
-const GREEN = '#3DAA35';
+const GREEN = '#2D3748';
 const DARK = '#0F1117';
 const BG = '#F5FAF4';
 
@@ -35,7 +35,7 @@ function ImageGallery({ images }: { images: string[] }) {
   return (
     <div>
       {/* Main image — padding-bottom trick gives reliable square height */}
-      <div style={{ position: 'relative', width: '100%', paddingBottom: '100%', background: '#edf6ec', borderRadius: 14, overflow: 'hidden', border: `2px solid #e8f0e8`, boxShadow: '0 4px 24px rgba(61,170,53,0.10)' }}>
+      <div style={{ position: 'relative', width: '100%', paddingBottom: '100%', background: '#F8F9FA', borderRadius: 14, overflow: 'hidden', border: `2px solid #E5E7EB`, boxShadow: '0 4px 24px rgba(45,55,72,0.10)' }}>
         <Image
           src={images[main]}
           alt="Product"
@@ -55,10 +55,10 @@ function ImageGallery({ images }: { images: string[] }) {
               onClick={() => setMain(i)}
               style={{
                 display: 'block', position: 'relative', width: '100%', paddingTop: '100%',
-                border: `2px solid ${i === main ? GREEN : '#e8f0e8'}`,
+                border: `2px solid ${i === main ? GREEN : '#E5E7EB'}`,
                 borderRadius: 8, overflow: 'hidden',
                 opacity: i === main ? 1 : 0.55,
-                cursor: 'pointer', background: '#edf6ec',
+                cursor: 'pointer', background: '#F8F9FA',
                 transition: 'opacity 0.2s, border-color 0.2s',
               }}
             >
@@ -93,7 +93,7 @@ function VideoGallery({ videos }: { videos: ProductVideo[] }) {
 
         {/* Player */}
         <div>
-          <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 14, border: `2px solid #e8f0e8`, boxShadow: '0 8px 32px rgba(61,170,53,0.10)' }}>
+          <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 14, border: `2px solid #E5E7EB`, boxShadow: '0 8px 32px rgba(45,55,72,0.10)' }}>
             <iframe
               key={videos[active].id}
               src={embedUrl}
@@ -103,7 +103,7 @@ function VideoGallery({ videos }: { videos: ProductVideo[] }) {
               title={videos[active].title}
             />
           </div>
-          <div style={{ marginTop: 12, padding: '10px 14px', background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ marginTop: 12, padding: '10px 14px', background: '#fff', border: `1.5px solid #E5E7EB`, borderRadius: 8, display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ width: 28, height: 28, borderRadius: '50%', background: GREEN, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
             </span>
@@ -120,7 +120,7 @@ function VideoGallery({ videos }: { videos: ProductVideo[] }) {
               onClick={() => setActive(i)}
               style={{
                 display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 12px', width: '100%',
-                background: i === active ? `rgba(61,170,53,0.07)` : 'transparent',
+                background: i === active ? `rgba(45,55,72,0.07)` : 'transparent',
                 border: 'none',
                 borderLeft: `3px solid ${i === active ? GREEN : 'transparent'}`,
                 borderRadius: '0 8px 8px 0',
@@ -146,8 +146,8 @@ const TABS = ['Features', 'Specifications', 'How to Use', 'Delivery'];
 function Tabs({ product }: { product: StaticProduct }) {
   const [active, setActive] = useState(0);
   return (
-    <div style={{ marginTop: 40, borderTop: `2px solid #e8f0e8` }}>
-      <div style={{ display: 'flex', borderBottom: `2px solid #e8f0e8`, overflowX: 'auto' }}>
+    <div style={{ marginTop: 40, borderTop: `2px solid #E5E7EB` }}>
+      <div style={{ display: 'flex', borderBottom: `2px solid #E5E7EB`, overflowX: 'auto' }}>
         {TABS.map((t, i) => (
           <button
             key={i}
@@ -171,7 +171,7 @@ function Tabs({ product }: { product: StaticProduct }) {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
             {product.benefits.map((b, i) => (
               <li key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                <span style={{ width: 20, height: 20, background: `rgba(61,170,53,0.12)`, border: `1.5px solid ${GREEN}`, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                <span style={{ width: 20, height: 20, background: `rgba(45,55,72,0.12)`, border: `1.5px solid ${GREEN}`, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
                   <Check style={{ width: 10, height: 10, color: GREEN }} />
                 </span>
                 <span style={{ fontSize: 13, color: DARK, lineHeight: 1.65 }}>{b}</span>
@@ -182,7 +182,7 @@ function Tabs({ product }: { product: StaticProduct }) {
         {active === 1 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {product.ingredients.map((ing, i) => (
-              <div key={i} style={{ display: 'flex', gap: 16, padding: '14px 16px', background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 8 }}>
+              <div key={i} style={{ display: 'flex', gap: 16, padding: '14px 16px', background: '#fff', border: `1.5px solid #E5E7EB`, borderRadius: 8 }}>
                 <div style={{ minWidth: 72, textAlign: 'center', flexShrink: 0 }}>
                   <p style={{ fontSize: 15, fontWeight: 800, color: GREEN, lineHeight: 1.1, letterSpacing: '-0.01em' }}>{ing.dose}</p>
                 </div>
@@ -196,10 +196,10 @@ function Tabs({ product }: { product: StaticProduct }) {
         )}
         {active === 2 && (
           <div>
-            <div style={{ background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 8, padding: '16px 20px', marginBottom: 12 }}>
+            <div style={{ background: '#fff', border: `1.5px solid #E5E7EB`, borderRadius: 8, padding: '16px 20px', marginBottom: 12 }}>
               <p style={{ fontSize: 13, color: DARK, lineHeight: 1.8 }}>{product.howToUse}</p>
             </div>
-            <div style={{ padding: '12px 16px', background: `rgba(61,170,53,0.06)`, border: `1.5px solid rgba(61,170,53,0.2)`, borderRadius: 8 }}>
+            <div style={{ padding: '12px 16px', background: `rgba(45,55,72,0.06)`, border: `1.5px solid rgba(45,55,72,0.2)`, borderRadius: 8 }}>
               <p style={{ fontSize: 12, color: '#2e7a28', fontWeight: 600 }}>
                 Always use as directed by your physician. If any unusual symptoms occur, stop use and consult a doctor immediately.
               </p>
@@ -214,7 +214,7 @@ function Tabs({ product }: { product: StaticProduct }) {
               { icon: RotateCcw, label: 'Returns', value: '7-day return policy on manufacturing defects' },
               { icon: ShieldCheck, label: 'Warranty', value: 'Full manufacturer warranty included' },
             ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '12px 16px', background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 8 }}>
+              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '12px 16px', background: '#fff', border: `1.5px solid #E5E7EB`, borderRadius: 8 }}>
                 <item.icon style={{ width: 16, height: 16, color: GREEN, flexShrink: 0 }} />
                 <div>
                   <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.16em', color: 'rgba(15,17,23,0.4)', fontWeight: 600, marginBottom: 2 }}>{item.label}</p>
@@ -233,11 +233,11 @@ function RelatedCard({ product }: { product: StaticProduct }) {
   return (
     <Link
       href={`/product/${product.slug}`}
-      style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 12, overflow: 'hidden', transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: '0 2px 8px rgba(61,170,53,0.06)' }}
-      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 24px rgba(61,170,53,0.15)'; }}
-      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(61,170,53,0.06)'; }}
+      style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', background: '#fff', border: `1.5px solid #E5E7EB`, borderRadius: 12, overflow: 'hidden', transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: '0 2px 8px rgba(45,55,72,0.06)' }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 24px rgba(45,55,72,0.15)'; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(45,55,72,0.06)'; }}
     >
-      <div style={{ position: 'relative', aspectRatio: '4/3', background: '#edf6ec', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', aspectRatio: '4/3', background: '#F8F9FA', overflow: 'hidden' }}>
         <Image src={product.images[0]} alt={product.name} fill style={{ objectFit: 'contain', padding: 12 }} sizes="300px" />
       </div>
       <div style={{ padding: '14px 16px' }}>
@@ -279,7 +279,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
     <div style={{ minHeight: '100vh', background: BG, paddingBottom: 120, overflowX: 'hidden', maxWidth: '100vw' }}>
 
       {/* Breadcrumb */}
-      <div style={{ borderBottom: `1px solid #e8f0e8`, background: '#fff' }}>
+      <div style={{ borderBottom: `1px solid #E5E7EB`, background: '#fff' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '10px 32px' }}>
           <nav style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(15,17,23,0.4)' }}>
             <Link href="/" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.15s' }} onMouseEnter={e => (e.currentTarget.style.color = GREEN)} onMouseLeave={e => (e.currentTarget.style.color = 'rgba(15,17,23,0.4)')}>Home</Link>
@@ -304,7 +304,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
           <div>
             {/* Badges */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
-              <span style={{ background: `rgba(61,170,53,0.1)`, color: GREEN, fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', padding: '5px 12px', border: `1.5px solid rgba(61,170,53,0.3)`, borderRadius: 4 }}>
+              <span style={{ background: `rgba(45,55,72,0.1)`, color: GREEN, fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', padding: '5px 12px', border: `1.5px solid rgba(45,55,72,0.3)`, borderRadius: 4 }}>
                 {product.category}
               </span>
               {product.badge && (
@@ -342,7 +342,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
             <div style={{ marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
               {product.benefits.slice(0, 4).map((b, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                  <span style={{ width: 18, height: 18, background: `rgba(61,170,53,0.1)`, border: `1.5px solid ${GREEN}`, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+                  <span style={{ width: 18, height: 18, background: `rgba(45,55,72,0.1)`, border: `1.5px solid ${GREEN}`, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
                     <Check style={{ width: 9, height: 9, color: GREEN }} />
                   </span>
                   <span style={{ fontSize: 13, color: DARK, lineHeight: 1.6 }}>{b}</span>
@@ -351,7 +351,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
             </div>
 
             {/* Price */}
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 24, paddingBottom: 24, borderBottom: `2px solid #e8f0e8` }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 24, paddingBottom: 24, borderBottom: `2px solid #E5E7EB` }}>
               <span style={{ fontSize: 44, fontWeight: 900, color: DARK, lineHeight: 1, letterSpacing: '-0.02em' }}>
                 ₹{product.price.toLocaleString('en-IN')}
               </span>
@@ -367,14 +367,14 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
                 disabled={isAddingToCart}
                 style={{
                   flex: 1, padding: '14px 20px', background: '#fff', color: DARK,
-                  border: `2px solid #e8f0e8`, borderRadius: 10,
+                  border: `2px solid #E5E7EB`, borderRadius: 10,
                   fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
                   cursor: isAddingToCart ? 'not-allowed' : 'pointer', opacity: isAddingToCart ? 0.7 : 1,
                   transition: 'border-color 0.15s, box-shadow 0.15s', fontFamily: 'inherit',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
                 }}
-                onMouseEnter={e => { if (!isAddingToCart) { (e.currentTarget as HTMLElement).style.borderColor = GREEN; (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 12px rgba(61,170,53,0.15)`; }}}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = '#e8f0e8'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)'; }}
+                onMouseEnter={e => { if (!isAddingToCart) { (e.currentTarget as HTMLElement).style.borderColor = GREEN; (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 12px rgba(45,55,72,0.15)`; }}}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = '#E5E7EB'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)'; }}
               >
                 {isAddingToCart ? 'ADDED ✓' : 'ADD TO CART'}
               </button>
@@ -388,10 +388,10 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
                   cursor: isBuyingNow ? 'not-allowed' : 'pointer', opacity: isBuyingNow ? 0.7 : 1,
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   transition: 'background 0.15s, box-shadow 0.15s', fontFamily: 'inherit',
-                  boxShadow: `0 4px 14px rgba(61,170,53,0.35)`,
+                  boxShadow: `0 4px 14px rgba(45,55,72,0.35)`,
                 }}
-                onMouseEnter={e => { if (!isBuyingNow) { (e.currentTarget as HTMLElement).style.background = '#2e9128'; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 20px rgba(61,170,53,0.45)`; }}}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = GREEN; (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 14px rgba(61,170,53,0.35)`; }}
+                onMouseEnter={e => { if (!isBuyingNow) { (e.currentTarget as HTMLElement).style.background = '#1A202C'; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 20px rgba(45,55,72,0.45)`; }}}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = GREEN; (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 14px rgba(45,55,72,0.35)`; }}
               >
                 <Zap style={{ width: 14, height: 14 }} />
                 {isBuyingNow ? 'PROCESSING...' : 'BUY NOW'}
@@ -399,7 +399,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
             </div>
 
             {/* Delivery note */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: DARK, marginBottom: 20, padding: '10px 14px', background: `rgba(61,170,53,0.06)`, border: `1.5px solid rgba(61,170,53,0.2)`, borderRadius: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: DARK, marginBottom: 20, padding: '10px 14px', background: `rgba(45,55,72,0.06)`, border: `1.5px solid rgba(45,55,72,0.2)`, borderRadius: 8 }}>
               <Truck style={{ width: 15, height: 15, color: GREEN, flexShrink: 0 }} />
               <span><strong>Free delivery</strong> · Dispatched within 24 hours · Pan-India</span>
             </div>
@@ -412,7 +412,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
                 { icon: Package, title: 'Manufacturer Warranty', sub: 'Full warranty included' },
                 { icon: Truck, title: 'Pan-India Delivery', sub: '3–5 business days' },
               ].map((item, i) => (
-                <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 8 }}>
+                <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: `1.5px solid #E5E7EB`, borderRadius: 8 }}>
                   <item.icon style={{ width: 14, height: 14, color: GREEN, flexShrink: 0, marginTop: 2 }} />
                   <div>
                     <p style={{ fontSize: 12, fontWeight: 700, color: DARK, marginBottom: 1 }}>{item.title}</p>
@@ -472,19 +472,19 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
       </div>
 
       {/* Mobile Sticky Bottom CTA */}
-      <div className="mobile-cta-outer" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: `2px solid #e8f0e8`, padding: '10px 12px', zIndex: 500, boxShadow: '0 -4px 16px rgba(0,0,0,0.08)', display: 'none' }}>
+      <div className="mobile-cta-outer" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: `2px solid #E5E7EB`, padding: '10px 12px', zIndex: 500, boxShadow: '0 -4px 16px rgba(0,0,0,0.08)', display: 'none' }}>
         <div style={{ display: 'flex', gap: 8, maxWidth: 600, margin: '0 auto' }}>
           <button
             onClick={handleAddToCart}
             disabled={isAddingToCart}
-            style={{ flex: '0 0 auto', padding: '13px 14px', background: '#fff', color: DARK, border: `2px solid #e8f0e8`, borderRadius: 10, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}
+            style={{ flex: '0 0 auto', padding: '13px 14px', background: '#fff', color: DARK, border: `2px solid #E5E7EB`, borderRadius: 10, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}
           >
             {isAddingToCart ? '✓ ADDED' : 'ADD TO CART'}
           </button>
           <button
             onClick={handleBuyNow}
             disabled={isBuyingNow}
-            style={{ flex: 1, background: GREEN, color: '#fff', padding: '13px 12px', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'inherit', boxShadow: `0 4px 14px rgba(61,170,53,0.3)`, minWidth: 0 }}
+            style={{ flex: 1, background: GREEN, color: '#fff', padding: '13px 12px', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'inherit', boxShadow: `0 4px 14px rgba(45,55,72,0.3)`, minWidth: 0 }}
           >
             <Zap style={{ width: 13, height: 13, flexShrink: 0 }} />
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -502,7 +502,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
           .product-image-sticky { position: relative !important; top: auto !important; }
           .related-grid { grid-template-columns: 1fr 1fr !important; }
           .video-section-grid { grid-template-columns: 1fr !important; }
-          .video-playlist { max-height: 220px !important; border: 1.5px solid #e8f0e8; border-radius: 10px; padding: 8px 4px !important; background: #fff; }
+          .video-playlist { max-height: 220px !important; border: 1.5px solid #E5E7EB; border-radius: 10px; padding: 8px 4px !important; background: #fff; }
         }
         @media (max-width: 480px) {
           .related-grid { grid-template-columns: 1fr !important; }

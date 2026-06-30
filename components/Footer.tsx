@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 
-const GREEN = '#3DAA35';
+const GREEN = '#2D3748';
 const DARK = '#0F1117';
 
 export default function Footer() {
@@ -115,7 +115,7 @@ export default function Footer() {
                 { label: 'Address', val: 'Sultanpuri, Delhi – 110041' },
               ].map((item) => (
                 <li key={item.label}>
-                  <span style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(61,170,53,0.55)', display: 'block', marginBottom: 2 }}>{item.label}</span>
+                  <span style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', display: 'block', marginBottom: 2 }}>{item.label}</span>
                   <span style={{ fontSize: 13, fontWeight: 300, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>{item.val}</span>
                 </li>
               ))}
@@ -135,14 +135,14 @@ export default function Footer() {
             href="https://proshala.com"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'rgba(61,170,53,0.7)', textDecoration: 'none', fontWeight: 600, transition: 'color 0.2s' }}
-            onMouseEnter={e => (e.currentTarget.style.color = GREEN)}
-            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(61,170,53,0.7)')}
+            style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', fontWeight: 600, transition: 'color 0.2s' }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
           >
             Proshala
           </Link>
         </p>
-        <p style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: `rgba(61,170,53,0.35)` }}>
+        <p style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: `rgba(255,255,255,0.2)` }}>
           AUTHORISED DEALER · SINCE 1981 ◆
         </p>
       </div>

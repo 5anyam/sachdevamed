@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { StaticProduct } from '../../../lib/products-data';
 import { Star, ChevronRight } from 'lucide-react';
 
-const GREEN = '#3DAA35';
+const GREEN = '#2D3748';
 const DARK = '#0F1117';
 const BG = '#F5FAF4';
 
@@ -19,11 +19,11 @@ function ProductCard({ product }: { product: StaticProduct }) {
   return (
     <Link
       href={`/product/${product.slug}`}
-      style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 12, overflow: 'hidden', transition: 'transform 0.25s, box-shadow 0.25s', boxShadow: '0 2px 10px rgba(61,170,53,0.07)' }}
-      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 10px 30px rgba(61,170,53,0.15)'; }}
-      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 10px rgba(61,170,53,0.07)'; }}
+      style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', background: '#fff', border: `1.5px solid #E5E7EB`, borderRadius: 12, overflow: 'hidden', transition: 'transform 0.25s, box-shadow 0.25s', boxShadow: '0 2px 10px rgba(45,55,72,0.07)' }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 10px 30px rgba(45,55,72,0.15)'; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 10px rgba(45,55,72,0.07)'; }}
     >
-      <div style={{ position: 'relative', aspectRatio: '4/3', background: '#edf6ec', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', aspectRatio: '4/3', background: '#F8F9FA', overflow: 'hidden' }}>
         <Image src={product.images[0]} alt={product.name} fill style={{ objectFit: 'contain', padding: '12px', transition: 'transform 0.5s' }} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
         {product.badge && (
           <span style={{ position: 'absolute', top: 12, left: 12, background: GREEN, color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', padding: '4px 10px', borderRadius: 4 }}>{product.badge}</span>
@@ -50,7 +50,7 @@ function ProductCard({ product }: { product: StaticProduct }) {
             )}
           </div>
           <div style={{ background: GREEN, color: '#fff', textAlign: 'center', padding: '11px 16px', fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', borderRadius: 8, transition: 'background 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = '#2e9128')}
+            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = '#1A202C')}
             onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = GREEN)}
           >
             VIEW DETAILS <ChevronRight size={14} />
@@ -79,7 +79,7 @@ export default function ShopPageClient({ products }: Props) {
 
       {/* Hero */}
       <section style={{ background: DARK, padding: '64px 32px', borderBottom: `4px solid ${GREEN}`, position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(61,170,53,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(61,170,53,0.05) 1px, transparent 1px)`, backgroundSize: '48px 48px', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(45,55,72,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(45,55,72,0.05) 1px, transparent 1px)`, backgroundSize: '48px 48px', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
           <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase', color: GREEN, display: 'block', marginBottom: 16 }}>◆ Our Equipment</span>
           <h1 style={{ fontSize: 'clamp(56px,9vw,110px)', fontWeight: 900, color: '#fff', lineHeight: 0.9, marginBottom: 16, letterSpacing: '-0.02em' }}>
@@ -104,15 +104,15 @@ export default function ShopPageClient({ products }: Props) {
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ width: '100%', padding: '12px 16px 12px 40px', border: `1.5px solid #e8f0e8`, background: '#fff', color: DARK, fontSize: 13, outline: 'none', boxSizing: 'border-box', borderRadius: 8, fontFamily: 'inherit' }}
+              style={{ width: '100%', padding: '12px 16px 12px 40px', border: `1.5px solid #E5E7EB`, background: '#fff', color: DARK, fontSize: 13, outline: 'none', boxSizing: 'border-box', borderRadius: 8, fontFamily: 'inherit' }}
               onFocus={e => (e.currentTarget.style.borderColor = GREEN)}
-              onBlur={e => (e.currentTarget.style.borderColor = '#e8f0e8')}
+              onBlur={e => (e.currentTarget.style.borderColor = '#E5E7EB')}
             />
           </div>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            style={{ padding: '12px 20px', border: `1.5px solid #e8f0e8`, background: '#fff', color: DARK, fontSize: 13, outline: 'none', cursor: 'pointer', fontFamily: 'inherit', borderRadius: 8 }}
+            style={{ padding: '12px 20px', border: `1.5px solid #E5E7EB`, background: '#fff', color: DARK, fontSize: 13, outline: 'none', cursor: 'pointer', fontFamily: 'inherit', borderRadius: 8 }}
           >
             <option value="">All Categories</option>
             {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}

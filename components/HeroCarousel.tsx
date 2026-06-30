@@ -102,9 +102,9 @@ export default function HeroCarousel() {
             <button
               key={index}
               className={`rounded-full cursor-pointer transition-all duration-300 
-                hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-500/50 
+                hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-600/50 
                 ${index === current
-                  ? 'bg-teal-500 w-6 sm:w-8 h-2 sm:h-2.5' 
+                  ? 'bg-gray-800 w-6 sm:w-8 h-2 sm:h-2.5' 
                   : 'bg-gray-300 hover:bg-gray-400 w-2 sm:w-2.5 h-2 sm:h-2.5'
                 }`}
               onClick={() => goToSlide(index)}

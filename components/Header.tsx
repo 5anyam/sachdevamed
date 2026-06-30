@@ -9,7 +9,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FiSearch, FiUser, FiMenu, FiX } from 'react-icons/fi';
 import { BiChevronDown } from 'react-icons/bi';
 
-const GREEN = '#3DAA35';
+const GREEN = '#2D3748';
 
 const navItems = [
   { name: 'Home', to: '/' },
@@ -73,7 +73,7 @@ export default function Header() {
   return (
     <>
       {/* ── DESKTOP HEADER ── */}
-      <header style={{ borderBottom: `2px solid #e8f0e8`, background: '#ffffff', position: 'sticky', top: 0, zIndex: 500, boxShadow: '0 2px 12px rgba(61,170,53,0.06)' }}>
+      <header style={{ borderBottom: `2px solid #E5E7EB`, background: '#ffffff', position: 'sticky', top: 0, zIndex: 500, boxShadow: '0 2px 12px rgba(45,55,72,0.06)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 70 }}>
 
@@ -118,7 +118,7 @@ export default function Header() {
 
                         {shopSubmenuOpen && (
                           <div style={{ position: 'absolute', top: '100%', left: 0, paddingTop: 8, zIndex: 100 }}>
-                            <div style={{ background: '#ffffff', border: `1.5px solid #e8f0e8`, boxShadow: '0 8px 24px rgba(61,170,53,0.12)', minWidth: 220, borderRadius: 10, overflow: 'hidden' }}>
+                            <div style={{ background: '#ffffff', border: `1.5px solid #E5E7EB`, boxShadow: '0 8px 24px rgba(45,55,72,0.12)', minWidth: 220, borderRadius: 10, overflow: 'hidden' }}>
                               {item.submenu.map((sub) => (
                                 <Link
                                   key={sub.name}
@@ -128,11 +128,11 @@ export default function Header() {
                                     fontWeight: 500,
                                     color: location === sub.to ? activeColor : '#1A1A1A',
                                     textDecoration: 'none',
-                                    borderBottom: '1px solid rgba(61,170,53,0.08)',
+                                    borderBottom: '1px solid rgba(45,55,72,0.08)',
                                     transition: 'background 0.15s, color 0.15s',
                                     borderLeft: location === sub.to ? `3px solid ${activeColor}` : '3px solid transparent',
                                   }}
-                                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#f5faf4'; (e.currentTarget as HTMLElement).style.color = activeColor; }}
+                                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#F8F9FA'; (e.currentTarget as HTMLElement).style.color = activeColor; }}
                                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = location === sub.to ? activeColor : '#1A1A1A'; }}
                                 >
                                   {sub.name}
@@ -169,7 +169,7 @@ export default function Header() {
               {/* Desktop Search */}
               {!isMobile && (
                 <form onSubmit={handleSearch} style={{ position: 'relative' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', border: `1.5px solid #e8f0e8`, background: '#f5faf4', padding: '7px 14px', gap: 8, width: 220, borderRadius: 8 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', border: `1.5px solid #E5E7EB`, background: '#F8F9FA', padding: '7px 14px', gap: 8, width: 220, borderRadius: 8 }}>
                     <FiSearch style={{ color: '#555', flexShrink: 0 }} size={14} />
                     <input
                       type="text"
@@ -199,14 +199,14 @@ export default function Header() {
                         {user.name.charAt(0).toUpperCase()}
                       </button>
                       {userMenuOpen && (
-                        <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: 8, background: '#fff', border: `1.5px solid #e8f0e8`, boxShadow: '0 8px 24px rgba(61,170,53,0.12)', minWidth: 180, zIndex: 200, borderRadius: 10 }}>
-                          <div style={{ padding: '10px 14px', borderBottom: `1px solid #e8f0e8` }}>
+                        <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: 8, background: '#fff', border: `1.5px solid #E5E7EB`, boxShadow: '0 8px 24px rgba(45,55,72,0.12)', minWidth: 180, zIndex: 200, borderRadius: 10 }}>
+                          <div style={{ padding: '10px 14px', borderBottom: `1px solid #E5E7EB` }}>
                             <p style={{ fontWeight: 700, fontSize: 13, color: '#1A1A1A' }}>{user.name}</p>
                             <p style={{ fontSize: 11, color: '#888', marginTop: 2 }}>{user.email}</p>
                           </div>
                           <Link href="/my-account" onClick={() => setUserMenuOpen(false)}
-                            style={{ display: 'block', padding: '10px 14px', fontSize: 13, fontWeight: 500, color: '#1A1A1A', textDecoration: 'none', borderBottom: `1px solid rgba(61,170,53,0.08)` }}
-                            onMouseEnter={e => (e.currentTarget.style.background = '#f5faf4')}
+                            style={{ display: 'block', padding: '10px 14px', fontSize: 13, fontWeight: 500, color: '#1A1A1A', textDecoration: 'none', borderBottom: `1px solid rgba(45,55,72,0.08)` }}
+                            onMouseEnter={e => (e.currentTarget.style.background = '#F8F9FA')}
                             onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                           >
                             My Account
@@ -222,9 +222,9 @@ export default function Header() {
                       )}
                     </>
                   ) : (
-                    <Link href="/login" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, border: `1.5px solid #e8f0e8`, borderRadius: 8, color: '#1A1A1A', textDecoration: 'none', transition: 'background 0.15s, border-color 0.15s' }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#f5faf4'; (e.currentTarget as HTMLElement).style.borderColor = GREEN; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#fff'; (e.currentTarget as HTMLElement).style.borderColor = '#e8f0e8'; }}
+                    <Link href="/login" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, border: `1.5px solid #E5E7EB`, borderRadius: 8, color: '#1A1A1A', textDecoration: 'none', transition: 'background 0.15s, border-color 0.15s' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#F8F9FA'; (e.currentTarget as HTMLElement).style.borderColor = GREEN; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#fff'; (e.currentTarget as HTMLElement).style.borderColor = '#E5E7EB'; }}
                     >
                       <FiUser size={16} />
                     </Link>
@@ -233,7 +233,7 @@ export default function Header() {
               )}
 
               {/* Cart */}
-              <div style={{ borderLeft: `1px solid #e8f0e8`, paddingLeft: 12 }}>
+              <div style={{ borderLeft: `1px solid #E5E7EB`, paddingLeft: 12 }}>
                 <CartIcon />
               </div>
 
@@ -257,7 +257,7 @@ export default function Header() {
 
             {/* Mobile Search Overlay */}
             {isMobile && showMobileSearch && (
-              <div style={{ position: 'absolute', inset: 0, background: '#fff', zIndex: 50, display: 'flex', alignItems: 'center', padding: '0 16px', borderBottom: `2px solid #e8f0e8` }}>
+              <div style={{ position: 'absolute', inset: 0, background: '#fff', zIndex: 50, display: 'flex', alignItems: 'center', padding: '0 16px', borderBottom: `2px solid #E5E7EB` }}>
                 <form style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%' }} onSubmit={handleSearch}>
                   <FiSearch style={{ color: '#555' }} size={16} />
                   <input autoFocus type="text" placeholder="Search medical equipment..." value={search} onChange={(e) => setSearch(e.target.value)}
@@ -280,14 +280,14 @@ export default function Header() {
           />
           <div style={{
             position: 'fixed', top: 0, right: 0, bottom: 0, width: '82%', maxWidth: 340,
-            background: '#fff', zIndex: 700, borderLeft: `2px solid #e8f0e8`,
+            background: '#fff', zIndex: 700, borderLeft: `2px solid #E5E7EB`,
             transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(100%)',
             transition: 'transform 0.32s cubic-bezier(.16,1,.3,1)',
             display: 'flex', flexDirection: 'column',
-            boxShadow: '-4px 0 24px rgba(61,170,53,0.1)',
+            boxShadow: '-4px 0 24px rgba(45,55,72,0.1)',
           }}>
             {/* Drawer header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: `2px solid #e8f0e8`, background: '#f5faf4' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: `2px solid #E5E7EB`, background: '#F8F9FA' }}>
               <Image src="/sachdeva-logo.jpeg" alt="Sachdeva Medline" width={160} height={44} style={{ height: 38, width: 'auto', objectFit: 'contain' }} />
               <button onClick={() => setMobileMenuOpen(false)} style={{ background: GREEN, border: 'none', color: '#fff', width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                 <FiX size={17} />
@@ -299,7 +299,7 @@ export default function Header() {
               {navItems.map((item) => (
                 <div key={item.name}>
                   {item.submenu ? (
-                    <div style={{ borderBottom: `1px solid #e8f0e8` }}>
+                    <div style={{ borderBottom: `1px solid #E5E7EB` }}>
                       <button onClick={() => setMobileShopSubmenuOpen(!mobileShopSubmenuOpen)}
                         style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', fontSize: 16, fontWeight: 600, color: '#1A1A1A', background: 'none', border: 'none', cursor: 'pointer' }}
                       >
@@ -310,7 +310,7 @@ export default function Header() {
                         <div style={{ paddingLeft: 20, paddingBottom: 8 }}>
                           {item.submenu.map((sub) => (
                             <Link key={sub.name} href={sub.to} onClick={() => setMobileMenuOpen(false)}
-                              style={{ display: 'block', padding: '9px 16px', fontSize: 13, fontWeight: 500, color: location === sub.to ? GREEN : '#555', textDecoration: 'none', borderLeft: `2px solid ${location === sub.to ? GREEN : '#e8f0e8'}`, marginBottom: 4 }}
+                              style={{ display: 'block', padding: '9px 16px', fontSize: 13, fontWeight: 500, color: location === sub.to ? GREEN : '#555', textDecoration: 'none', borderLeft: `2px solid ${location === sub.to ? GREEN : '#E5E7EB'}`, marginBottom: 4 }}
                             >
                               {sub.name}
                             </Link>
@@ -320,7 +320,7 @@ export default function Header() {
                     </div>
                   ) : (
                     <Link href={item.to} onClick={() => setMobileMenuOpen(false)}
-                      style={{ display: 'block', padding: '14px 20px', fontSize: 16, fontWeight: 600, color: location === item.to ? GREEN : '#1A1A1A', textDecoration: 'none', borderBottom: `1px solid #e8f0e8`, borderLeft: location === item.to ? `3px solid ${GREEN}` : '3px solid transparent' }}
+                      style={{ display: 'block', padding: '14px 20px', fontSize: 16, fontWeight: 600, color: location === item.to ? GREEN : '#1A1A1A', textDecoration: 'none', borderBottom: `1px solid #E5E7EB`, borderLeft: location === item.to ? `3px solid ${GREEN}` : '3px solid transparent' }}
                     >
                       {item.name}
                     </Link>
@@ -330,10 +330,10 @@ export default function Header() {
             </div>
 
             {/* Auth footer */}
-            <div style={{ padding: 20, borderTop: `2px solid #e8f0e8`, background: '#f5faf4' }}>
+            <div style={{ padding: 20, borderTop: `2px solid #E5E7EB`, background: '#F8F9FA' }}>
               {user ? (
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12, padding: '10px 14px', background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 8 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12, padding: '10px 14px', background: '#fff', border: `1.5px solid #E5E7EB`, borderRadius: 8 }}>
                     <div style={{ width: 36, height: 36, background: GREEN, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, flexShrink: 0, borderRadius: 8 }}>
                       {user.name.charAt(0)}
                     </div>
@@ -343,7 +343,7 @@ export default function Header() {
                     </div>
                   </div>
                   <Link href="/my-account" onClick={() => setMobileMenuOpen(false)}
-                    style={{ display: 'block', padding: '12px 16px', textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#1A1A1A', textDecoration: 'none', border: `1.5px solid #e8f0e8`, borderRadius: 8, marginBottom: 10, background: '#fff' }}
+                    style={{ display: 'block', padding: '12px 16px', textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#1A1A1A', textDecoration: 'none', border: `1.5px solid #E5E7EB`, borderRadius: 8, marginBottom: 10, background: '#fff' }}
                   >
                     My Account
                   </Link>

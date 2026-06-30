@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { PRODUCTS, StaticProduct } from '../../lib/products-data';
 import { Star, ShieldCheck, Truck, Check, ChevronRight, Phone, Clock, Wrench, BadgeCheck, HeartPulse, Package } from 'lucide-react';
 
-const GREEN = '#3DAA35';
+const GREEN = '#2D3748';
 const PINK = '#E8175D';
 const DARK = '#0F1117';
 const BG = '#F5FAF4';
@@ -38,12 +38,12 @@ function ProductCard({ product }: { product: StaticProduct }) {
   return (
     <Link
       href={`/product/${product.slug}`}
-      style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', background: '#fff', border: `2px solid #e8f0e8`, boxShadow: '0 2px 12px rgba(61,170,53,0.08)', borderRadius: 12, overflow: 'hidden', transition: 'transform 0.25s, box-shadow 0.25s' }}
-      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px rgba(61,170,53,0.18)'; }}
-      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 12px rgba(61,170,53,0.08)'; }}
+      style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', background: '#fff', border: `2px solid #E5E7EB`, boxShadow: '0 2px 12px rgba(45,55,72,0.08)', borderRadius: 12, overflow: 'hidden', transition: 'transform 0.25s, box-shadow 0.25s' }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px rgba(45,55,72,0.18)'; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 12px rgba(45,55,72,0.08)'; }}
     >
       {/* Image */}
-      <div style={{ position: 'relative', aspectRatio: '4/3', background: '#edf6ec', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', aspectRatio: '4/3', background: '#F8F9FA', overflow: 'hidden' }}>
         <Image src={product.images[0]} alt={product.name} fill style={{ objectFit: 'contain', padding: '12px', transition: 'transform 0.5s' }} sizes="(max-width: 768px) 100vw, 33vw" />
         {product.badge && (
           <span style={{ position: 'absolute', top: 12, left: 12, background: GREEN, color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', padding: '4px 10px', borderRadius: 4 }}>
@@ -76,7 +76,7 @@ function ProductCard({ product }: { product: StaticProduct }) {
             )}
           </div>
           <div style={{ background: GREEN, color: '#fff', textAlign: 'center', padding: '12px 16px', fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', borderRadius: 8, transition: 'background 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = '#2e9128')}
+            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = '#1A202C')}
             onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = GREEN)}
           >
             VIEW DETAILS <ChevronRight size={14} />
@@ -91,7 +91,7 @@ function HeroSection() {
   return (
     <section style={{ background: DARK, position: 'relative', overflow: 'hidden', borderBottom: `4px solid ${GREEN}` }}>
       {/* grid pattern */}
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(61,170,53,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(61,170,53,0.04) 1px, transparent 1px)`, backgroundSize: '48px 48px', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(45,55,72,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(45,55,72,0.04) 1px, transparent 1px)`, backgroundSize: '48px 48px', pointerEvents: 'none' }} />
       {/* Pink glow */}
       <div style={{ position: 'absolute', top: -80, right: -80, width: 400, height: 400, background: `radial-gradient(circle, rgba(232,23,93,0.12) 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
@@ -99,7 +99,7 @@ function HeroSection() {
         {/* Left */}
         <div>
           {/* Since badge */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `rgba(61,170,53,0.1)`, border: `1.5px solid rgba(61,170,53,0.35)`, color: GREEN, fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', padding: '6px 14px', borderRadius: 4, marginBottom: 28 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `rgba(45,55,72,0.1)`, border: `1.5px solid rgba(45,55,72,0.35)`, color: GREEN, fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', padding: '6px 14px', borderRadius: 4, marginBottom: 28 }}>
             ◆ Trusted Since 1981 — 45+ Years of Service
           </div>
 
@@ -115,14 +115,14 @@ function HeroSection() {
           </p>
 
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 40 }}>
-            <Link href="/shop" style={{ background: GREEN, color: '#fff', padding: '14px 30px', borderRadius: 8, fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, boxShadow: `0 4px 18px rgba(61,170,53,0.4)`, transition: 'transform 0.2s, box-shadow 0.2s' }}
-              onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'translateY(-2px)'; el.style.boxShadow = `0 8px 24px rgba(61,170,53,0.5)`; }}
-              onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'none'; el.style.boxShadow = `0 4px 18px rgba(61,170,53,0.4)`; }}
+            <Link href="/shop" style={{ background: GREEN, color: '#fff', padding: '14px 30px', borderRadius: 8, fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, boxShadow: `0 4px 18px rgba(45,55,72,0.4)`, transition: 'transform 0.2s, box-shadow 0.2s' }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'translateY(-2px)'; el.style.boxShadow = `0 8px 24px rgba(45,55,72,0.5)`; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'none'; el.style.boxShadow = `0 4px 18px rgba(45,55,72,0.4)`; }}
             >
               SHOP NOW <ChevronRight size={15} />
             </Link>
             <a href="tel:+919999999999" style={{ color: '#fff', padding: '14px 30px', border: `1.5px solid rgba(255,255,255,0.25)`, borderRadius: 8, fontSize: 12, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, transition: 'border-color 0.2s' }}
-              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.borderColor = `rgba(61,170,53,0.6)`)}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.borderColor = `rgba(45,55,72,0.6)`)}
               onMouseLeave={e => ((e.currentTarget as HTMLElement).style.borderColor = `rgba(255,255,255,0.25)`)}
             >
               <Phone size={14} /> CALL US
@@ -148,8 +148,8 @@ function HeroSection() {
         <div className="hero-img-col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <div style={{ position: 'relative', width: '100%', maxWidth: 380 }}>
             {/* Decorative ring */}
-            <div style={{ position: 'absolute', inset: -16, border: `2px dashed rgba(61,170,53,0.25)`, borderRadius: 20, pointerEvents: 'none' }} />
-            <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(61,170,53,0.2)`, borderRadius: 16, padding: '48px 40px', backdropFilter: 'blur(8px)', textAlign: 'center' }}>
+            <div style={{ position: 'absolute', inset: -16, border: `2px dashed rgba(45,55,72,0.25)`, borderRadius: 20, pointerEvents: 'none' }} />
+            <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(45,55,72,0.2)`, borderRadius: 16, padding: '48px 40px', backdropFilter: 'blur(8px)', textAlign: 'center' }}>
               <div style={{ background: '#fff', borderRadius: 12, padding: '28px 24px', marginBottom: 28 }}>
                 <Image src="/sachdeva-logo.jpeg" alt="Sachdeva Medline" width={300} height={100} style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
               </div>
@@ -225,7 +225,7 @@ function TrustBar() {
     { icon: Clock, label: 'Fast Dispatch in 24 hrs' },
   ];
   return (
-    <section style={{ background: '#fff', borderBottom: `2px solid #e8f0e8` }}>
+    <section style={{ background: '#fff', borderBottom: `2px solid #E5E7EB` }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '14px 32px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px 36px', alignItems: 'center' }}>
           {items.map((item, i) => (
@@ -309,7 +309,7 @@ const whyItems = [
 function WhySection() {
   return (
     <section style={{ background: '#fff', borderBottom: `3px solid ${DARK}` }} id="why">
-      <div style={{ borderBottom: `2px solid #e8f0e8`, padding: '52px 40px', background: `linear-gradient(135deg,#edf6ec,#f5faf4)`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
+      <div style={{ borderBottom: `2px solid #E5E7EB`, padding: '52px 40px', background: `linear-gradient(135deg,#F8F9FA,#F8F9FA)`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
         <div>
           <span style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: GREEN, fontWeight: 600, display: 'block', marginBottom: 10 }}>◆ The Sachdeva Medline Difference</span>
           <h2 style={{ fontSize: 'clamp(40px,5.5vw,72px)', fontWeight: 900, letterSpacing: '-0.025em', color: DARK, lineHeight: 1 }}>
@@ -329,16 +329,16 @@ function WhySection() {
             key={i}
             style={{
               padding: '40px 32px',
-              borderRight: (i + 1) % 3 !== 0 ? `2px solid #e8f0e8` : 'none',
-              borderBottom: i < 3 ? `2px solid #e8f0e8` : 'none',
+              borderRight: (i + 1) % 3 !== 0 ? `2px solid #E5E7EB` : 'none',
+              borderBottom: i < 3 ? `2px solid #E5E7EB` : 'none',
               position: 'relative', overflow: 'hidden', cursor: 'default',
               transition: 'background 0.2s',
             }}
             onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = BG)}
             onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = '#fff')}
           >
-            <span style={{ position: 'absolute', top: -8, right: 16, fontSize: 80, fontWeight: 900, color: `rgba(61,170,53,0.05)`, lineHeight: 1, pointerEvents: 'none', letterSpacing: '-0.02em' }}>{item.num}</span>
-            <div style={{ width: 44, height: 44, background: `rgba(61,170,53,0.1)`, border: `1.5px solid rgba(61,170,53,0.25)`, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>
+            <span style={{ position: 'absolute', top: -8, right: 16, fontSize: 80, fontWeight: 900, color: `rgba(45,55,72,0.05)`, lineHeight: 1, pointerEvents: 'none', letterSpacing: '-0.02em' }}>{item.num}</span>
+            <div style={{ width: 44, height: 44, background: `rgba(45,55,72,0.1)`, border: `1.5px solid rgba(45,55,72,0.25)`, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>
               <item.icon style={{ width: 20, height: 20, color: GREEN }} />
             </div>
             <h3 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.01em', color: DARK, marginBottom: 10 }}>{item.title}</h3>
@@ -352,7 +352,7 @@ function WhySection() {
 
 function HowToOrderSection() {
   return (
-    <section className="how-section" style={{ padding: '80px 48px', background: BG, borderBottom: `2px solid #e8f0e8` }}>
+    <section className="how-section" style={{ padding: '80px 48px', background: BG, borderBottom: `2px solid #E5E7EB` }}>
       <div style={{ maxWidth: 960, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 56 }}>
           <span style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: GREEN, fontWeight: 600, display: 'block', marginBottom: 12 }}>◆ Simple Process</span>
@@ -360,15 +360,15 @@ function HowToOrderSection() {
             ORDER IN<br /><span style={{ color: GREEN }}>4 EASY STEPS.</span>
           </h2>
         </div>
-        <div className="how-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, border: `2px solid #e8f0e8`, borderRadius: 12, overflow: 'hidden' }}>
+        <div className="how-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, border: `2px solid #E5E7EB`, borderRadius: 12, overflow: 'hidden' }}>
           {[
             { step: '01', title: 'Browse Products', desc: 'Explore our range of Longfian oxygen concentrators and recliner beds.' },
             { step: '02', title: 'Call or WhatsApp', desc: 'Confirm your requirement and get expert guidance from our team.' },
             { step: '03', title: 'Easy Payment', desc: 'Pay online, via UPI, or choose EMI — quick and secure checkout.' },
             { step: '04', title: 'Doorstep Delivery', desc: 'Dispatched within 24 hrs. Delivered safely with installation guidance.' },
           ].map((item, i) => (
-            <div key={i} style={{ padding: '36px 26px', textAlign: 'center', borderRight: i < 3 ? `2px solid #e8f0e8` : 'none', background: i % 2 === 0 ? '#fff' : BG }}>
-              <div style={{ width: 52, height: 52, background: GREEN, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 18px', boxShadow: `0 4px 12px rgba(61,170,53,0.3)` }}>
+            <div key={i} style={{ padding: '36px 26px', textAlign: 'center', borderRight: i < 3 ? `2px solid #E5E7EB` : 'none', background: i % 2 === 0 ? '#fff' : BG }}>
+              <div style={{ width: 52, height: 52, background: GREEN, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 18px', boxShadow: `0 4px 12px rgba(45,55,72,0.3)` }}>
                 <span style={{ fontSize: 20, fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>{item.step}</span>
               </div>
               <h4 style={{ fontSize: 16, fontWeight: 700, color: DARK, marginBottom: 10 }}>{item.title}</h4>
@@ -384,10 +384,10 @@ function HowToOrderSection() {
 function CTASection() {
   return (
     <section style={{ background: DARK, padding: '80px 32px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(61,170,53,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(61,170,53,0.05) 1px, transparent 1px)`, backgroundSize: '40px 40px', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(rgba(45,55,72,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(45,55,72,0.05) 1px, transparent 1px)`, backgroundSize: '40px 40px', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, background: `radial-gradient(circle, rgba(232,23,93,0.08) 0%, transparent 70%)`, pointerEvents: 'none' }} />
       <div style={{ maxWidth: 680, margin: '0 auto', position: 'relative', zIndex: 2 }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `rgba(61,170,53,0.1)`, border: `1.5px solid rgba(61,170,53,0.3)`, color: GREEN, fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', padding: '6px 14px', borderRadius: 4, marginBottom: 24 }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `rgba(45,55,72,0.1)`, border: `1.5px solid rgba(45,55,72,0.3)`, color: GREEN, fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', padding: '6px 14px', borderRadius: 4, marginBottom: 24 }}>
           ◆ We&apos;re Here to Help
         </div>
         <h2 style={{ fontSize: 'clamp(44px,6.5vw,88px)', fontWeight: 900, color: '#fff', lineHeight: 0.92, marginBottom: 20, letterSpacing: '-0.025em' }}>
@@ -397,14 +397,14 @@ function CTASection() {
           Our experts will guide you to the right oxygen concentrator for your prescription and budget — no pushy sales, just honest advice.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'center', marginBottom: 40 }}>
-          <Link href="/shop" style={{ background: GREEN, color: '#fff', padding: '15px 32px', borderRadius: 8, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', boxShadow: `0 4px 18px rgba(61,170,53,0.4)`, transition: 'transform 0.2s, box-shadow 0.2s' }}
-            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'translateY(-2px)'; el.style.boxShadow = `0 8px 28px rgba(61,170,53,0.5)`; }}
-            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'none'; el.style.boxShadow = `0 4px 18px rgba(61,170,53,0.4)`; }}
+          <Link href="/shop" style={{ background: GREEN, color: '#fff', padding: '15px 32px', borderRadius: 8, fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', boxShadow: `0 4px 18px rgba(45,55,72,0.4)`, transition: 'transform 0.2s, box-shadow 0.2s' }}
+            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'translateY(-2px)'; el.style.boxShadow = `0 8px 28px rgba(45,55,72,0.5)`; }}
+            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'none'; el.style.boxShadow = `0 4px 18px rgba(45,55,72,0.4)`; }}
           >
             EXPLORE PRODUCTS →
           </Link>
           <Link href="/contact" style={{ color: '#fff', padding: '15px 32px', border: `1.5px solid rgba(255,255,255,0.25)`, borderRadius: 8, fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', transition: 'border-color 0.2s' }}
-            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.borderColor = `rgba(61,170,53,0.5)`)}
+            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.borderColor = `rgba(45,55,72,0.5)`)}
             onMouseLeave={e => ((e.currentTarget as HTMLElement).style.borderColor = `rgba(255,255,255,0.25)`)}
           >
             CONTACT US
@@ -451,7 +451,7 @@ export default function Homepage() {
           .products-grid { grid-template-columns: 1fr !important; }
           .why-grid { grid-template-columns: 1fr !important; }
           .how-grid { grid-template-columns: 1fr !important; }
-          .how-grid > div { border-right: none !important; border-bottom: 2px solid #e8f0e8 !important; }
+          .how-grid > div { border-right: none !important; border-bottom: 2px solid #E5E7EB !important; }
           .why-grid > div { border-right: none !important; }
         }
       `}</style>

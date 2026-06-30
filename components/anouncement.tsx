@@ -25,7 +25,7 @@ export default function AnnouncementBar() {
   return (
     <div
       style={{
-        background: '#3DAA35',
+        background: '#2D3748',
         color: '#fff',
         padding: '9px 16px',
         position: 'relative',
