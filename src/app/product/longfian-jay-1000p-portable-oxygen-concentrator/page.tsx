@@ -3,10 +3,10 @@ import Jay1000PClient from './client';
 
 const TITLE = 'Longfian JAY-1000P Portable Oxygen Concentrator | FDA & FAA Approved | Sachdeva Medline';
 const DESCRIPTION =
-  'Buy Longfian JAY-1000P portable oxygen concentrator in India. 1.98 kg, FDA cleared, FAA approved for flights, CDSCO registered. 93%±3% pure oxygen, 11-hour battery. Free pan-India delivery. 2-year warranty. Authorised Longfian dealer.';
+  'Buy Longfian JAY-1000P portable oxygen concentrator in India at ₹95,000. 1.98 kg, FDA cleared, FAA approved for flights, CDSCO registered. 93%±3% pure oxygen, 11-hour battery (2 batteries included). Exclusive importer — Sachdeva Medline. Free pan-India delivery. 2-year warranty.';
 const CANONICAL = 'https://sachdevamedline.com/product/longfian-jay-1000p-portable-oxygen-concentrator';
-const IMAGE = 'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w1200';
-const PRICE = '45000';
+const IMAGE = 'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w2000';
+const PRICE = '95000';
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -51,10 +51,10 @@ const jsonLd = {
   description:
     'FDA cleared, FAA approved, CDSCO registered portable oxygen concentrator. 1.98 kg, 93%±3% oxygen purity, up to 11 hours battery. CE and ISO certified.',
   image: [
-    'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w1200',
-    'https://drive.google.com/thumbnail?id=13InsWquc7HhRHUt2P9A0gVgpvviOUsP6&sz=w1200',
-    'https://drive.google.com/thumbnail?id=17wYaPDQbETH7AFSaZUxe_lR-HUYSdIPz&sz=w1200',
-    'https://drive.google.com/thumbnail?id=1werhzIak53KRDx7bLagADW-IAFIgVaQ1&sz=w1200',
+    'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w2000',
+    'https://drive.google.com/thumbnail?id=13InsWquc7HhRHUt2P9A0gVgpvviOUsP6&sz=w2000',
+    'https://drive.google.com/thumbnail?id=17wYaPDQbETH7AFSaZUxe_lR-HUYSdIPz&sz=w2000',
+    'https://drive.google.com/thumbnail?id=1werhzIak53KRDx7bLagADW-IAFIgVaQ1&sz=w2000',
   ],
   url: CANONICAL,
   sku: 'SM-JAY1000P',
