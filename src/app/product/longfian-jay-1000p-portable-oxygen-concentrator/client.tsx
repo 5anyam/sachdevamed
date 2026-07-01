@@ -383,9 +383,18 @@ export default function Jay1000PClient() {
       </section>
 
       {/* ──── CREATIVE IMAGE 1 ──── */}
-      <section style={{ position: 'relative', width: '100%', overflow: 'hidden', lineHeight: 0 }}>
-        <div style={{ position: 'relative', width: '100%', paddingBottom: 'clamp(28%,20vw,36%)' }}>
-          <Image src={CREATIVE_1} alt="Longfian JAY-1000P — Portable Oxygen Concentrator" fill style={{ objectFit: 'cover', objectPosition: 'center' }} sizes="100vw" />
+      <section style={{ background: '#fff', padding: `${VPAD} 0` }}>
+        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
+          <div style={{ position: 'relative', width: '100%', maxWidth: 860, margin: '0 auto' }}>
+            <Image
+              src={CREATIVE_1}
+              alt="Longfian JAY-1000P — Portable Oxygen Concentrator"
+              width={1200}
+              height={1200}
+              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16 }}
+              sizes="(max-width:768px) 100vw, 860px"
+            />
+          </div>
         </div>
       </section>
 
@@ -402,44 +411,124 @@ export default function Jay1000PClient() {
       </section>
 
       {/* ──── SPECIFICATIONS ──── */}
-      <section style={{ background: BG, padding: `${VPAD} 0` }}>
+      <section style={{ background: DARK, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+
+          {/* heading */}
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <Label text="Technical Details" />
-            <H2>TECHNICAL SPECIFICATIONS</H2>
+            <H2 light>TECHNICAL SPECIFICATIONS</H2>
+            <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', maxWidth: 480, margin: '0 auto' }}>
+              Every number that matters — tested, certified, and verified by international regulators.
+            </p>
           </div>
-          <div className="specs-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, maxWidth: 900, margin: '0 auto' }}>
+
+          {/* ── 4 hero stat cards ── */}
+          <div className="spec-hero" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 48 }}>
             {[
-              ['Oxygen Purity',        '93% ± 3%'],
-              ['Flow Settings',        '1–5 Levels (Pulse Dose)'],
-              ['Weight',               '1.98 kg'],
-              ['Dimensions',           '183 × 86 × 199 mm'],
-              ['Battery (Single)',     '5.5 hrs at Setting 1 / 3 hrs at Setting 2'],
-              ['Battery (Double)',     'Up to 11 hrs at Setting 1'],
-              ['Batteries Included',   '2 batteries included in the box'],
-              ['Charge Time',          'Approx. 2 hours'],
-              ['Noise Level',          '≤ 48 dB'],
-              ['Technology',           'PSA Molecular Sieve'],
-              ['Display',              'LCD — battery, flow, running hours'],
-              ['Carry Bag',            'Shoulder + backpack dual mode, air vented'],
-              ['Certifications',       'CE · ISO · FDA · CDSCO · FAA'],
-              ['Warranty',             '2 Years total (1 yr on batteries & sieve beds)'],
-              ['Manufacturer',         'Longfian Scitech Co., Ltd, China'],
-              ['Indian Distributor',   'Sachdeva Medline — Exclusive Importer'],
-            ].map(([lbl, val], i) => (
-              <div key={i} style={{ display: 'flex', gap: 16, padding: '13px 18px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 700, color: GREY, minWidth: 140, flexShrink: 0, lineHeight: 1.5 }}>{lbl}</span>
-                <span style={{ fontSize: 13, fontWeight: 600, color: DARK, lineHeight: 1.5 }}>{val}</span>
+              { val: '93%±3%',  lbl: 'Oxygen Purity',   sub: 'Medical-grade PSA' },
+              { val: '1.98 kg', lbl: 'Device Weight',    sub: 'Incl. single battery' },
+              { val: '11 Hrs',  lbl: 'Max Battery Life', sub: 'Double battery, Flow 1' },
+              { val: '≤48 dB',  lbl: 'Noise Level',      sub: 'Library-quiet operation' },
+            ].map((s, i) => (
+              <div key={i} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 14, padding: 'clamp(20px,3vw,32px)', textAlign: 'center' }}>
+                <p style={{ fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 10 }}>{s.val}</p>
+                <p style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>{s.lbl}</p>
+                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>{s.sub}</p>
               </div>
             ))}
+          </div>
+
+          {/* ── categorised spec table — 2 columns ── */}
+          <div className="spec-table-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+
+            {/* col 1 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {/* Performance */}
+              <div style={{ background: ACC, borderRadius: '10px 10px 0 0', padding: '10px 18px' }}>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Performance</span>
+              </div>
+              {[
+                ['Oxygen Purity',   '93% ± 3%'],
+                ['Flow Settings',   '1–5 Levels (Pulse Dose)'],
+                ['Technology',      'PSA Molecular Sieve'],
+                ['Noise Level',     '≤ 48 dB'],
+              ].map(([lbl, val], i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                  <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}>{lbl}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', textAlign: 'right' }}>{val}</span>
+                </div>
+              ))}
+
+              {/* Physical */}
+              <div style={{ background: ACC, padding: '10px 18px', marginTop: 6 }}>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Physical</span>
+              </div>
+              {[
+                ['Weight',      '1.98 kg (single battery)'],
+                ['Dimensions',  '183 × 86 × 199 mm'],
+                ['Display',     'LCD — battery, flow, hours'],
+                ['Carry Bag',   'Shoulder + backpack, air vented'],
+              ].map(([lbl, val], i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)', borderBottom: i === 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', borderRadius: i === 3 ? '0 0 10px 10px' : 0 }}>
+                  <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}>{lbl}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', textAlign: 'right' }}>{val}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* col 2 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {/* Battery */}
+              <div style={{ background: ACC, borderRadius: '10px 10px 0 0', padding: '10px 18px' }}>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Battery</span>
+              </div>
+              {[
+                ['Batteries in Box',    '2 batteries included'],
+                ['Single Battery Life', '5.5 hrs (Flow 1) / 3 hrs (Flow 2)'],
+                ['Double Battery Life', 'Up to 11 hrs at Flow Setting 1'],
+                ['Charge Time',         'Approx. 2 hours (per battery)'],
+              ].map(([lbl, val], i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                  <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}>{lbl}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', textAlign: 'right' }}>{val}</span>
+                </div>
+              ))}
+
+              {/* Compliance */}
+              <div style={{ background: ACC, padding: '10px 18px', marginTop: 6 }}>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Compliance & Support</span>
+              </div>
+              {[
+                ['Certifications',    'CE · ISO · FDA · CDSCO · FAA'],
+                ['Warranty',          '2 Yrs (1 yr batteries & sieve beds)'],
+                ['Manufacturer',      'Longfian Scitech Co., Ltd, China'],
+                ['India Partner',     'Sachdeva Medline — Exclusive Importer'],
+              ].map(([lbl, val], i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)', borderBottom: i === 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', borderRadius: i === 3 ? '0 0 10px 10px' : 0 }}>
+                  <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}>{lbl}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', textAlign: 'right' }}>{val}</span>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* ──── CREATIVE IMAGE 2 ──── */}
-      <section style={{ position: 'relative', width: '100%', overflow: 'hidden', lineHeight: 0 }}>
-        <div style={{ position: 'relative', width: '100%', paddingBottom: 'clamp(28%,20vw,36%)' }}>
-          <Image src={CREATIVE_2} alt="Fly With Confidence — JAY-1000P FDA FAA Approved for flights" fill style={{ objectFit: 'cover', objectPosition: 'center' }} sizes="100vw" />
+      <section style={{ background: BG, padding: `${VPAD} 0` }}>
+        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
+          <div style={{ position: 'relative', width: '100%', maxWidth: 860, margin: '0 auto' }}>
+            <Image
+              src={CREATIVE_2}
+              alt="Fly With Confidence — JAY-1000P FDA FAA Approved for flights"
+              width={1200}
+              height={1200}
+              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16 }}
+              sizes="(max-width:768px) 100vw, 860px"
+            />
+          </div>
         </div>
       </section>
 
@@ -642,28 +731,30 @@ export default function Jay1000PClient() {
 
       <style>{`
         @media (max-width: 900px) {
-          .hero-wrap      { grid-template-columns: 1fr !important; }
-          .hero-gallery   { position: relative !important; top: auto !important; }
-          .cert-grid      { grid-template-columns: repeat(3, 1fr) !important; }
-          .video-pair     { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .more-grid      { grid-template-columns: 1fr 1fr !important; }
-          .warranty-grid  { grid-template-columns: 1fr !important; }
+          .hero-wrap        { grid-template-columns: 1fr !important; }
+          .hero-gallery     { position: relative !important; top: auto !important; }
+          .cert-grid        { grid-template-columns: repeat(3, 1fr) !important; }
+          .video-pair       { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .more-grid        { grid-template-columns: 1fr 1fr !important; }
+          .warranty-grid    { grid-template-columns: 1fr !important; }
+          .spec-table-grid  { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 768px) {
           .mob-cta           { display: block !important; }
           .stats-grid        { grid-template-columns: repeat(2, 1fr) !important; }
           .benefits-grid     { grid-template-columns: 1fr 1fr !important; }
-          .specs-grid        { grid-template-columns: 1fr !important; }
           .box-grid          { grid-template-columns: repeat(2, 1fr) !important; }
           .trust-grid        { grid-template-columns: 1fr 1fr !important; }
           .more-grid         { grid-template-columns: 1fr !important; }
           .highlights-grid   { grid-template-columns: 1fr 1fr !important; }
+          .spec-hero         { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 480px) {
           .benefits-grid  { grid-template-columns: 1fr !important; }
           .cert-grid      { grid-template-columns: repeat(2, 1fr) !important; }
           .box-grid       { grid-template-columns: 1fr !important; }
           .trust-grid     { grid-template-columns: 1fr !important; }
+          .spec-hero      { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
     </div>
