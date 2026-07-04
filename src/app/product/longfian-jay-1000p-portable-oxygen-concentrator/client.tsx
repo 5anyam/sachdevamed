@@ -92,7 +92,7 @@ function H2({ children, light }: { children: React.ReactNode; light?: boolean })
 }
 
 /* clickable video thumbnail — opens modal on click */
-function VideoThumb({ id, title, dark, onPlay }: { id: string; title: string; dark?: boolean; onPlay: () => void }) {
+function VideoThumb({ title, dark, onPlay }: { id: string; title: string; dark?: boolean; onPlay: () => void }) {
   const [hovered, setHovered] = useState(false);
   return (
     <button
