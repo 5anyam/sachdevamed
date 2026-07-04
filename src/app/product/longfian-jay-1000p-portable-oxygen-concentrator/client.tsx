@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star, Award } from 'lucide-react';
+import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star } from 'lucide-react';
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 
@@ -91,19 +91,28 @@ function H2({ children, light }: { children: React.ReactNode; light?: boolean })
   );
 }
 
-/* video embed — overflow visible so iframe never clips */
-function VideoEmbed({ id, title, dark }: { id: string; title: string; dark?: boolean }) {
+/* clickable video thumbnail — opens modal on click */
+function VideoThumb({ id, title, dark, onPlay }: { id: string; title: string; dark?: boolean; onPlay: () => void }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 12, overflow: 'hidden', border: dark ? '1.5px solid rgba(255,255,255,0.1)' : '1.5px solid #E5E7EB', boxShadow: dark ? 'none' : '0 4px 20px rgba(0,0,0,0.08)' }}>
-      <iframe
-        src={`https://drive.google.com/file/d/${id}/preview`}
-        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', display: 'block' }}
-        allow="autoplay; fullscreen; encrypted-media"
-        allowFullScreen
-        title={title}
-        loading="lazy"
-      />
-    </div>
+    <button
+      onClick={onPlay}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ display: 'block', width: '100%', position: 'relative', paddingBottom: '56.25%', borderRadius: 12, overflow: 'hidden', border: dark ? '1.5px solid rgba(255,255,255,0.12)' : '1.5px solid #E5E7EB', background: dark ? '#1a1f2e' : '#1a1f2e', cursor: 'pointer', padding: 0 }}
+      aria-label={`Play ${title}`}
+    >
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+        {/* play circle */}
+        <div style={{ width: 64, height: 64, borderRadius: '50%', background: hovered ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)', border: '2px solid rgba(255,255,255,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: hovered ? 'scale(1.12)' : 'scale(1)', transition: 'transform 0.18s ease, background 0.18s ease', backdropFilter: 'blur(4px)' }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 3 }}>
+            <polygon points="5,3 19,12 5,21" />
+          </svg>
+        </div>
+        {/* title */}
+        <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.7)', textAlign: 'center', padding: '0 16px', lineHeight: 1.4, letterSpacing: '0.02em' }}>{title}</p>
+      </div>
+    </button>
   );
 }
 
@@ -119,6 +128,13 @@ export default function Jay1000PClient() {
   const [adding, setAdding] = useState(false);
   const [buying, setBuying] = useState(false);
   const reviewsRef = useRef<HTMLDivElement>(null);
+  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setActiveVideo(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   const cartItem = {
     id: PID, name: PNAME,
@@ -134,8 +150,38 @@ export default function Jay1000PClient() {
   };
   const doBuy = () => { setBuying(true); addToCart(cartItem); router.push('/checkout'); };
 
+  const play = (id: string, title: string) => setActiveVideo({ id, title });
+
   return (
     <div style={{ minHeight: '100vh', background: BG, overflowX: 'hidden', maxWidth: '100vw' }}>
+
+      {/* ──── VIDEO MODAL ──── */}
+      {activeVideo && (
+        <div
+          onClick={() => setActiveVideo(null)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.92)', zIndex: 9000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ position: 'relative', width: '100%', maxWidth: 1100, aspectRatio: '16/9' }}
+          >
+            <iframe
+              src={`https://drive.google.com/file/d/${activeVideo.id}/preview`}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', borderRadius: 10 }}
+              allow="autoplay; fullscreen; encrypted-media"
+              allowFullScreen
+              title={activeVideo.title}
+            />
+            <button
+              onClick={() => setActiveVideo(null)}
+              style={{ position: 'absolute', top: -44, right: 0, width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.12)', border: '1.5px solid rgba(255,255,255,0.3)', color: '#fff', fontSize: 18, lineHeight: 1, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              aria-label="Close video"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ──── BREADCRUMB ──── */}
       <div style={{ borderBottom: '1px solid #E5E7EB', background: '#fff' }}>
@@ -172,14 +218,6 @@ export default function Jay1000PClient() {
                   {b.label}
                 </span>
               ))}
-            </div>
-
-            {/* exclusive partner */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-              <Award style={{ width: 14, height: 14, color: ACC, flexShrink: 0 }} />
-              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACC }}>
-                Exclusive Partner &amp; Authorised Importer — Longfian Scitech, China
-              </span>
             </div>
 
             <h1 style={{ fontSize: 'clamp(26px,3.5vw,48px)', fontWeight: 900, letterSpacing: '-0.02em', color: DARK, lineHeight: 1.05, marginBottom: 14 }}>
@@ -425,7 +463,7 @@ export default function Jay1000PClient() {
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, marginBottom: 32, maxWidth: 520 }}>
             The complete product video — design, features, and how the JAY-1000P fits seamlessly into daily life for travel, COPD therapy, and more.
           </p>
-          <VideoEmbed id="15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj" title="JAY-1000P Product Video HD" dark />
+          <VideoThumb id="15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj" title="JAY-1000P Product Video HD" dark onPlay={() => play('15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj', 'JAY-1000P Product Video HD')} />
         </div>
       </section>
 
@@ -438,22 +476,6 @@ export default function Jay1000PClient() {
             <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', maxWidth: 480, margin: '0 auto' }}>
               Every number that matters — tested, certified, and verified by international regulators.
             </p>
-          </div>
-
-          {/* 4 hero stat cards */}
-          <div className="spec-hero" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 48 }}>
-            {[
-              { val: '93% ± 3%', lbl: 'Oxygen Purity',   sub: 'Medical-grade PSA' },
-              { val: '1.98 kg',  lbl: 'Device Weight',    sub: 'Incl. single battery' },
-              { val: '10 Hrs',   lbl: 'Max Battery Life', sub: 'Double battery, Flow 1' },
-              { val: '≤48 dB',   lbl: 'Noise Level',      sub: 'Library-quiet operation' },
-            ].map((s, i) => (
-              <div key={i} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 14, padding: 'clamp(20px,3vw,32px)', textAlign: 'center' }}>
-                <p style={{ fontSize: 'clamp(24px,3vw,40px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 10 }}>{s.val}</p>
-                <p style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>{s.lbl}</p>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>{s.sub}</p>
-              </div>
-            ))}
           </div>
 
           {/* categorised spec table */}
@@ -540,7 +562,7 @@ export default function Jay1000PClient() {
           <p style={{ fontSize: 14, color: GREY, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>
             Longfian demonstrated the JAY-1000P at MEDICA 2025 — the world&apos;s largest medical trade fair. Watch the live FDA and FAA certified demonstration with international healthcare professionals.
           </p>
-          <VideoEmbed id="1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N" title="MEDICA 2025 — FDA & FAA Approved Demo" />
+          <VideoThumb id="1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N" title="MEDICA 2025 — FDA & FAA Approved Demo" onPlay={() => play('1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N', 'MEDICA 2025 — FDA & FAA Approved Demo')} />
         </div>
       </section>
 
@@ -557,14 +579,14 @@ export default function Jay1000PClient() {
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 16, lineHeight: 1.65 }}>
                 See how the JAY-1000P synchronises oxygen delivery to your breathing — oxygen only on inhalation, zero waste, maximum efficiency.
               </p>
-              <VideoEmbed id="19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV" title="Pulse Mode Demonstration" dark />
+              <VideoThumb id="19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV" title="Pulse Mode Demonstration" dark onPlay={() => play('19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV', 'Pulse Mode Demonstration')} />
             </div>
             <div>
               <h3 style={{ fontSize: 'clamp(15px,2vw,20px)', fontWeight: 800, color: '#fff', marginBottom: 10, lineHeight: 1.3 }}>Filter Replacement Guide</h3>
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 16, lineHeight: 1.65 }}>
                 Easy DIY maintenance at home — replace the air filter yourself in under 2 minutes. No technician needed, no tools required.
               </p>
-              <VideoEmbed id="1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL" title="Filter Replacement Guide" dark />
+              <VideoThumb id="1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL" title="Filter Replacement Guide" dark onPlay={() => play('1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL', 'Filter Replacement Guide')} />
             </div>
           </div>
         </div>
@@ -668,7 +690,7 @@ export default function Jay1000PClient() {
             {MORE_VIDEOS.map((v, i) => (
               <div key={i}>
                 <h3 style={{ fontSize: 13, fontWeight: 700, color: DARK, marginBottom: 10, lineHeight: 1.4 }}>{v.title}</h3>
-                <VideoEmbed id={v.id} title={v.title} />
+                <VideoThumb id={v.id} title={v.title} onPlay={() => play(v.id, v.title)} />
               </div>
             ))}
           </div>
@@ -732,14 +754,12 @@ export default function Jay1000PClient() {
           .trust-grid        { grid-template-columns: 1fr 1fr !important; }
           .more-grid         { grid-template-columns: 1fr !important; }
           .highlights-grid   { grid-template-columns: 1fr 1fr !important; }
-          .spec-hero         { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 480px) {
           .benefits-grid  { grid-template-columns: 1fr !important; }
           .cert-grid      { grid-template-columns: repeat(2, 1fr) !important; }
           .box-grid       { grid-template-columns: 1fr !important; }
           .trust-grid     { grid-template-columns: 1fr !important; }
-          .spec-hero      { grid-template-columns: 1fr 1fr !important; }
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
         }
       `}</style>
