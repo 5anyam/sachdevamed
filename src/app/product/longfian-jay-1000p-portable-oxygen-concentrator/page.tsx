@@ -3,7 +3,7 @@ import Jay1000PClient from './client';
 
 const TITLE = 'Longfian JAY-1000P Portable Oxygen Concentrator | FDA & FAA Approved | Sachdeva Medline';
 const DESCRIPTION =
-  'Buy Longfian JAY-1000P portable oxygen concentrator in India at ₹95,000. 1.98 kg, FDA cleared, FAA approved for flights, CDSCO registered. 93%±3% pure oxygen, 11-hour battery (2 batteries included). Exclusive importer — Sachdeva Medline. Free pan-India delivery. 2-year warranty.';
+  'Buy Longfian JAY-1000P portable oxygen concentrator in India at ₹95,000. 1.98 kg, FDA cleared, FAA approved for flights, CDSCO registered. 93%±3% pure oxygen, upto 10-hour battery (2 batteries included). Exclusive importer — Sachdeva Medline. Free pan-India delivery. 2-year warranty.';
 const CANONICAL = 'https://sachdevamedline.com/product/longfian-jay-1000p-portable-oxygen-concentrator';
 const IMAGE = 'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w2000';
 const PRICE = '95000';
@@ -49,7 +49,7 @@ const jsonLd = {
   '@type': 'Product',
   name: 'Longfian JAY-1000P Portable Oxygen Concentrator',
   description:
-    'FDA cleared, FAA approved, CDSCO registered portable oxygen concentrator. 1.98 kg, 93%±3% oxygen purity, up to 11 hours battery. CE and ISO certified.',
+    'FDA cleared, FAA approved, CDSCO registered portable oxygen concentrator. 1.98 kg, 93%±3% oxygen purity, up to 10 hours battery. CE and ISO certified.',
   image: [
     'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w2000',
     'https://drive.google.com/thumbnail?id=13InsWquc7HhRHUt2P9A0gVgpvviOUsP6&sz=w2000',
@@ -77,7 +77,7 @@ const jsonLd = {
     { '@type': 'PropertyValue', name: 'Weight', value: '1.98 kg' },
     { '@type': 'PropertyValue', name: 'Oxygen Purity', value: '93%±3%' },
     { '@type': 'PropertyValue', name: 'Flow Settings', value: '1-5 Pulse Dose' },
-    { '@type': 'PropertyValue', name: 'Battery Life', value: 'Up to 11 hours' },
+    { '@type': 'PropertyValue', name: 'Battery Life', value: 'Up to 10 hours' },
     { '@type': 'PropertyValue', name: 'FAA Approved', value: 'Yes' },
     { '@type': 'PropertyValue', name: 'FDA Cleared', value: 'Yes (K243833)' },
     { '@type': 'PropertyValue', name: 'Certifications', value: 'CE, ISO, FDA, CDSCO, FAA' },
@@ -105,7 +105,7 @@ const jsonLd = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.9',
-    reviewCount: '47',
+    reviewCount: '623',
     bestRating: '5',
     worstRating: '1',
   },

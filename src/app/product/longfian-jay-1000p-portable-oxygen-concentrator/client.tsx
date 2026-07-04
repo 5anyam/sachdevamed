@@ -5,18 +5,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { Check, ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star, Award } from 'lucide-react';
+import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star, Award } from 'lucide-react';
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
 
-// ── palette: grey/black, no green ──────────────────────────────
-const ACC  = '#2D3748';   // dark slate — primary accent (replaces green)
-const GREY = '#6B7280';   // medium grey — labels, borders
-const DARK = '#0F1117';   // near-black — headings, body
-const BG   = '#F8F9FA';   // neutral off-white background
+const ACC  = '#2D3748';
+const GREY = '#6B7280';
+const DARK = '#0F1117';
+const BG   = '#F8F9FA';
 
 const PRICE = 95000;
 const MRP   = 149000;
@@ -46,7 +45,7 @@ const MORE_VIDEOS = [
   { id: '1ZlfHxf-QVVRQp5E1cFg7EoqKNlxEAc6B', title: 'JAY-1000P Overview' },
 ];
 
-/* ─── reusable primitives ───────────────────────────────────── */
+/* ─── primitives ─────────────────────────────────────────────── */
 
 function StarRow({ r }: { r: number }) {
   return (
@@ -62,27 +61,14 @@ function Gallery() {
   const [main, setMain] = useState(0);
   return (
     <div>
-      {/* main image — wrapper div provides padding so image is never clipped */}
       <div style={{ position: 'relative', width: '100%', paddingBottom: '100%', background: '#fff', borderRadius: 14, overflow: 'hidden', border: '2px solid #E5E7EB', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
         <div style={{ position: 'absolute', inset: 8 }}>
-          <Image
-            src={GALLERY[main]}
-            alt={PNAME}
-            fill
-            style={{ objectFit: 'contain' }}
-            sizes="(max-width:768px) 100vw, 50vw"
-            priority
-          />
+          <Image src={GALLERY[main]} alt={PNAME} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority />
         </div>
       </div>
-      {/* thumbnails */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginTop: 10 }}>
         {GALLERY.map((src, i) => (
-          <button
-            key={i}
-            onClick={() => setMain(i)}
-            style={{ display: 'block', position: 'relative', width: '100%', paddingTop: '100%', border: `2px solid ${i === main ? ACC : '#E5E7EB'}`, borderRadius: 8, overflow: 'hidden', opacity: i === main ? 1 : 0.6, cursor: 'pointer', background: '#fff', transition: 'all 0.2s' }}
-          >
+          <button key={i} onClick={() => setMain(i)} style={{ display: 'block', position: 'relative', width: '100%', paddingTop: '100%', border: `2px solid ${i === main ? ACC : '#E5E7EB'}`, borderRadius: 8, overflow: 'hidden', opacity: i === main ? 1 : 0.6, cursor: 'pointer', background: '#fff', transition: 'all 0.2s' }}>
             <div style={{ position: 'absolute', inset: 4 }}>
               <Image src={src} alt="" fill style={{ objectFit: 'contain' }} sizes="120px" />
             </div>
@@ -93,16 +79,10 @@ function Gallery() {
   );
 }
 
-// eyebrow label — grey, no green
 function Label({ text }: { text: string }) {
-  return (
-    <span style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: GREY, fontWeight: 700, display: 'block', marginBottom: 12 }}>
-      ◆ {text}
-    </span>
-  );
+  return <span style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: GREY, fontWeight: 700, display: 'block', marginBottom: 12 }}>◆ {text}</span>;
 }
 
-// section heading — always black
 function H2({ children, light }: { children: React.ReactNode; light?: boolean }) {
   return (
     <h2 style={{ fontSize: 'clamp(26px,4vw,46px)', fontWeight: 900, letterSpacing: '-0.02em', color: light ? '#fff' : DARK, lineHeight: 1.08, marginBottom: 24 }}>
@@ -111,12 +91,13 @@ function H2({ children, light }: { children: React.ReactNode; light?: boolean })
   );
 }
 
+/* video embed — overflow visible so iframe never clips */
 function VideoEmbed({ id, title, dark }: { id: string; title: string; dark?: boolean }) {
   return (
-    <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 12, border: dark ? '2px solid rgba(255,255,255,0.08)' : '2px solid #E5E7EB', boxShadow: dark ? 'none' : '0 4px 20px rgba(0,0,0,0.08)' }}>
+    <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 12, overflow: 'hidden', border: dark ? '1.5px solid rgba(255,255,255,0.1)' : '1.5px solid #E5E7EB', boxShadow: dark ? 'none' : '0 4px 20px rgba(0,0,0,0.08)' }}>
       <iframe
         src={`https://drive.google.com/file/d/${id}/preview`}
-        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', display: 'block' }}
         allow="autoplay; fullscreen; encrypted-media"
         allowFullScreen
         title={title}
@@ -135,15 +116,13 @@ const VPAD = 'clamp(48px,8vw,80px)';
 export default function Jay1000PClient() {
   const { addToCart } = useCart();
   const router = useRouter();
-  const [adding, setAdding]  = useState(false);
-  const [buying, setBuying]  = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [buying, setBuying] = useState(false);
   const reviewsRef = useRef<HTMLDivElement>(null);
 
   const cartItem = {
-    id: PID,
-    name: PNAME,
-    price: PRICE.toString(),
-    regular_price: MRP.toString(),
+    id: PID, name: PNAME,
+    price: PRICE.toString(), regular_price: MRP.toString(),
     images: GALLERY.map(src => ({ src })),
   };
 
@@ -173,40 +152,29 @@ export default function Jay1000PClient() {
 
       {/* ──── HERO ──── */}
       <section style={{ background: '#fff', paddingBottom: 'clamp(32px,5vw,56px)' }}>
-        <div
-          className="hero-wrap"
-          style={{ maxWidth: W, margin: '0 auto', padding: `clamp(24px,5vw,40px) ${PAD} 0`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(24px,5vw,64px)', alignItems: 'start' }}
-        >
-          {/* Sticky gallery */}
+        <div className="hero-wrap" style={{ maxWidth: W, margin: '0 auto', padding: `clamp(24px,5vw,40px) ${PAD} 0`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(24px,5vw,64px)', alignItems: 'start' }}>
+
+          {/* sticky gallery */}
           <div className="hero-gallery" style={{ position: 'sticky', top: 88, alignSelf: 'start' }}>
             <Gallery />
           </div>
 
-          {/* Product info */}
+          {/* product info */}
           <div>
-            {/* Badges */}
+            {/* badges */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
               {[
                 { label: 'Portable Oxygen Concentrator', dark: false },
-                { label: 'Flight Safe · FAA Approved',  dark: true  },
-                { label: `${DISC}% OFF`,                red:  true  },
+                { label: 'Flight Safe · FAA Approved',   dark: true  },
+                { label: `${DISC}% OFF`,                 red:  true  },
               ].map((b: { label: string; dark?: boolean; red?: boolean }, i) => (
-                <span
-                  key={i}
-                  style={{
-                    fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
-                    padding: '5px 12px', borderRadius: 4,
-                    background: b.red ? '#E8175D' : b.dark ? ACC : '#F3F4F6',
-                    color: (b.red || b.dark) ? '#fff' : GREY,
-                    border: (!b.red && !b.dark) ? `1.5px solid #E5E7EB` : 'none',
-                  }}
-                >
+                <span key={i} style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: b.red ? '#E8175D' : b.dark ? ACC : '#F3F4F6', color: (b.red || b.dark) ? '#fff' : GREY, border: (!b.red && !b.dark) ? `1.5px solid #E5E7EB` : 'none' }}>
                   {b.label}
                 </span>
               ))}
             </div>
 
-            {/* Exclusive partner line */}
+            {/* exclusive partner */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <Award style={{ width: 14, height: 14, color: ACC, flexShrink: 0 }} />
               <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACC }}>
@@ -221,67 +189,59 @@ export default function Jay1000PClient() {
               </span>
             </h1>
 
-            <button
-              onClick={() => reviewsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-              style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-            >
+            {/* reviews — #3: 623 */}
+            <button onClick={() => reviewsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
               <StarRow r={4.9} />
               <span style={{ fontSize: 12, color: 'rgba(15,17,23,0.5)', borderBottom: '1px solid rgba(15,17,23,0.2)' }}>
-                4.9 · 47 Verified Reviews
+                4.9 · 623 Verified Reviews
               </span>
             </button>
 
-            {/* KEY HIGHLIGHTS STRIP */}
-            <div
-              className="highlights-grid"
-              style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8, marginBottom: 20, padding: '16px', background: BG, border: '1.5px solid #E5E7EB', borderRadius: 12 }}
-            >
-              {[
-                { icon: '⏱', val: '11 Hrs',        lbl: 'Battery Backup (double battery)' },
-                { icon: '✈️', val: 'FAA Approved',  lbl: 'Fly on any commercial airline' },
-                { icon: '🔋', val: '2 Batteries',   lbl: 'Included in the box' },
-                { icon: '⚖️', val: '1.98 kg',       lbl: 'Ultra-light — fits in carry bag' },
-              ].map((h, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 20, flexShrink: 0 }}>{h.icon}</span>
-                  <div>
-                    <p style={{ fontSize: 13, fontWeight: 800, color: DARK, lineHeight: 1.1 }}>{h.val}</p>
-                    <p style={{ fontSize: 11, color: GREY, lineHeight: 1.4 }}>{h.lbl}</p>
+            {/* ── KEY HIGHLIGHTS BOX — #4 ── */}
+            <div style={{ marginBottom: 4, border: '2.5px solid #2D3748', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 16px rgba(15,17,23,0.10)' }}>
+              {/* 4 points */}
+              <div style={{ background: '#EAECF0', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 0 }}>
+                {[
+                  { icon: '✈️', title: 'FAA Approved',                     sub: 'Can be taken on any flight' },
+                  { icon: '🔋', title: '2 Batteries Included in the Box',  sub: null },
+                  { icon: '⏱',  title: 'Upto 10 Hours Total Battery Backup Time*', sub: null },
+                  { icon: '⚖️', title: '1.98 Kg',                         sub: 'Ultra Light Weight' },
+                ].map((h, i, arr) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '11px 2px', borderBottom: i < arr.length - 1 ? '1px solid rgba(45,55,72,0.12)' : 'none' }}>
+                    <span style={{ fontSize: 18, flexShrink: 0, width: 26, textAlign: 'center', marginTop: 1 }}>{h.icon}</span>
+                    <div>
+                      <p style={{ fontSize: 13, fontWeight: 700, color: DARK, lineHeight: 1.25 }}>{h.title}</p>
+                      {h.sub && <p style={{ fontSize: 11, color: GREY, lineHeight: 1.4, marginTop: 2 }}>{h.sub}</p>}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* disclaimer footer */}
+              <div style={{ background: '#D1D5DB', padding: '10px 14px', borderTop: '1.5px solid rgba(45,55,72,0.15)' }}>
+                {[
+                  '*Battery backup time varies as per the flow setting',
+                  '*CE, ISO, FDA, CDSCO and FAA approved — permitted on all commercial flights worldwide',
+                  '*Pulse dose model with settings from 1 to 5 as per patient\'s requirement',
+                  '*93% ± 3% oxygen concentration at all flow settings',
+                  '*Only 1.98 kg — lighter than most laptops, fits in the air-vented carry bag',
+                  '*Comes with car charger, 2 spare filters, all standard accessories and 2 rechargeable batteries — up to 10 hours of total battery backup time',
+                ].map((line, i) => (
+                  <p key={i} style={{ fontSize: 10, color: '#4B5563', lineHeight: 1.6, marginBottom: i < 5 ? 2 : 0 }}>{line}</p>
+                ))}
+              </div>
             </div>
 
-            <p style={{ fontSize: 14, color: 'rgba(15,17,23,0.6)', lineHeight: 1.75, marginBottom: 20 }}>
-              India&apos;s lightest portable oxygen concentrator — FDA cleared, FAA approved for flights, CDSCO registered for India. Comes with 2 batteries for up to 11 hours of uninterrupted oxygen therapy.
+            {/* #5 — tagline below box */}
+            <p style={{ fontSize: 13, fontWeight: 600, color: ACC, lineHeight: 1.6, marginBottom: 20, marginTop: 12 }}>
+              Lightest and most affordable FAA (flight) approved portable oxygen concentrator available in India
             </p>
 
-            {/* Bullet benefits */}
-            <div style={{ marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {[
-                'Only 1.98 kg — lighter than most laptops, fits in the air-vented carry bag',
-                'FDA cleared & FAA approved — permitted on all commercial flights worldwide',
-                'Comes with 2 batteries — up to 11 hours of use on a single charge cycle',
-                'CDSCO approved for India — authorised by Sachdeva Medline since 1999',
-              ].map((b, i) => (
-                <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                  <span style={{ width: 18, height: 18, background: '#F3F4F6', border: `1.5px solid ${ACC}`, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
-                    <Check style={{ width: 9, height: 9, color: ACC }} />
-                  </span>
-                  <span style={{ fontSize: 13, color: DARK, lineHeight: 1.6 }}>{b}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Price block */}
+            {/* price */}
             <div style={{ marginBottom: 24, paddingBottom: 24, borderBottom: '2px solid #E5E7EB' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 4 }}>
-                <span style={{ fontSize: 44, fontWeight: 900, color: DARK, letterSpacing: '-0.02em' }}>
-                  ₹{PRICE.toLocaleString('en-IN')}
-                </span>
-                <span style={{ fontSize: 16, color: 'rgba(15,17,23,0.35)', textDecoration: 'line-through' }}>
-                  ₹{MRP.toLocaleString('en-IN')}
-                </span>
+                <span style={{ fontSize: 44, fontWeight: 900, color: DARK, letterSpacing: '-0.02em' }}>₹{PRICE.toLocaleString('en-IN')}</span>
+                <span style={{ fontSize: 16, color: 'rgba(15,17,23,0.35)', textDecoration: 'line-through' }}>₹{MRP.toLocaleString('en-IN')}</span>
               </div>
               <p style={{ fontSize: 11, color: GREY, fontWeight: 500, letterSpacing: '0.04em' }}>
                 Incl. of all taxes &nbsp;·&nbsp; MRP ₹{MRP.toLocaleString('en-IN')} &nbsp;·&nbsp; Save ₹{(MRP - PRICE).toLocaleString('en-IN')} ({DISC}%)
@@ -290,36 +250,22 @@ export default function Jay1000PClient() {
 
             {/* CTA buttons */}
             <div style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
-              <button
-                onClick={doAdd}
-                disabled={adding}
-                style={{ flex: 1, padding: '14px 20px', background: '#fff', color: DARK, border: `2px solid ${ACC}`, borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s' }}
-              >
+              <button onClick={doAdd} disabled={adding} style={{ flex: 1, padding: '14px 20px', background: '#fff', color: DARK, border: `2px solid ${ACC}`, borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s' }}>
                 {adding ? 'ADDED ✓' : 'ADD TO CART'}
               </button>
-              <button
-                onClick={doBuy}
-                disabled={buying}
-                style={{ flex: 1, padding: '14px 20px', background: DARK, color: '#fff', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(15,17,23,0.25)', transition: 'all 0.15s' }}
-              >
+              <button onClick={doBuy} disabled={buying} style={{ flex: 1, padding: '14px 20px', background: DARK, color: '#fff', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(15,17,23,0.25)', transition: 'all 0.15s' }}>
                 <Zap style={{ width: 14, height: 14 }} />
                 {buying ? 'PROCESSING...' : 'BUY NOW'}
               </button>
             </div>
 
-            {/* Delivery note */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: DARK, marginBottom: 20, padding: '10px 14px', background: '#F3F4F6', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
-              <Truck style={{ width: 15, height: 15, color: ACC, flexShrink: 0 }} />
-              <span><strong>Free delivery</strong> · Dispatched within 24 hours · Pan-India</span>
-            </div>
-
-            {/* Trust grid */}
+            {/* #6 — trust grid updated */}
             <div className="trust-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               {[
-                { icon: ShieldCheck, title: 'Exclusive Importer',  sub: 'Direct from Longfian, China' },
-                { icon: RotateCcw,   title: 'Easy Returns',        sub: '7-day return policy' },
-                { icon: Package,     title: '2-Year Warranty',     sub: '1 yr on batteries & sieve beds' },
-                { icon: Truck,       title: 'Pan-India Delivery',  sub: '3–5 business days' },
+                { icon: Truck,       title: 'Free Delivery',     sub: 'All over India' },
+                { icon: Package,     title: 'Delivery Time',     sub: '3–5 business days' },
+                { icon: RotateCcw,   title: 'Easy Returns',      sub: '7-day return policy' },
+                { icon: ShieldCheck, title: '2-Year Warranty',   sub: '1 yr on batteries & sieve beds' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
                   <item.icon style={{ width: 14, height: 14, color: ACC, flexShrink: 0, marginTop: 2 }} />
@@ -334,50 +280,130 @@ export default function Jay1000PClient() {
         </div>
       </section>
 
-      {/* ──── STATS STRIP ──── */}
+      {/* ──── STATS STRIP — #7 ──── */}
       <section style={{ background: DARK, padding: 'clamp(28px,5vw,40px) 0' }}>
-        <div
-          className="stats-grid"
-          style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}`, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}
-        >
-          {[
-            { val: '1.98 kg',  lbl: 'Ultra-light',     sub: 'Lighter than most laptops' },
-            { val: '93%±3%',   lbl: 'Oxygen purity',   sub: 'Medical-grade PSA technology' },
-            { val: '11 hrs',   lbl: 'Max battery',     sub: 'Double battery, Setting 1' },
-            { val: '≤48 dB',   lbl: 'Noise level',     sub: 'Quieter than a conversation' },
-          ].map((s, i) => (
-            <div key={i} style={{ textAlign: 'center', padding: 'clamp(8px,2vw,20px)', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.12)' : 'none' }}>
-              <p style={{ fontSize: 'clamp(22px,3vw,38px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 4 }}>{s.val}</p>
-              <p style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>{s.lbl}</p>
-              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{s.sub}</p>
-            </div>
-          ))}
+        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
+          {/* row 1: experience + manufacturer — side by side */}
+          <div className="stats-row1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: 0 }}>
+            {[
+              { val: '25+',  lbl: 'Years of Experience',  sub: 'Longfian — established 1999' },
+              { val: '#1',   lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer" },
+            ].map((s, i) => (
+              <div key={i} style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
+                <p style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 3 }}>{s.lbl}</p>
+                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{s.sub}</p>
+              </div>
+            ))}
+          </div>
+          {/* row 2: oxygen purity + noise */}
+          <div className="stats-row2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
+            {[
+              { val: '93% ± 3%', lbl: 'Oxygen Purity',  sub: 'Medical-grade PSA technology' },
+              { val: '≤48 dB',   lbl: 'Noise Level',     sub: 'Quieter than a conversation' },
+            ].map((s, i) => (
+              <div key={i} style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                <p style={{ fontSize: 'clamp(22px,3vw,40px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 3 }}>{s.lbl}</p>
+                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{s.sub}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ──── BENEFITS ──── */}
+      {/* ──── BENEFITS — #8-13 ──── */}
       <section style={{ background: '#fff', padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <Label text="Key Benefits" />
-            <H2>WHY CHOOSE THE JAY-1000P?</H2>
+            {/* #8: Longfian added */}
+            <H2>WHY CHOOSE THE LONGFIAN JAY-1000P?</H2>
           </div>
           <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-            {[
-              { icon: '✈️', title: 'Fly Anywhere',           desc: 'FDA cleared & FAA approved for all commercial airlines worldwide. No extra documentation — just pack and board.' },
-              { icon: '⚖️', title: 'Only 1.98 kg',           desc: 'Lighter than most laptops. Runs inside the included shoulder bag — air vents keep it cool while stored.' },
-              { icon: '🔋', title: '11-Hour Battery Backup',  desc: 'Comes with 2 batteries delivering up to 11 hours of continuous oxygen therapy at Setting 1.' },
-              { icon: '💧', title: '93%±3% Oxygen Purity',   desc: 'PSA molecular sieve technology delivers clinically accurate oxygen every breath, every time.' },
-              { icon: '🔇', title: 'Whisper Quiet',           desc: 'At under 48 dB — quieter than a normal conversation. Use in meetings, on flights, or while sleeping.' },
-              { icon: '🇮🇳', title: 'CDSCO Approved',         desc: "Officially registered with India's drug regulatory authority. Sachdeva Medline — exclusive importer since 1999." },
-              { icon: '📊', title: 'Smart LCD Display',       desc: 'Real-time battery level, flow setting, and running hours. Large tactile buttons — no complicated menus.' },
-            ].map((b, i) => (
-              <div key={i} style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-                <div style={{ fontSize: 32, marginBottom: 14 }}>{b.icon}</div>
-                <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>{b.title}</h3>
-                <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>{b.desc}</p>
+
+            {/* #10 — card 1: Longfian brand */}
+            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
+              <div style={{ marginBottom: 14 }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: DARK, color: '#fff', padding: '6px 14px', borderRadius: 6, fontSize: 13, fontWeight: 900, letterSpacing: '0.06em', marginBottom: 12 }}>
+                  LONGFIAN
+                </div>
               </div>
-            ))}
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Over 25 Years of Experience</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
+                Longfian is the world&apos;s biggest manufacturer for oxygen concentrators with decades of experience.
+              </p>
+            </div>
+
+            {/* #11 — card 2: FAA */}
+            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
+              <div style={{ fontSize: 32, marginBottom: 14 }}>✈️</div>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Fly Anywhere</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
+                FAA (flight) approved for all commercial airlines worldwide.
+              </p>
+            </div>
+
+            {/* #12 — card 3: weight */}
+            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
+              <div style={{ fontSize: 32, marginBottom: 14 }}>⚖️</div>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 4 }}>Only 1.98 Kg</h3>
+              <p style={{ fontSize: 13, fontWeight: 600, color: ACC, marginBottom: 8 }}>Ultra Light Weight</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
+                Comes with shoulder carry bag for ease in carrying during travel.
+              </p>
+            </div>
+
+            {/* #12 — card 4: battery */}
+            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
+              <div style={{ fontSize: 32, marginBottom: 14 }}>🔋</div>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Upto 10 Hours of Battery Backup Time</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
+                Comes with 2 lithium ion rechargeable batteries.<br />
+                Battery backup time varies as per flow setting.
+              </p>
+            </div>
+
+            {/* #12 — card 5: oxygen purity */}
+            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
+              <div style={{ fontSize: 32, marginBottom: 14 }}>💧</div>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>93% ± 3% Oxygen Purity</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
+                Advanced PSA Molecular sieve technology for above 93% oxygen concentration in every breath, every time.
+              </p>
+            </div>
+
+            {/* #12 — card 6: quiet + LCD (combined) */}
+            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
+              <div style={{ fontSize: 32, marginBottom: 14 }}>🔇</div>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Whisper Quiet</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7, marginBottom: 14 }}>
+                At under 48 dB — quieter than a normal conversation / library.
+              </p>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Smart LCD Display</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
+                Shows real-time battery level, flow setting and running hours. Large tactile buttons — no complicated menus.
+              </p>
+            </div>
+
+            {/* #12 — card 7: globally certified */}
+            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
+              <div style={{ fontSize: 32, marginBottom: 14 }}>🏅</div>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Globally Certified</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
+                CE, ISO, CDSCO, US FDA and FAA approvals — trusted by healthcare professionals worldwide.
+              </p>
+            </div>
+
+            {/* #13 — card 8: safety alarms */}
+            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
+              <div style={{ fontSize: 32, marginBottom: 14 }}>🔔</div>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Safety Alarms</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
+                Audio and visual alarms for low battery, low oxygen concentration, high / low pressure and for other issues.
+              </p>
+            </div>
+
           </div>
         </div>
       </section>
@@ -385,20 +411,13 @@ export default function Jay1000PClient() {
       {/* ──── CREATIVE IMAGE 1 ──── */}
       <section style={{ background: '#fff', padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ position: 'relative', width: '100%', maxWidth: 860, margin: '0 auto' }}>
-            <Image
-              src={CREATIVE_1}
-              alt="Longfian JAY-1000P — Portable Oxygen Concentrator"
-              width={1200}
-              height={1200}
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16 }}
-              sizes="(max-width:768px) 100vw, 860px"
-            />
+          <div style={{ maxWidth: 860, margin: '0 auto' }}>
+            <Image src={CREATIVE_1} alt="Longfian JAY-1000P — Portable Oxygen Concentrator" width={1200} height={1200} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16 }} sizes="(max-width:768px) 100vw, 860px" />
           </div>
         </div>
       </section>
 
-      {/* ──── VIDEO 1: PRODUCT OVERVIEW ──── */}
+      {/* ──── VIDEO 1: PRODUCT OVERVIEW — #14 fix ──── */}
       <section style={{ background: '#111827', padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: 960, margin: '0 auto', padding: `0 ${PAD}` }}>
           <Label text="Product Overview" />
@@ -413,8 +432,6 @@ export default function Jay1000PClient() {
       {/* ──── SPECIFICATIONS ──── */}
       <section style={{ background: DARK, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-
-          {/* heading */}
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <Label text="Technical Details" />
             <H2 light>TECHNICAL SPECIFICATIONS</H2>
@@ -423,28 +440,25 @@ export default function Jay1000PClient() {
             </p>
           </div>
 
-          {/* ── 4 hero stat cards ── */}
+          {/* 4 hero stat cards */}
           <div className="spec-hero" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 48 }}>
             {[
-              { val: '93%±3%',  lbl: 'Oxygen Purity',   sub: 'Medical-grade PSA' },
-              { val: '1.98 kg', lbl: 'Device Weight',    sub: 'Incl. single battery' },
-              { val: '11 Hrs',  lbl: 'Max Battery Life', sub: 'Double battery, Flow 1' },
-              { val: '≤48 dB',  lbl: 'Noise Level',      sub: 'Library-quiet operation' },
+              { val: '93% ± 3%', lbl: 'Oxygen Purity',   sub: 'Medical-grade PSA' },
+              { val: '1.98 kg',  lbl: 'Device Weight',    sub: 'Incl. single battery' },
+              { val: '10 Hrs',   lbl: 'Max Battery Life', sub: 'Double battery, Flow 1' },
+              { val: '≤48 dB',   lbl: 'Noise Level',      sub: 'Library-quiet operation' },
             ].map((s, i) => (
               <div key={i} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: 14, padding: 'clamp(20px,3vw,32px)', textAlign: 'center' }}>
-                <p style={{ fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 10 }}>{s.val}</p>
+                <p style={{ fontSize: 'clamp(24px,3vw,40px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 10 }}>{s.val}</p>
                 <p style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>{s.lbl}</p>
                 <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>{s.sub}</p>
               </div>
             ))}
           </div>
 
-          {/* ── categorised spec table — 2 columns ── */}
+          {/* categorised spec table */}
           <div className="spec-table-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-
-            {/* col 1 */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              {/* Performance */}
               <div style={{ background: ACC, borderRadius: '10px 10px 0 0', padding: '10px 18px' }}>
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Performance</span>
               </div>
@@ -459,8 +473,6 @@ export default function Jay1000PClient() {
                   <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', textAlign: 'right' }}>{val}</span>
                 </div>
               ))}
-
-              {/* Physical */}
               <div style={{ background: ACC, padding: '10px 18px', marginTop: 6 }}>
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Physical</span>
               </div>
@@ -477,16 +489,14 @@ export default function Jay1000PClient() {
               ))}
             </div>
 
-            {/* col 2 */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              {/* Battery */}
               <div style={{ background: ACC, borderRadius: '10px 10px 0 0', padding: '10px 18px' }}>
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Battery</span>
               </div>
               {[
                 ['Batteries in Box',    '2 batteries included'],
                 ['Single Battery Life', '5.5 hrs (Flow 1) / 3 hrs (Flow 2)'],
-                ['Double Battery Life', 'Up to 11 hrs at Flow Setting 1'],
+                ['Double Battery Life', 'Up to 10 hrs at Flow Setting 1'],
                 ['Charge Time',         'Approx. 2 hours (per battery)'],
               ].map(([lbl, val], i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
@@ -494,8 +504,6 @@ export default function Jay1000PClient() {
                   <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', textAlign: 'right' }}>{val}</span>
                 </div>
               ))}
-
-              {/* Compliance */}
               <div style={{ background: ACC, padding: '10px 18px', marginTop: 6 }}>
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Compliance & Support</span>
               </div>
@@ -511,7 +519,6 @@ export default function Jay1000PClient() {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </section>
@@ -519,15 +526,8 @@ export default function Jay1000PClient() {
       {/* ──── CREATIVE IMAGE 2 ──── */}
       <section style={{ background: BG, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ position: 'relative', width: '100%', maxWidth: 860, margin: '0 auto' }}>
-            <Image
-              src={CREATIVE_2}
-              alt="Fly With Confidence — JAY-1000P FDA FAA Approved for flights"
-              width={1200}
-              height={1200}
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16 }}
-              sizes="(max-width:768px) 100vw, 860px"
-            />
+          <div style={{ maxWidth: 860, margin: '0 auto' }}>
+            <Image src={CREATIVE_2} alt="Fly With Confidence — JAY-1000P FDA FAA Approved for flights" width={1200} height={1200} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16 }} sizes="(max-width:768px) 100vw, 860px" />
           </div>
         </div>
       </section>
@@ -553,18 +553,14 @@ export default function Jay1000PClient() {
           </div>
           <div className="video-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
             <div>
-              <h3 style={{ fontSize: 'clamp(15px,2vw,20px)', fontWeight: 800, color: '#fff', marginBottom: 10, lineHeight: 1.3 }}>
-                Pulse Mode Demonstration
-              </h3>
+              <h3 style={{ fontSize: 'clamp(15px,2vw,20px)', fontWeight: 800, color: '#fff', marginBottom: 10, lineHeight: 1.3 }}>Pulse Mode Demonstration</h3>
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 16, lineHeight: 1.65 }}>
                 See how the JAY-1000P synchronises oxygen delivery to your breathing — oxygen only on inhalation, zero waste, maximum efficiency.
               </p>
               <VideoEmbed id="19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV" title="Pulse Mode Demonstration" dark />
             </div>
             <div>
-              <h3 style={{ fontSize: 'clamp(15px,2vw,20px)', fontWeight: 800, color: '#fff', marginBottom: 10, lineHeight: 1.3 }}>
-                Filter Replacement Guide
-              </h3>
+              <h3 style={{ fontSize: 'clamp(15px,2vw,20px)', fontWeight: 800, color: '#fff', marginBottom: 10, lineHeight: 1.3 }}>Filter Replacement Guide</h3>
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 16, lineHeight: 1.65 }}>
                 Easy DIY maintenance at home — replace the air filter yourself in under 2 minutes. No technician needed, no tools required.
               </p>
@@ -601,7 +597,7 @@ export default function Jay1000PClient() {
         </div>
       </section>
 
-      {/* ──── WARRANTY CALLOUT ──── */}
+      {/* ──── WARRANTY ──── */}
       <section style={{ background: ACC, padding: 'clamp(28px,5vw,48px) 0' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', padding: `0 ${PAD}`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'center' }} className="warranty-grid">
           <div>
@@ -615,9 +611,9 @@ export default function Jay1000PClient() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
-              { period: '2 Years', item: 'Main Concentrator Unit', note: 'Full parts & service coverage' },
-              { period: '1 Year',  item: 'Rechargeable Batteries', note: 'Both batteries included in box' },
-              { period: '1 Year',  item: 'Molecular Sieve Beds',   note: 'Core filtration component' },
+              { period: '2 Years', item: 'Main Concentrator Unit',  note: 'Full parts & service coverage' },
+              { period: '1 Year',  item: 'Rechargeable Batteries',  note: 'Both batteries included in box' },
+              { period: '1 Year',  item: 'Molecular Sieve Beds',    note: 'Core filtration component' },
             ].map((w, i) => (
               <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 16px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10 }}>
                 <span style={{ fontSize: 11, fontWeight: 900, color: '#fff', background: 'rgba(255,255,255,0.15)', padding: '4px 10px', borderRadius: 4, whiteSpace: 'nowrap', flexShrink: 0 }}>{w.period}</span>
@@ -640,14 +636,14 @@ export default function Jay1000PClient() {
           </div>
           <div className="box-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, maxWidth: 960, margin: '0 auto' }}>
             {[
-              { icon: '🔬', item: 'JAY-1000P Unit',         desc: 'The main concentrator device' },
-              { icon: '🔋', item: '2 Batteries',             desc: 'Both single batteries included' },
-              { icon: '👜', item: 'Carry Bag',               desc: 'Shoulder & backpack, air vented' },
-              { icon: '🔌', item: 'AC Power Adapter',        desc: 'Standard household charger' },
-              { icon: '🚗', item: 'Car Charger',             desc: 'DC adapter for vehicle use' },
-              { icon: '👃', item: 'Nasal Cannula',           desc: 'For oxygen delivery' },
-              { icon: '📖', item: 'User Manual',             desc: 'Setup and operation guide' },
-              { icon: '📋', item: 'Warranty Card',           desc: '2-yr warranty by Sachdeva Medline' },
+              { icon: '🔬', item: 'JAY-1000P Unit',       desc: 'The main concentrator device' },
+              { icon: '🔋', item: '2 Batteries',           desc: 'Both batteries included' },
+              { icon: '👜', item: 'Carry Bag',             desc: 'Shoulder & backpack, air vented' },
+              { icon: '🔌', item: 'AC Power Adapter',      desc: 'Standard household charger' },
+              { icon: '🚗', item: 'Car Charger',           desc: 'DC adapter for vehicle use' },
+              { icon: '👃', item: 'Nasal Cannula',         desc: 'For oxygen delivery' },
+              { icon: '🔧', item: '2 Spare Filters',       desc: 'Replacement air filters' },
+              { icon: '📋', item: 'Warranty Card',         desc: '2-yr warranty by Sachdeva Medline' },
             ].map((b, i) => (
               <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '16px', background: '#fff', borderRadius: 10, border: '1.5px solid #E5E7EB' }}>
                 <span style={{ fontSize: 22, flexShrink: 0 }}>{b.icon}</span>
@@ -704,23 +700,12 @@ export default function Jay1000PClient() {
       </div>
 
       {/* ──── MOBILE STICKY CTA ──── */}
-      <div
-        className="mob-cta"
-        style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: '2px solid #E5E7EB', padding: '10px 12px', zIndex: 500, boxShadow: '0 -4px 16px rgba(0,0,0,0.08)', display: 'none' }}
-      >
+      <div className="mob-cta" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: '2px solid #E5E7EB', padding: '10px 12px', zIndex: 500, boxShadow: '0 -4px 16px rgba(0,0,0,0.08)', display: 'none' }}>
         <div style={{ display: 'flex', gap: 8, maxWidth: 600, margin: '0 auto' }}>
-          <button
-            onClick={doAdd}
-            disabled={adding}
-            style={{ flex: '0 0 auto', padding: '13px 14px', background: '#fff', color: DARK, border: `2px solid ${ACC}`, borderRadius: 10, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}
-          >
+          <button onClick={doAdd} disabled={adding} style={{ flex: '0 0 auto', padding: '13px 14px', background: '#fff', color: DARK, border: `2px solid ${ACC}`, borderRadius: 10, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}>
             {adding ? '✓ ADDED' : 'ADD TO CART'}
           </button>
-          <button
-            onClick={doBuy}
-            disabled={buying}
-            style={{ flex: 1, background: DARK, color: '#fff', padding: '13px 12px', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(15,17,23,0.25)', minWidth: 0 }}
-          >
+          <button onClick={doBuy} disabled={buying} style={{ flex: 1, background: DARK, color: '#fff', padding: '13px 12px', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(15,17,23,0.25)', minWidth: 0 }}>
             <Zap style={{ width: 13, height: 13, flexShrink: 0 }} />
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {buying ? 'PROCESSING...' : `BUY NOW — ₹${PRICE.toLocaleString('en-IN')}`}
@@ -738,10 +723,10 @@ export default function Jay1000PClient() {
           .more-grid        { grid-template-columns: 1fr 1fr !important; }
           .warranty-grid    { grid-template-columns: 1fr !important; }
           .spec-table-grid  { grid-template-columns: 1fr !important; }
+          .stats-row1, .stats-row2 { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 768px) {
           .mob-cta           { display: block !important; }
-          .stats-grid        { grid-template-columns: repeat(2, 1fr) !important; }
           .benefits-grid     { grid-template-columns: 1fr 1fr !important; }
           .box-grid          { grid-template-columns: repeat(2, 1fr) !important; }
           .trust-grid        { grid-template-columns: 1fr 1fr !important; }
@@ -755,6 +740,7 @@ export default function Jay1000PClient() {
           .box-grid       { grid-template-columns: 1fr !important; }
           .trust-grid     { grid-template-columns: 1fr !important; }
           .spec-hero      { grid-template-columns: 1fr 1fr !important; }
+          .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
