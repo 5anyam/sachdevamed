@@ -99,7 +99,7 @@ function VideoThumb({ id, title, dark, onPlay }: { id: string; title: string; da
       onClick={onPlay}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ display: 'block', width: '100%', position: 'relative', paddingBottom: '56.25%', borderRadius: 12, overflow: 'hidden', border: dark ? '1.5px solid rgba(255,255,255,0.12)' : '1.5px solid #E5E7EB', background: dark ? '#1a1f2e' : '#1a1f2e', cursor: 'pointer', padding: 0 }}
+      style={{ display: 'block', width: '100%', position: 'relative', paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: '56.25%', borderRadius: 12, overflow: 'hidden', border: dark ? '1.5px solid rgba(255,255,255,0.12)' : '1.5px solid #E5E7EB', background: '#1a1f2e', cursor: 'pointer' }}
       aria-label={`Play ${title}`}
     >
       <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
