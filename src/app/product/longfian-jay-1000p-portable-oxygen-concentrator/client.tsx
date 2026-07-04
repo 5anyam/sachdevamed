@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -128,13 +128,6 @@ export default function Jay1000PClient() {
   const [adding, setAdding] = useState(false);
   const [buying, setBuying] = useState(false);
   const reviewsRef = useRef<HTMLDivElement>(null);
-  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setActiveVideo(null); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
 
   const cartItem = {
     id: PID, name: PNAME,
@@ -150,38 +143,10 @@ export default function Jay1000PClient() {
   };
   const doBuy = () => { setBuying(true); addToCart(cartItem); router.push('/checkout'); };
 
-  const play = (id: string, title: string) => setActiveVideo({ id, title });
+  const play = (id: string) => window.open(`https://drive.google.com/file/d/${id}/view`, '_blank');
 
   return (
     <div style={{ minHeight: '100vh', background: BG, overflowX: 'hidden', maxWidth: '100vw' }}>
-
-      {/* ──── VIDEO MODAL ──── */}
-      {activeVideo && (
-        <div
-          onClick={() => setActiveVideo(null)}
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.92)', zIndex: 9000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
-        >
-          <div
-            onClick={e => e.stopPropagation()}
-            style={{ position: 'relative', width: '100%', maxWidth: 1100, aspectRatio: '16/9' }}
-          >
-            <iframe
-              src={`https://drive.google.com/file/d/${activeVideo.id}/preview`}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', borderRadius: 10 }}
-              allow="autoplay; fullscreen; encrypted-media"
-              allowFullScreen
-              title={activeVideo.title}
-            />
-            <button
-              onClick={() => setActiveVideo(null)}
-              style={{ position: 'absolute', top: -44, right: 0, width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.12)', border: '1.5px solid rgba(255,255,255,0.3)', color: '#fff', fontSize: 18, lineHeight: 1, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              aria-label="Close video"
-            >
-              ✕
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* ──── BREADCRUMB ──── */}
       <div style={{ borderBottom: '1px solid #E5E7EB', background: '#fff' }}>
@@ -463,7 +428,7 @@ export default function Jay1000PClient() {
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, marginBottom: 32, maxWidth: 520 }}>
             The complete product video — design, features, and how the JAY-1000P fits seamlessly into daily life for travel, COPD therapy, and more.
           </p>
-          <VideoThumb id="15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj" title="JAY-1000P Product Video HD" dark onPlay={() => play('15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj', 'JAY-1000P Product Video HD')} />
+          <VideoThumb id="15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj" title="JAY-1000P Product Video HD" dark onPlay={() => play('15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj')} />
         </div>
       </section>
 
@@ -562,7 +527,7 @@ export default function Jay1000PClient() {
           <p style={{ fontSize: 14, color: GREY, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>
             Longfian demonstrated the JAY-1000P at MEDICA 2025 — the world&apos;s largest medical trade fair. Watch the live FDA and FAA certified demonstration with international healthcare professionals.
           </p>
-          <VideoThumb id="1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N" title="MEDICA 2025 — FDA & FAA Approved Demo" onPlay={() => play('1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N', 'MEDICA 2025 — FDA & FAA Approved Demo')} />
+          <VideoThumb id="1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N" title="MEDICA 2025 — FDA & FAA Approved Demo" onPlay={() => play('1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N')} />
         </div>
       </section>
 
@@ -579,14 +544,14 @@ export default function Jay1000PClient() {
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 16, lineHeight: 1.65 }}>
                 See how the JAY-1000P synchronises oxygen delivery to your breathing — oxygen only on inhalation, zero waste, maximum efficiency.
               </p>
-              <VideoThumb id="19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV" title="Pulse Mode Demonstration" dark onPlay={() => play('19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV', 'Pulse Mode Demonstration')} />
+              <VideoThumb id="19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV" title="Pulse Mode Demonstration" dark onPlay={() => play('19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV')} />
             </div>
             <div>
               <h3 style={{ fontSize: 'clamp(15px,2vw,20px)', fontWeight: 800, color: '#fff', marginBottom: 10, lineHeight: 1.3 }}>Filter Replacement Guide</h3>
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 16, lineHeight: 1.65 }}>
                 Easy DIY maintenance at home — replace the air filter yourself in under 2 minutes. No technician needed, no tools required.
               </p>
-              <VideoThumb id="1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL" title="Filter Replacement Guide" dark onPlay={() => play('1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL', 'Filter Replacement Guide')} />
+              <VideoThumb id="1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL" title="Filter Replacement Guide" dark onPlay={() => play('1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL')} />
             </div>
           </div>
         </div>
@@ -690,7 +655,7 @@ export default function Jay1000PClient() {
             {MORE_VIDEOS.map((v, i) => (
               <div key={i}>
                 <h3 style={{ fontSize: 13, fontWeight: 700, color: DARK, marginBottom: 10, lineHeight: 1.4 }}>{v.title}</h3>
-                <VideoThumb id={v.id} title={v.title} onPlay={() => play(v.id, v.title)} />
+                <VideoThumb id={v.id} title={v.title} onPlay={() => play(v.id)} />
               </div>
             ))}
           </div>
