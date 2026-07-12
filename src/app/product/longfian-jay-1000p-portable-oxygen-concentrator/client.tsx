@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -30,19 +30,18 @@ const GALLERY = [
   'https://drive.google.com/thumbnail?id=17wYaPDQbETH7AFSaZUxe_lR-HUYSdIPz&sz=w2000',
   'https://drive.google.com/thumbnail?id=1werhzIak53KRDx7bLagADW-IAFIgVaQ1&sz=w2000',
 ];
-const CREATIVE_1 = 'https://drive.google.com/thumbnail?id=1pqGeZ8S5x7jKljkdL4387r0hqV9_u9cG&sz=w2000';
 const CREATIVE_2 = 'https://drive.google.com/thumbnail?id=1Ko3sVyiDCrpeqBlaXgzsAAOVww1YZfTC&sz=w2000';
 
 const MORE_VIDEOS = [
   { id: '1w-PUSdr2Sh8v6HkcsH800y1tNmC4fBwr', title: 'Longfian Manufacturing Facility' },
   { id: '1xxsGDkQqq2bPZ8ToXjGDcuGwwEdhTM8-', title: 'Production Line Tour' },
-  { id: '1O3R2ywXX-LyZf3Wv-akB_1druXA3j-tJ', title: 'JAY-1000P in Action' },
+  { id: '1O3R2ywXX-LyZf3Wv-akB_1druXA3j-tJ', title: 'Longfian JAY-1000P in Action' },
   { id: '13ywqxTXsAkkDtDM1CT1eLchspSfpel89', title: 'Product Showcase' },
   { id: '1hLbQBO8PV8AfX9CdRHyb7kYok1AoPPdF', title: 'Device Overview' },
   { id: '1jWb-4XvHfzsCSDmhJ7D_op54v-KPd4-v', title: 'Usage Demonstration' },
-  { id: '11jv5KOMBLB0QR077pPHOJzK9ZCzG9GxS', title: 'Product in Action' },
+  { id: '11jv5KOMBLB0QR077pPHOJzK9ZCzG9GxS', title: 'Longfian JAY-1000P in Action' },
   { id: '1GEW--Dc2G_98oxHJbQbkTe6posEk0VgO', title: 'Feature Highlight' },
-  { id: '1ZlfHxf-QVVRQp5E1cFg7EoqKNlxEAc6B', title: 'JAY-1000P Overview' },
+  { id: '1ZlfHxf-QVVRQp5E1cFg7EoqKNlxEAc6B', title: 'Longfian JAY-1000P Overview' },
 ];
 
 /* ─── primitives ─────────────────────────────────────────────── */
@@ -88,6 +87,23 @@ function H2({ children, light }: { children: React.ReactNode; light?: boolean })
     <h2 style={{ fontSize: 'clamp(26px,4vw,46px)', fontWeight: 900, letterSpacing: '-0.02em', color: light ? '#fff' : DARK, lineHeight: 1.08, marginBottom: 24 }}>
       {children}
     </h2>
+  );
+}
+
+function BenefitCard({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [lit, setLit] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setLit(true); }, { threshold: 0.25 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} style={{ padding: 'clamp(14px,2vw,20px)', background: lit ? '#fff' : BG, borderRadius: 12, border: `1.5px solid ${lit ? '#CBD5E0' : '#E5E7EB'}`, boxShadow: lit ? '0 4px 20px rgba(0,0,0,0.07)' : 'none', transition: 'background 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease' }}>
+      {children}
+    </div>
   );
 }
 
@@ -148,6 +164,13 @@ export default function Jay1000PClient() {
   return (
     <div style={{ minHeight: '100vh', background: BG, overflowX: 'hidden', maxWidth: '100vw' }}>
 
+      {/* ──── EXCLUSIVE IMPORTER BAR ──── */}
+      <div style={{ background: ACC, padding: '9px 0', textAlign: 'center' }}>
+        <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.85)', letterSpacing: '0.06em' }}>
+          Sachdeva Medline is the exclusive importer and partner for Longfian oxygen concentrators in India
+        </p>
+      </div>
+
       {/* ──── BREADCRUMB ──── */}
       <div style={{ borderBottom: '1px solid #E5E7EB', background: '#fff' }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `10px ${PAD}` }}>
@@ -156,7 +179,7 @@ export default function Jay1000PClient() {
             <ChevronRight style={{ width: 12, height: 12 }} />
             <Link href="/shop" style={{ color: 'inherit', textDecoration: 'none' }}>Products</Link>
             <ChevronRight style={{ width: 12, height: 12 }} />
-            <span style={{ color: DARK }}>JAY-1000P</span>
+            <span style={{ color: DARK }}>Longfian JAY-1000P</span>
           </nav>
         </div>
       </div>
@@ -175,11 +198,10 @@ export default function Jay1000PClient() {
             {/* badges */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
               {[
-                { label: 'Portable Oxygen Concentrator', dark: false },
-                { label: 'Flight Safe · FAA Approved',   dark: true  },
-                { label: `${DISC}% OFF`,                 red:  true  },
-              ].map((b: { label: string; dark?: boolean; red?: boolean }, i) => (
-                <span key={i} style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: b.red ? '#E8175D' : b.dark ? ACC : '#F3F4F6', color: (b.red || b.dark) ? '#fff' : GREY, border: (!b.red && !b.dark) ? `1.5px solid #E5E7EB` : 'none' }}>
+                { label: 'Longfian Portable Oxygen Concentrator', dark: false },
+                { label: 'Flight Safe · FAA Approved',             dark: true  },
+              ].map((b: { label: string; dark?: boolean }, i) => (
+                <span key={i} style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: b.dark ? ACC : '#F3F4F6', color: b.dark ? '#fff' : GREY, border: !b.dark ? `1.5px solid #E5E7EB` : 'none' }}>
                   {b.label}
                 </span>
               ))}
@@ -200,37 +222,32 @@ export default function Jay1000PClient() {
               </span>
             </button>
 
-            {/* ── KEY HIGHLIGHTS BOX — #4 ── */}
+            {/* ── KEY HIGHLIGHTS BOX ── */}
             <div style={{ marginBottom: 4, border: '2.5px solid #2D3748', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 16px rgba(15,17,23,0.10)' }}>
-              {/* 4 points */}
               <div style={{ background: '#EAECF0', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 0 }}>
                 {[
-                  { icon: '✈️', title: 'FAA Approved',                     sub: 'Can be taken on any flight' },
-                  { icon: '🔋', title: '2 Batteries Included in the Box',  sub: null },
-                  { icon: '⏱',  title: 'Upto 10 Hours Total Battery Backup Time*', sub: null },
-                  { icon: '⚖️', title: '1.98 Kg',                         sub: 'Ultra Light Weight' },
+                  { icon: '✈️', title: 'FAA Approved',                    sub: 'Can be taken on any flight' },
+                  { icon: '⚖️', title: '1.98 Kg',                        sub: 'Ultra Light Weight' },
+                  { icon: '🔋', title: '2 Batteries Included in the Box', sub: null },
                 ].map((h, i, arr) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '11px 2px', borderBottom: i < arr.length - 1 ? '1px solid rgba(45,55,72,0.12)' : 'none' }}>
                     <span style={{ fontSize: 18, flexShrink: 0, width: 26, textAlign: 'center', marginTop: 1 }}>{h.icon}</span>
                     <div>
-                      <p style={{ fontSize: 13, fontWeight: 700, color: DARK, lineHeight: 1.25 }}>{h.title}</p>
-                      {h.sub && <p style={{ fontSize: 11, color: GREY, lineHeight: 1.4, marginTop: 2 }}>{h.sub}</p>}
+                      <p style={{ fontSize: 14, fontWeight: 700, color: DARK, lineHeight: 1.25 }}>{h.title}</p>
+                      {h.sub && <p style={{ fontSize: 12, color: GREY, lineHeight: 1.4, marginTop: 2 }}>{h.sub}</p>}
                     </div>
                   </div>
                 ))}
               </div>
-
-              {/* disclaimer footer */}
               <div style={{ background: '#D1D5DB', padding: '10px 14px', borderTop: '1.5px solid rgba(45,55,72,0.15)' }}>
                 {[
-                  '*Battery backup time varies as per the flow setting',
                   '*CE, ISO, FDA, CDSCO and FAA approved — permitted on all commercial flights worldwide',
                   '*Pulse dose model with settings from 1 to 5 as per patient\'s requirement',
                   '*93% ± 3% oxygen concentration at all flow settings',
                   '*Only 1.98 kg — lighter than most laptops, fits in the air-vented carry bag',
-                  '*Comes with car charger, 2 spare filters, all standard accessories and 2 rechargeable batteries — up to 10 hours of total battery backup time',
+                  '*Comes with car charger, 2 spare filters, all standard accessories and 2 rechargeable batteries',
                 ].map((line, i) => (
-                  <p key={i} style={{ fontSize: 10, color: '#4B5563', lineHeight: 1.6, marginBottom: i < 5 ? 2 : 0 }}>{line}</p>
+                  <p key={i} style={{ fontSize: 11, color: '#374151', lineHeight: 1.65, marginBottom: i < 4 ? 2 : 0 }}>{line}</p>
                 ))}
               </div>
             </div>
@@ -242,12 +259,18 @@ export default function Jay1000PClient() {
 
             {/* price */}
             <div style={{ marginBottom: 24, paddingBottom: 24, borderBottom: '2px solid #E5E7EB' }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 4 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 6 }}>
                 <span style={{ fontSize: 44, fontWeight: 900, color: DARK, letterSpacing: '-0.02em' }}>₹{PRICE.toLocaleString('en-IN')}</span>
                 <span style={{ fontSize: 16, color: 'rgba(15,17,23,0.35)', textDecoration: 'line-through' }}>₹{MRP.toLocaleString('en-IN')}</span>
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 10px', borderRadius: 4, background: DARK, color: '#fff' }}>
+                  {DISC}% OFF
+                </span>
               </div>
+              <span style={{ display: 'inline-block', fontSize: 11, fontWeight: 700, color: ACC, background: 'rgba(45,55,72,0.08)', border: `1.5px solid ${ACC}`, borderRadius: 5, padding: '4px 10px', marginBottom: 6, letterSpacing: '0.04em' }}>
+                With Double Batteries
+              </span>
               <p style={{ fontSize: 11, color: GREY, fontWeight: 500, letterSpacing: '0.04em' }}>
-                Incl. of all taxes &nbsp;·&nbsp; MRP ₹{MRP.toLocaleString('en-IN')} &nbsp;·&nbsp; Save ₹{(MRP - PRICE).toLocaleString('en-IN')} ({DISC}%)
+                Incl. of all taxes &nbsp;·&nbsp; MRP ₹{MRP.toLocaleString('en-IN')} &nbsp;·&nbsp; Save ₹{(MRP - PRICE).toLocaleString('en-IN')}
               </p>
             </div>
 
@@ -267,8 +290,8 @@ export default function Jay1000PClient() {
               {[
                 { icon: Truck,       title: 'Free Delivery',     sub: 'All over India' },
                 { icon: Package,     title: 'Delivery Time',     sub: '3–5 business days' },
-                { icon: RotateCcw,   title: 'Easy Returns',      sub: '7-day return policy' },
-                { icon: ShieldCheck, title: '2-Year Warranty',   sub: '1 yr on batteries & sieve beds' },
+                { icon: RotateCcw,   title: 'Easy Returns',      sub: '7 Days Return Policy' },
+                { icon: ShieldCheck, title: '2-Year Warranty',   sub: '(1 Year on Batteries and Sieve Beds)' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
                   <item.icon style={{ width: 14, height: 14, color: ACC, flexShrink: 0, marginTop: 2 }} />
@@ -312,6 +335,12 @@ export default function Jay1000PClient() {
               </div>
             ))}
           </div>
+          {/* row 3: service centres */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center', padding: 'clamp(16px,3vw,24px)' }}>
+            <p style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 6 }}>15+</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 3 }}>Service Centres All Over India</p>
+            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>Pan-India support by Sachdeva Medline</p>
+          </div>
         </div>
       </section>
 
@@ -323,108 +352,118 @@ export default function Jay1000PClient() {
             {/* #8: Longfian added */}
             <H2>WHY CHOOSE THE LONGFIAN JAY-1000P?</H2>
           </div>
-          <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+          <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
 
-            {/* #10 — card 1: Longfian brand */}
-            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-              <div style={{ marginBottom: 14 }}>
-                <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: DARK, color: '#fff', padding: '6px 14px', borderRadius: 6, fontSize: 13, fontWeight: 900, letterSpacing: '0.06em', marginBottom: 12 }}>
-                  LONGFIAN
+            <BenefitCard>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: DARK, color: '#fff', padding: '5px 12px', borderRadius: 5, fontSize: 12, fontWeight: 900, letterSpacing: '0.08em', marginBottom: 12 }}>LONGFIAN</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Over 25 Years of Experience</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Longfian is the world&apos;s biggest manufacturer for oxygen concentrators with decades of experience.</p>
+            </BenefitCard>
+
+            <BenefitCard>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>✈️</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Fly Anywhere</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>FAA (flight) approved for all commercial airlines worldwide.</p>
+            </BenefitCard>
+
+            <BenefitCard>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>⚖️</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 4 }}>Only 1.98 Kg</h3>
+              <p style={{ fontSize: 12, fontWeight: 600, color: ACC, marginBottom: 6 }}>Ultra Light Weight</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with shoulder carry bag for ease in carrying during travel.</p>
+            </BenefitCard>
+
+            <BenefitCard>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>🔋</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Upto 10 Hours Battery Backup</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with 2 lithium ion rechargeable batteries.</p>
+              <p style={{ fontSize: 11, color: GREY, lineHeight: 1.5, marginTop: 6, fontStyle: 'italic' }}>(Battery backup time varies as per flow setting)</p>
+            </BenefitCard>
+
+            <BenefitCard>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>💧</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>93% ± 3% Oxygen Purity</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Advanced PSA Molecular sieve technology for above 93% oxygen concentration in every breath, every time.</p>
+            </BenefitCard>
+
+            <BenefitCard>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>🔇</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Whisper Quiet</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>At under 48 dB — quieter than a normal conversation / library.</p>
+            </BenefitCard>
+
+            <BenefitCard>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>📊</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Smart LCD Display</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Shows real-time battery level, flow setting and running hours. Large tactile buttons — no complicated menus.</p>
+            </BenefitCard>
+
+            <BenefitCard>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>🏅</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Globally Certified</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>CE, ISO, CDSCO, US FDA and FAA approvals — trusted by healthcare professionals worldwide.</p>
+            </BenefitCard>
+
+            <BenefitCard>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>🔔</div>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Safety Alarms</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Audio and visual alarms for low battery, low oxygen concentration, high / low pressure and other issues.</p>
+            </BenefitCard>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ──── BATTERY BACKUP TABLE ──── */}
+      <section style={{ background: DARK, padding: `${VPAD} 0` }}>
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: `0 ${PAD}` }}>
+          <div style={{ textAlign: 'center', marginBottom: 40 }}>
+            <Label text="Battery Performance" />
+            <H2 light>BATTERY BACKUP TIME</H2>
+            <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8 }}>
+              Backup time varies as per the pulse flow setting. Double battery (2 batteries included in the box).
+            </p>
+          </div>
+          <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.12)' }}>
+            {/* header row */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', background: ACC }}>
+              {['Pulse Setting', 'Single Battery', 'Double Battery'].map((h, i) => (
+                <div key={i} style={{ padding: '13px 18px', textAlign: 'center' }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.9)' }}>{h}</span>
+                </div>
+              ))}
+            </div>
+            {[
+              ['1', '5 h 00 min', '10 h 00 min'],
+              ['2', '3 h 50 min', '7 h 40 min'],
+              ['3', '3 h 00 min', '6 h 00 min'],
+              ['4', '2 h 00 min', '4 h 00 min'],
+              ['5', '1 h 40 min', '3 h 20 min'],
+            ].map(([setting, single, double_], i) => (
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', background: i % 2 === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+                <div style={{ padding: '14px 18px', textAlign: 'center' }}>
+                  <span style={{ fontSize: 15, fontWeight: 900, color: '#fff' }}>{setting}</span>
+                </div>
+                <div style={{ padding: '14px 18px', textAlign: 'center', borderLeft: '1px solid rgba(255,255,255,0.07)' }}>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>{single}</span>
+                </div>
+                <div style={{ padding: '14px 18px', textAlign: 'center', borderLeft: '1px solid rgba(255,255,255,0.07)' }}>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>{double_}</span>
                 </div>
               </div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Over 25 Years of Experience</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
-                Longfian is the world&apos;s biggest manufacturer for oxygen concentrators with decades of experience.
-              </p>
-            </div>
-
-            {/* #11 — card 2: FAA */}
-            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-              <div style={{ fontSize: 32, marginBottom: 14 }}>✈️</div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Fly Anywhere</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
-                FAA (flight) approved for all commercial airlines worldwide.
-              </p>
-            </div>
-
-            {/* #12 — card 3: weight */}
-            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-              <div style={{ fontSize: 32, marginBottom: 14 }}>⚖️</div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 4 }}>Only 1.98 Kg</h3>
-              <p style={{ fontSize: 13, fontWeight: 600, color: ACC, marginBottom: 8 }}>Ultra Light Weight</p>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
-                Comes with shoulder carry bag for ease in carrying during travel.
-              </p>
-            </div>
-
-            {/* #12 — card 4: battery */}
-            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-              <div style={{ fontSize: 32, marginBottom: 14 }}>🔋</div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Upto 10 Hours of Battery Backup Time</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
-                Comes with 2 lithium ion rechargeable batteries.<br />
-                Battery backup time varies as per flow setting.
-              </p>
-            </div>
-
-            {/* #12 — card 5: oxygen purity */}
-            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-              <div style={{ fontSize: 32, marginBottom: 14 }}>💧</div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>93% ± 3% Oxygen Purity</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
-                Advanced PSA Molecular sieve technology for above 93% oxygen concentration in every breath, every time.
-              </p>
-            </div>
-
-            {/* #12 — card 6: quiet + LCD (combined) */}
-            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-              <div style={{ fontSize: 32, marginBottom: 14 }}>🔇</div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Whisper Quiet</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7, marginBottom: 14 }}>
-                At under 48 dB — quieter than a normal conversation / library.
-              </p>
-              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Smart LCD Display</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
-                Shows real-time battery level, flow setting and running hours. Large tactile buttons — no complicated menus.
-              </p>
-            </div>
-
-            {/* #12 — card 7: globally certified */}
-            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-              <div style={{ fontSize: 32, marginBottom: 14 }}>🏅</div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Globally Certified</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
-                CE, ISO, CDSCO, US FDA and FAA approvals — trusted by healthcare professionals worldwide.
-              </p>
-            </div>
-
-            {/* #13 — card 8: safety alarms */}
-            <div style={{ padding: 'clamp(16px,2.5vw,24px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-              <div style={{ fontSize: 32, marginBottom: 14 }}>🔔</div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: DARK, marginBottom: 8 }}>Safety Alarms</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>
-                Audio and visual alarms for low battery, low oxygen concentration, high / low pressure and for other issues.
-              </p>
-            </div>
-
+            ))}
           </div>
+          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 14, lineHeight: 1.6 }}>
+            *Values are approximate and may vary based on usage pattern and battery age.
+          </p>
         </div>
       </section>
 
-      {/* ──── CREATIVE IMAGE 1 ──── */}
-      <section style={{ background: '#fff', padding: `${VPAD} 0` }}>
-        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ maxWidth: 860, margin: '0 auto' }}>
-            <Image src={CREATIVE_1} alt="Longfian JAY-1000P — Portable Oxygen Concentrator" width={1200} height={1200} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16 }} sizes="(max-width:768px) 100vw, 860px" />
-          </div>
-        </div>
-      </section>
-
-      {/* ──── VIDEO 1: PRODUCT OVERVIEW — #14 fix ──── */}
+      {/* ──── VIDEO 1: PRODUCT OVERVIEW ──── */}
       <section style={{ background: '#111827', padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: 960, margin: '0 auto', padding: `0 ${PAD}` }}>
           <Label text="Product Overview" />
-          <H2 light>JAY-1000P — See It In Action</H2>
+          <H2 light>Longfian JAY-1000P — See It In Action</H2>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, marginBottom: 32, maxWidth: 520 }}>
             The complete product video — design, features, and how the JAY-1000P fits seamlessly into daily life for travel, COPD therapy, and more.
           </p>
@@ -496,7 +535,7 @@ export default function Jay1000PClient() {
               </div>
               {[
                 ['Certifications',    'CE · ISO · FDA · CDSCO · FAA'],
-                ['Warranty',          '2 Yrs (1 yr batteries & sieve beds)'],
+                ['Warranty',          '2 Years (1 Year on Batteries and Sieve Beds)'],
                 ['Manufacturer',      'Longfian Scitech Co., Ltd, China'],
                 ['India Partner',     'Sachdeva Medline — Exclusive Importer'],
               ].map(([lbl, val], i) => (
@@ -573,9 +612,7 @@ export default function Jay1000PClient() {
               { cert: 'FAA',   name: 'Flight Approved',     desc: 'Meets FAA standards for Portable Oxygen Concentrators — permitted on all commercial flights.' },
             ].map((c, i) => (
               <div key={i} style={{ textAlign: 'center', padding: 'clamp(16px,2vw,24px) clamp(12px,1.5vw,16px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: ACC, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
-                  <span style={{ fontSize: 12, fontWeight: 900, color: '#fff', letterSpacing: '0.02em' }}>{c.cert}</span>
-                </div>
+                <div style={{ display: 'inline-block', background: ACC, color: '#fff', fontSize: 11, fontWeight: 900, letterSpacing: '0.12em', padding: '5px 14px', borderRadius: 6, marginBottom: 12 }}>{c.cert}</div>
                 <p style={{ fontSize: 13, fontWeight: 800, color: DARK, marginBottom: 6 }}>{c.name}</p>
                 <p style={{ fontSize: 11, color: GREY, lineHeight: 1.65 }}>{c.desc}</p>
               </div>
@@ -630,7 +667,7 @@ export default function Jay1000PClient() {
               { icon: '🚗', item: 'Car Charger',           desc: 'DC adapter for vehicle use' },
               { icon: '👃', item: 'Nasal Cannula',         desc: 'For oxygen delivery' },
               { icon: '🔧', item: '2 Spare Filters',       desc: 'Replacement air filters' },
-              { icon: '📋', item: 'Warranty Card',         desc: '2-yr warranty by Sachdeva Medline' },
+              { icon: '📋', item: 'Warranty Card',         desc: '2-Year Warranty by Sachdeva Medline' },
             ].map((b, i) => (
               <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '16px', background: '#fff', borderRadius: 10, border: '1.5px solid #E5E7EB' }}>
                 <span style={{ fontSize: 22, flexShrink: 0 }}>{b.icon}</span>
