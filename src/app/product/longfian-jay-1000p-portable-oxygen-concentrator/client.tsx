@@ -30,7 +30,6 @@ const GALLERY = [
   'https://drive.google.com/thumbnail?id=17wYaPDQbETH7AFSaZUxe_lR-HUYSdIPz&sz=w2000',
   'https://drive.google.com/thumbnail?id=1werhzIak53KRDx7bLagADW-IAFIgVaQ1&sz=w2000',
 ];
-const CREATIVE_2 = 'https://drive.google.com/thumbnail?id=1Ko3sVyiDCrpeqBlaXgzsAAOVww1YZfTC&sz=w2000';
 
 const MORE_VIDEOS = [
   { id: '1w-PUSdr2Sh8v6HkcsH800y1tNmC4fBwr', title: 'Longfian Manufacturing Facility' },
@@ -549,11 +548,22 @@ export default function Jay1000PClient() {
         </div>
       </section>
 
-      {/* ──── CREATIVE IMAGE 2 ──── */}
-      <section style={{ background: BG, padding: `${VPAD} 0` }}>
-        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ maxWidth: 860, margin: '0 auto' }}>
-            <Image src={CREATIVE_2} alt="Fly With Confidence — JAY-1000P FDA FAA Approved for flights" width={1200} height={1200} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 16 }} sizes="(max-width:768px) 100vw, 860px" />
+      {/* ──── YOUTUBE VIDEO ──── */}
+      <section style={{ background: DARK, padding: `${VPAD} 0` }}>
+        <div style={{ maxWidth: 960, margin: '0 auto', padding: `0 ${PAD}` }}>
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
+            <Label text="Official Product Video" />
+            <H2 light>Longfian JAY-1000P — Watch It Here</H2>
+          </div>
+          <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.4)' }}>
+            <iframe
+              src="https://www.youtube.com/embed/aC2HtnMiPw0"
+              title="Longfian JAY-1000P — Official Product Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+              loading="lazy"
+            />
           </div>
         </div>
       </section>
