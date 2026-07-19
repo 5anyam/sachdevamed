@@ -31,17 +31,6 @@ const GALLERY = [
   'https://drive.google.com/thumbnail?id=1werhzIak53KRDx7bLagADW-IAFIgVaQ1&sz=w2000',
 ];
 
-const MORE_VIDEOS = [
-  { id: '1w-PUSdr2Sh8v6HkcsH800y1tNmC4fBwr', title: 'Longfian Manufacturing Facility' },
-  { id: '1xxsGDkQqq2bPZ8ToXjGDcuGwwEdhTM8-', title: 'Production Line Tour' },
-  { id: '1O3R2ywXX-LyZf3Wv-akB_1druXA3j-tJ', title: 'Longfian JAY-1000P in Action' },
-  { id: '13ywqxTXsAkkDtDM1CT1eLchspSfpel89', title: 'Product Showcase' },
-  { id: '1hLbQBO8PV8AfX9CdRHyb7kYok1AoPPdF', title: 'Device Overview' },
-  { id: '1jWb-4XvHfzsCSDmhJ7D_op54v-KPd4-v', title: 'Usage Demonstration' },
-  { id: '11jv5KOMBLB0QR077pPHOJzK9ZCzG9GxS', title: 'Longfian JAY-1000P in Action' },
-  { id: '1GEW--Dc2G_98oxHJbQbkTe6posEk0VgO', title: 'Feature Highlight' },
-  { id: '1ZlfHxf-QVVRQp5E1cFg7EoqKNlxEAc6B', title: 'Longfian JAY-1000P Overview' },
-];
 
 /* ─── primitives ─────────────────────────────────────────────── */
 
@@ -106,30 +95,6 @@ function BenefitCard({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* clickable video thumbnail — opens modal on click */
-function VideoThumb({ title, dark, onPlay }: { id: string; title: string; dark?: boolean; onPlay: () => void }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <button
-      onClick={onPlay}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ display: 'block', width: '100%', position: 'relative', paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: '56.25%', borderRadius: 12, overflow: 'hidden', border: dark ? '1.5px solid rgba(255,255,255,0.12)' : '1.5px solid #E5E7EB', background: '#1a1f2e', cursor: 'pointer' }}
-      aria-label={`Play ${title}`}
-    >
-      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-        {/* play circle */}
-        <div style={{ width: 64, height: 64, borderRadius: '50%', background: hovered ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)', border: '2px solid rgba(255,255,255,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: hovered ? 'scale(1.12)' : 'scale(1)', transition: 'transform 0.18s ease, background 0.18s ease', backdropFilter: 'blur(4px)' }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 3 }}>
-            <polygon points="5,3 19,12 5,21" />
-          </svg>
-        </div>
-        {/* title */}
-        <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.7)', textAlign: 'center', padding: '0 16px', lineHeight: 1.4, letterSpacing: '0.02em' }}>{title}</p>
-      </div>
-    </button>
-  );
-}
 
 const W    = 1280;
 const PAD  = 'clamp(16px,4vw,32px)';
@@ -158,7 +123,6 @@ export default function Jay1000PClient() {
   };
   const doBuy = () => { setBuying(true); addToCart(cartItem); router.push('/checkout'); };
 
-  const play = (id: string) => window.open(`https://drive.google.com/file/d/${id}/view`, '_blank');
 
   return (
     <div style={{ minHeight: '100vh', background: BG, overflowX: 'hidden', maxWidth: '100vw' }}>
@@ -568,27 +532,11 @@ export default function Jay1000PClient() {
             </div>
           </div>
 
-          {/* Second YouTube + MEDICA pair */}
-          <div style={{ marginBottom: 32 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More Videos</p>
-            <div className="video-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-              <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 12, overflow: 'hidden' }}>
-                <iframe src="https://www.youtube.com/embed/ypFm6RjQBQ8" title="Longfian JAY-1000P Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} loading="lazy" />
-              </div>
-              <VideoThumb id="1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N" title="MEDICA 2025 — FDA & FAA Approved Demo" dark onPlay={() => play('1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N')} />
-            </div>
-          </div>
-
-          {/* Google Drive videos — 3 col */}
+          {/* Second YouTube — full width */}
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More</p>
-            <div className="more-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-              <VideoThumb id="15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj" title="JAY-1000P Product Overview" dark onPlay={() => play('15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj')} />
-              <VideoThumb id="19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV" title="Pulse Mode Demonstration" dark onPlay={() => play('19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV')} />
-              <VideoThumb id="1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL" title="Filter Replacement Guide" dark onPlay={() => play('1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL')} />
-              {MORE_VIDEOS.map((v) => (
-                <VideoThumb key={v.id} id={v.id} title={v.title} dark onPlay={() => play(v.id)} />
-              ))}
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More Videos</p>
+            <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
+              <iframe src="https://www.youtube.com/embed/ypFm6RjQBQ8" title="Longfian JAY-1000P Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} loading="lazy" />
             </div>
           </div>
         </div>
