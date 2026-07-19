@@ -458,18 +458,6 @@ export default function Jay1000PClient() {
         </div>
       </section>
 
-      {/* ──── VIDEO 1: PRODUCT OVERVIEW ──── */}
-      <section style={{ background: '#111827', padding: `${VPAD} 0` }}>
-        <div style={{ maxWidth: 960, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <Label text="Product Overview" />
-          <H2 light>Longfian JAY-1000P — See It In Action</H2>
-          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, marginBottom: 32, maxWidth: 520 }}>
-            The complete product video — design, features, and how the JAY-1000P fits seamlessly into daily life for travel, COPD therapy, and more.
-          </p>
-          <VideoThumb id="15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj" title="JAY-1000P Product Video HD" dark onPlay={() => play('15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj')} />
-        </div>
-      </section>
-
       {/* ──── SPECIFICATIONS ──── */}
       <section style={{ background: DARK, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
@@ -548,59 +536,59 @@ export default function Jay1000PClient() {
         </div>
       </section>
 
-      {/* ──── YOUTUBE VIDEO ──── */}
+      {/* ──── ALL VIDEOS ──── */}
       <section style={{ background: DARK, padding: `${VPAD} 0` }}>
-        <div style={{ maxWidth: 960, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ textAlign: 'center', marginBottom: 32 }}>
-            <Label text="Official Product Video" />
-            <H2 light>Longfian JAY-1000P — Watch It Here</H2>
-          </div>
-          <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.4)' }}>
-            <iframe
-              src="https://www.youtube.com/embed/aC2HtnMiPw0"
-              title="Longfian JAY-1000P — Official Product Video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ──── VIDEO 2: MEDICA 2025 ──── */}
-      <section style={{ background: '#fff', padding: `${VPAD} 0` }}>
-        <div style={{ maxWidth: 960, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <Label text="International Certification" />
-          <H2>MEDICA 2025 — FDA & FAA Certified Demo</H2>
-          <p style={{ fontSize: 14, color: GREY, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>
-            Longfian demonstrated the JAY-1000P at MEDICA 2025 — the world&apos;s largest medical trade fair. Watch the live FDA and FAA certified demonstration with international healthcare professionals.
-          </p>
-          <VideoThumb id="1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N" title="MEDICA 2025 — FDA & FAA Approved Demo" onPlay={() => play('1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N')} />
-        </div>
-      </section>
-
-      {/* ──── VIDEOS 3 & 4 ──── */}
-      <section style={{ background: '#111827', padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <Label text="How It Works" />
-            <H2 light>WATCH IT IN DETAIL</H2>
+            <Label text="Watch" />
+            <H2 light>LONGFIAN JAY-1000P — VIDEOS</H2>
           </div>
-          <div className="video-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
-            <div>
-              <h3 style={{ fontSize: 'clamp(15px,2vw,20px)', fontWeight: 800, color: '#fff', marginBottom: 10, lineHeight: 1.3 }}>Pulse Mode Demonstration</h3>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 16, lineHeight: 1.65 }}>
-                See how the JAY-1000P synchronises oxygen delivery to your breathing — oxygen only on inhalation, zero waste, maximum efficiency.
-              </p>
-              <VideoThumb id="19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV" title="Pulse Mode Demonstration" dark onPlay={() => play('19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV')} />
+
+          {/* Featured YouTube — full width */}
+          <div style={{ marginBottom: 32 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Official Product Video</p>
+            <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
+              <iframe src="https://www.youtube.com/embed/aC2HtnMiPw0" title="Longfian JAY-1000P — Official Product Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} loading="lazy" />
             </div>
-            <div>
-              <h3 style={{ fontSize: 'clamp(15px,2vw,20px)', fontWeight: 800, color: '#fff', marginBottom: 10, lineHeight: 1.3 }}>Filter Replacement Guide</h3>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 16, lineHeight: 1.65 }}>
-                Easy DIY maintenance at home — replace the air filter yourself in under 2 minutes. No technician needed, no tools required.
-              </p>
+          </div>
+
+          {/* YouTube Shorts — 3 col vertical */}
+          <div style={{ marginBottom: 32 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Shorts</p>
+            <div className="shorts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+              {[
+                { id: '4mh9lwAIf5A', title: 'JAY-1000P Short 1' },
+                { id: 'zxOz_Bylfek',  title: 'JAY-1000P Short 2' },
+                { id: 'FQ3b2cj9Vjw',  title: 'JAY-1000P Short 3' },
+              ].map((v) => (
+                <div key={v.id} style={{ position: 'relative', width: '100%', paddingBottom: '177.78%', borderRadius: 12, overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+                  <iframe src={`https://www.youtube.com/embed/${v.id}`} title={v.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} loading="lazy" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Second YouTube + MEDICA pair */}
+          <div style={{ marginBottom: 32 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More Videos</p>
+            <div className="video-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 12, overflow: 'hidden' }}>
+                <iframe src="https://www.youtube.com/embed/ypFm6RjQBQ8" title="Longfian JAY-1000P Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} loading="lazy" />
+              </div>
+              <VideoThumb id="1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N" title="MEDICA 2025 — FDA & FAA Approved Demo" dark onPlay={() => play('1qUxGfQL_dFZ145J1sUh-_DfmA45Oao0N')} />
+            </div>
+          </div>
+
+          {/* Google Drive videos — 3 col */}
+          <div>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More</p>
+            <div className="more-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+              <VideoThumb id="15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj" title="JAY-1000P Product Overview" dark onPlay={() => play('15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj')} />
+              <VideoThumb id="19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV" title="Pulse Mode Demonstration" dark onPlay={() => play('19Jpj6asBolaWH_fY5kDd7C5KyOBWCYGV')} />
               <VideoThumb id="1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL" title="Filter Replacement Guide" dark onPlay={() => play('1WRGiADRDTkPlGWGy_6_5KrGbdYWU-OrL')} />
+              {MORE_VIDEOS.map((v) => (
+                <VideoThumb key={v.id} id={v.id} title={v.title} dark onPlay={() => play(v.id)} />
+              ))}
             </div>
           </div>
         </div>
@@ -691,24 +679,6 @@ export default function Jay1000PClient() {
         </div>
       </section>
 
-      {/* ──── MORE VIDEOS ──── */}
-      <section style={{ background: '#fff', padding: `${VPAD} 0` }}>
-        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <Label text="More Content" />
-            <H2>MORE VIDEOS</H2>
-          </div>
-          <div className="more-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
-            {MORE_VIDEOS.map((v, i) => (
-              <div key={i}>
-                <h3 style={{ fontSize: 13, fontWeight: 700, color: DARK, marginBottom: 10, lineHeight: 1.4 }}>{v.title}</h3>
-                <VideoThumb id={v.id} title={v.title} onPlay={() => play(v.id)} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ──── REVIEWS ──── */}
       <div ref={reviewsRef} style={{ background: BG, padding: `${VPAD} 0`, scrollMarginTop: 96 }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
@@ -753,8 +723,9 @@ export default function Jay1000PClient() {
           .hero-wrap        { grid-template-columns: 1fr !important; }
           .hero-gallery     { position: relative !important; top: auto !important; }
           .cert-grid        { grid-template-columns: repeat(3, 1fr) !important; }
-          .video-pair       { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .video-pair       { grid-template-columns: 1fr !important; gap: 24px !important; }
           .more-grid        { grid-template-columns: 1fr 1fr !important; }
+          .shorts-grid      { grid-template-columns: repeat(3, 1fr) !important; }
           .warranty-grid    { grid-template-columns: 1fr !important; }
           .spec-table-grid  { grid-template-columns: 1fr !important; }
           .stats-row1, .stats-row2 { grid-template-columns: 1fr 1fr !important; }
@@ -764,7 +735,8 @@ export default function Jay1000PClient() {
           .benefits-grid     { grid-template-columns: 1fr 1fr !important; }
           .box-grid          { grid-template-columns: repeat(2, 1fr) !important; }
           .trust-grid        { grid-template-columns: 1fr 1fr !important; }
-          .more-grid         { grid-template-columns: 1fr !important; }
+          .more-grid         { grid-template-columns: 1fr 1fr !important; }
+          .shorts-grid       { grid-template-columns: repeat(3, 1fr) !important; }
           .highlights-grid   { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 480px) {
@@ -772,6 +744,8 @@ export default function Jay1000PClient() {
           .cert-grid      { grid-template-columns: repeat(2, 1fr) !important; }
           .box-grid       { grid-template-columns: 1fr !important; }
           .trust-grid     { grid-template-columns: 1fr !important; }
+          .more-grid      { grid-template-columns: 1fr !important; }
+          .shorts-grid    { grid-template-columns: repeat(3, 1fr) !important; }
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
         }
       `}</style>
