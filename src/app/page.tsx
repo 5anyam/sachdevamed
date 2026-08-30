@@ -218,7 +218,7 @@ function MarqueeBelt() {
 
 function TrustBar() {
   const items = [
-    { icon: BadgeCheck, label: 'Authorised Longfian Dealer' },
+    { icon: BadgeCheck, label: 'NO COD Option' },
     { icon: ShieldCheck, label: 'ISO Certified Products' },
     { icon: Truck, label: 'Free Pan-India Delivery' },
     { icon: Wrench, label: 'After-Sale Service' },

@@ -72,6 +72,10 @@ export default function Header() {
 
   return (
     <>
+      <style>{`
+        @media (max-width: 767px) { .hdr-desktop { display: none !important; } }
+        @media (min-width: 768px) { .hdr-mobile  { display: none !important; } }
+      `}</style>
       {/* ── DESKTOP HEADER ── */}
       <header style={{ borderBottom: `2px solid #E5E7EB`, background: '#ffffff', position: 'sticky', top: 0, zIndex: 500, boxShadow: '0 2px 12px rgba(45,55,72,0.06)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
@@ -89,9 +93,8 @@ export default function Header() {
               />
             </Link>
 
-            {/* Desktop Nav */}
-            {!isMobile && (
-              <nav style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {/* Desktop Nav — hidden on mobile via CSS (no hydration flash) */}
+            <nav className="hdr-desktop" style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 {navItems.map((item) => (
                   <div key={item.name} style={{ position: 'relative' }} ref={item.name === 'Products' ? shopMenuRef : undefined}>
                     {item.submenu ? (
@@ -161,14 +164,12 @@ export default function Header() {
                   </div>
                 ))}
               </nav>
-            )}
 
             {/* Right Actions */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
 
               {/* Desktop Search */}
-              {!isMobile && (
-                <form onSubmit={handleSearch} style={{ position: 'relative' }}>
+                <form className="hdr-desktop" onSubmit={handleSearch} style={{ position: 'relative' }}>
                   <div style={{ display: 'flex', alignItems: 'center', border: `1.5px solid #E5E7EB`, background: '#F8F9FA', padding: '7px 14px', gap: 8, width: 220, borderRadius: 8 }}>
                     <FiSearch style={{ color: '#555', flexShrink: 0 }} size={14} />
                     <input
@@ -180,11 +181,9 @@ export default function Header() {
                     />
                   </div>
                 </form>
-              )}
 
               {/* User (Desktop) */}
-              {!isMobile && (
-                <div style={{ position: 'relative' }} ref={userMenuRef}>
+                <div className="hdr-desktop" style={{ position: 'relative' }} ref={userMenuRef}>
                   {user ? (
                     <>
                       <button
@@ -230,7 +229,6 @@ export default function Header() {
                     </Link>
                   )}
                 </div>
-              )}
 
               {/* Cart */}
               <div style={{ borderLeft: `1px solid #E5E7EB`, paddingLeft: 12 }}>
@@ -238,26 +236,25 @@ export default function Header() {
               </div>
 
               {/* Mobile Search toggle */}
-              {isMobile && !showMobileSearch && (
-                <button onClick={() => setShowMobileSearch(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1A1A1A', padding: 6 }}>
+              {!showMobileSearch && (
+                <button className="hdr-mobile" onClick={() => setShowMobileSearch(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1A1A1A', padding: 6 }}>
                   <FiSearch size={20} />
                 </button>
               )}
 
               {/* Mobile Menu Toggle */}
-              {isMobile && (
                 <button
+                  className="hdr-mobile"
                   onClick={() => setMobileMenuOpen(true)}
                   style={{ background: GREEN, color: '#fff', border: 'none', borderRadius: 8, padding: '7px 9px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                   <FiMenu size={20} />
                 </button>
-              )}
             </div>
 
             {/* Mobile Search Overlay */}
-            {isMobile && showMobileSearch && (
-              <div style={{ position: 'absolute', inset: 0, background: '#fff', zIndex: 50, display: 'flex', alignItems: 'center', padding: '0 16px', borderBottom: `2px solid #E5E7EB` }}>
+            {showMobileSearch && (
+              <div className="hdr-mobile" style={{ position: 'absolute', inset: 0, background: '#fff', zIndex: 50, display: 'flex', alignItems: 'center', padding: '0 16px', borderBottom: `2px solid #E5E7EB` }}>
                 <form style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%' }} onSubmit={handleSearch}>
                   <FiSearch style={{ color: '#555' }} size={16} />
                   <input autoFocus type="text" placeholder="Search medical equipment..." value={search} onChange={(e) => setSearch(e.target.value)}

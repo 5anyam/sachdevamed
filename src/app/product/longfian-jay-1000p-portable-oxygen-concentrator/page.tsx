@@ -5,7 +5,7 @@ const TITLE = 'Longfian JAY-1000P Portable Oxygen Concentrator | FDA & FAA Appro
 const DESCRIPTION =
   'Buy Longfian JAY-1000P portable oxygen concentrator in India at ₹95,000. 1.98 kg, FDA cleared, FAA approved for flights, CDSCO registered. 93%±3% pure oxygen, upto 10-hour battery (2 batteries included). Exclusive importer — Sachdeva Medline. Free pan-India delivery. 2-year warranty.';
 const CANONICAL = 'https://sachdevamedline.com/product/longfian-jay-1000p-portable-oxygen-concentrator';
-const IMAGE = 'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w2000';
+const IMAGE = 'https://sachdevamedline.com/products/jay-1000p/main.jpg';
 const PRICE = '95000';
 
 export const metadata: Metadata = {
@@ -51,10 +51,10 @@ const jsonLd = {
   description:
     'FDA cleared, FAA approved, CDSCO registered portable oxygen concentrator. 1.98 kg, 93%±3% oxygen purity, up to 10 hours battery. CE and ISO certified.',
   image: [
-    'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w2000',
-    'https://drive.google.com/thumbnail?id=13InsWquc7HhRHUt2P9A0gVgpvviOUsP6&sz=w2000',
-    'https://drive.google.com/thumbnail?id=17wYaPDQbETH7AFSaZUxe_lR-HUYSdIPz&sz=w2000',
-    'https://drive.google.com/thumbnail?id=1werhzIak53KRDx7bLagADW-IAFIgVaQ1&sz=w2000',
+    'https://sachdevamedline.com/products/jay-1000p/main.jpg',
+    'https://sachdevamedline.com/products/jay-1000p/lightweight.jpg',
+    'https://sachdevamedline.com/products/jay-1000p/flights-travel.jpg',
+    'https://sachdevamedline.com/products/jay-1000p/features.jpg',
   ],
   url: CANONICAL,
   sku: 'SM-JAY1000P',

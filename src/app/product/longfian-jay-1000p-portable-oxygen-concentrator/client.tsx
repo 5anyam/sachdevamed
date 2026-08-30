@@ -25,10 +25,16 @@ const PNAME = 'Longfian JAY-1000P';
 const PSLUG = 'longfian-jay-1000p-portable-oxygen-concentrator';
 
 const GALLERY = [
-  'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w2000',
-  'https://drive.google.com/thumbnail?id=13InsWquc7HhRHUt2P9A0gVgpvviOUsP6&sz=w2000',
-  'https://drive.google.com/thumbnail?id=17wYaPDQbETH7AFSaZUxe_lR-HUYSdIPz&sz=w2000',
-  'https://drive.google.com/thumbnail?id=1werhzIak53KRDx7bLagADW-IAFIgVaQ1&sz=w2000',
+  '/products/jay-1000p/main.jpg',
+  '/products/jay-1000p/lightweight.jpg',
+  '/products/jay-1000p/flights-travel.jpg',
+  '/products/jay-1000p/features.jpg',
+  '/products/jay-1000p/fly-with-confidence.jpg',
+  '/products/jay-1000p/suitable-for.jpg',
+  '/products/jay-1000p/battery-backup.jpg',
+  '/products/jay-1000p/stay-active.jpg',
+  '/products/jay-1000p/emergencies.jpg',
+  '/products/jay-1000p/in-the-box.jpg',
 ];
 
 
@@ -49,11 +55,18 @@ function Gallery() {
   return (
     <div>
       <div style={{ position: 'relative', width: '100%', paddingBottom: '100%', background: '#fff', borderRadius: 14, overflow: 'hidden', border: '2px solid #E5E7EB', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
-        <div style={{ position: 'absolute', inset: 8 }}>
-          <Image src={GALLERY[main]} alt={PNAME} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority />
-        </div>
+        {GALLERY.map((src, i) => (
+          <div key={src} style={{ position: 'absolute', inset: 8, opacity: main === i ? 1 : 0, transition: 'opacity 0.15s ease', pointerEvents: 'none' }}>
+            <Image src={src} alt={i === 0 ? PNAME : `${PNAME} — feature ${i}`} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority={i === 0} />
+          </div>
+        ))}
+        {main === 0 && (
+          <span style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, background: DARK, color: '#fff', fontSize: 10, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '7px 12px', borderRadius: 5, boxShadow: '0 2px 10px rgba(0,0,0,0.18)' }}>
+            25+ Years of Experience
+          </span>
+        )}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginTop: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8, marginTop: 10 }}>
         {GALLERY.map((src, i) => (
           <button key={i} onClick={() => setMain(i)} style={{ display: 'block', position: 'relative', width: '100%', paddingTop: '100%', border: `2px solid ${i === main ? ACC : '#E5E7EB'}`, borderRadius: 8, overflow: 'hidden', opacity: i === main ? 1 : 0.6, cursor: 'pointer', background: '#fff', transition: 'all 0.2s' }}>
             <div style={{ position: 'absolute', inset: 4 }}>
@@ -160,14 +173,9 @@ export default function Jay1000PClient() {
           <div>
             {/* badges */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
-              {[
-                { label: 'Longfian Portable Oxygen Concentrator', dark: false },
-                { label: 'Flight Safe · FAA Approved',             dark: true  },
-              ].map((b: { label: string; dark?: boolean }, i) => (
-                <span key={i} style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: b.dark ? ACC : '#F3F4F6', color: b.dark ? '#fff' : GREY, border: !b.dark ? `1.5px solid #E5E7EB` : 'none' }}>
-                  {b.label}
-                </span>
-              ))}
+              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: ACC, color: '#fff' }}>
+                Flight Safe · FAA Approved
+              </span>
             </div>
 
             <h1 style={{ fontSize: 'clamp(26px,3.5vw,48px)', fontWeight: 900, letterSpacing: '-0.02em', color: DARK, lineHeight: 1.05, marginBottom: 14 }}>
@@ -318,7 +326,9 @@ export default function Jay1000PClient() {
           <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
 
             <BenefitCard>
-              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: DARK, color: '#fff', padding: '5px 12px', borderRadius: 5, fontSize: 12, fontWeight: 900, letterSpacing: '0.08em', marginBottom: 12 }}>LONGFIAN</div>
+              <div style={{ marginBottom: 12 }}>
+                <Image src="/longfian-logo.png" alt="Longfian" width={130} height={26} style={{ height: 26, width: 'auto', objectFit: 'contain' }} />
+              </div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Over 25 Years of Experience</h3>
               <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Longfian is the world&apos;s biggest manufacturer for oxygen concentrators with decades of experience.</p>
             </BenefitCard>
@@ -337,7 +347,7 @@ export default function Jay1000PClient() {
             </BenefitCard>
 
             <BenefitCard>
-              <div style={{ fontSize: 28, marginBottom: 12 }}>🔋</div>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>🔋🔋</div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Upto 10 Hours Battery Backup</h3>
               <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with 2 lithium ion rechargeable batteries.</p>
               <p style={{ fontSize: 11, color: GREY, lineHeight: 1.5, marginTop: 6, fontStyle: 'italic' }}>(Battery backup time varies as per flow setting)</p>
@@ -352,7 +362,7 @@ export default function Jay1000PClient() {
             <BenefitCard>
               <div style={{ fontSize: 28, marginBottom: 12 }}>🔇</div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Whisper Quiet</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>At under 48 dB — quieter than a normal conversation / library.</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>At under 48 dB — it is quieter than a normal conversation / library.</p>
             </BenefitCard>
 
             <BenefitCard>
@@ -381,7 +391,6 @@ export default function Jay1000PClient() {
       <section style={{ background: DARK, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: 760, margin: '0 auto', padding: `0 ${PAD}` }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
-            <Label text="Battery Performance" />
             <H2 light>BATTERY BACKUP TIME</H2>
             <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8 }}>
               Backup time varies as per the pulse flow setting. Double battery (2 batteries included in the box).
@@ -416,7 +425,10 @@ export default function Jay1000PClient() {
               </div>
             ))}
           </div>
-          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 14, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.9)', textAlign: 'center', marginTop: 18 }}>
+            Battery Full Charge Time — Approx. 2 hours
+          </p>
+          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 10, lineHeight: 1.6 }}>
             *Values are approximate and may vary based on usage pattern and battery age.
           </p>
         </div>
@@ -426,7 +438,6 @@ export default function Jay1000PClient() {
       <section style={{ background: DARK, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <Label text="Technical Details" />
             <H2 light>TECHNICAL SPECIFICATIONS</H2>
             <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', maxWidth: 480, margin: '0 auto' }}>
               Every number that matters — tested, certified, and verified by international regulators.
@@ -454,10 +465,10 @@ export default function Jay1000PClient() {
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Physical</span>
               </div>
               {[
-                ['Weight',      '1.98 kg (single battery)'],
+                ['Weight',      '1.98 kg'],
                 ['Dimensions',  '183 × 86 × 199 mm'],
                 ['Display',     'LCD — battery, flow, hours'],
-                ['Carry Bag',   'Shoulder + backpack, air vented'],
+                ['Carry Bag',   'Shoulder Bag'],
               ].map(([lbl, val], i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)', borderBottom: i === 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', borderRadius: i === 3 ? '0 0 10px 10px' : 0 }}>
                   <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}>{lbl}</span>
@@ -468,27 +479,13 @@ export default function Jay1000PClient() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <div style={{ background: ACC, borderRadius: '10px 10px 0 0', padding: '10px 18px' }}>
-                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Battery</span>
-              </div>
-              {[
-                ['Batteries in Box',    '2 batteries included'],
-                ['Single Battery Life', '5.5 hrs (Flow 1) / 3 hrs (Flow 2)'],
-                ['Double Battery Life', 'Up to 10 hrs at Flow Setting 1'],
-                ['Charge Time',         'Approx. 2 hours (per battery)'],
-              ].map(([lbl, val], i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-                  <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}>{lbl}</span>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', textAlign: 'right' }}>{val}</span>
-                </div>
-              ))}
-              <div style={{ background: ACC, padding: '10px 18px', marginTop: 6 }}>
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Compliance & Support</span>
               </div>
               {[
                 ['Certifications',    'CE · ISO · FDA · CDSCO · FAA'],
                 ['Warranty',          '2 Years (1 Year on Batteries and Sieve Beds)'],
-                ['Manufacturer',      'Longfian Scitech Co., Ltd, China'],
-                ['India Partner',     'Sachdeva Medline — Exclusive Importer'],
+                ['Manufacturer',      'LONGFIAN'],
+                ['India Partner',     'SACHDEVA MEDLINE (9891521090)'],
               ].map(([lbl, val], i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)', borderBottom: i === 3 ? '1px solid rgba(255,255,255,0.06)' : 'none', borderRadius: i === 3 ? '0 0 10px 10px' : 0 }}>
                   <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}>{lbl}</span>
