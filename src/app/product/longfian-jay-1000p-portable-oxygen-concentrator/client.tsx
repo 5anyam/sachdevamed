@@ -120,28 +120,32 @@ function BenefitCard({ children }: { children: React.ReactNode }) {
 }
 
 
-/* Click-to-play YouTube facade — no player JS loads until tapped, then plays immediately */
-function YTVideo({ id, title, vertical }: { id: string; title: string; vertical?: boolean }) {
-  const [play, setPlay] = useState(false);
+/* Local product video — autoplays muted when scrolled into view, pauses when scrolled away */
+function LocalVideo({ src, vertical }: { src: string; vertical?: boolean }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.muted = true;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) el.play().catch(() => {});
+      else el.pause();
+    }, { threshold: 0.4 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
   return (
     <div style={{ position: 'relative', width: '100%', paddingBottom: vertical ? '177.78%' : '56.25%', borderRadius: vertical ? 12 : 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)', background: '#000' }}>
-      {play ? (
-        <iframe
-          src={`https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0`}
-          title={title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-        />
-      ) : (
-        <button onClick={() => setPlay(true)} aria-label={`Play video: ${title}`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 'none', cursor: 'pointer', background: '#000' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt={title} loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
-          <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 62, height: 44, background: '#FF0000', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
-            <span style={{ width: 0, height: 0, borderTop: '9px solid transparent', borderBottom: '9px solid transparent', borderLeft: '15px solid #fff', marginLeft: 4 }} />
-          </span>
-        </button>
-      )}
+      <video
+        ref={ref}
+        src={src}
+        muted
+        loop
+        playsInline
+        controls
+        preload="metadata"
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+      />
     </div>
   );
 }
@@ -542,30 +546,26 @@ export default function Jay1000PClient() {
             <h2 style={{ fontSize: 'clamp(20px,2.5vw,30px)', fontWeight: 900, letterSpacing: '-0.01em', color: '#fff', lineHeight: 1.1 }}>VIDEOS</h2>
           </div>
 
-          {/* Featured YouTube — full width */}
+          {/* Featured — full width landscape */}
           <div style={{ marginBottom: 32 }}>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Official Product Video</p>
-            <YTVideo id="aC2HtnMiPw0" title="Longfian JAY-1000P — Official Product Video" />
+            <LocalVideo src="/videos/official.mp4" />
           </div>
 
-          {/* YouTube Shorts — 3 col vertical */}
+          {/* Shorts — 3 col vertical on desktop, stacked full-width on mobile */}
           <div style={{ marginBottom: 32 }}>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Shorts</p>
             <div className="shorts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-              {[
-                { id: '4mh9lwAIf5A', title: 'JAY-1000P Short 1' },
-                { id: 'zxOz_Bylfek',  title: 'JAY-1000P Short 2' },
-                { id: 'FQ3b2cj9Vjw',  title: 'JAY-1000P Short 3' },
-              ].map((v) => (
-                <YTVideo key={v.id} id={v.id} title={v.title} vertical />
+              {['/videos/short-1.mp4', '/videos/short-2.mp4', '/videos/short-3.mp4'].map((src) => (
+                <LocalVideo key={src} src={src} vertical />
               ))}
             </div>
           </div>
 
-          {/* Second YouTube — full width */}
+          {/* Second — full width landscape */}
           <div>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More Videos</p>
-            <YTVideo id="ypFm6RjQBQ8" title="Longfian JAY-1000P Video" />
+            <LocalVideo src="/videos/overview.mp4" />
           </div>
         </div>
       </section>
@@ -672,7 +672,7 @@ export default function Jay1000PClient() {
           .box-grid          { grid-template-columns: repeat(2, 1fr) !important; }
           .trust-grid        { grid-template-columns: 1fr 1fr !important; }
           .more-grid         { grid-template-columns: 1fr 1fr !important; }
-          .shorts-grid       { grid-template-columns: repeat(3, 1fr) !important; }
+          .shorts-grid       { grid-template-columns: 1fr !important; gap: 24px !important; }
           .highlights-grid   { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 480px) {
@@ -681,7 +681,7 @@ export default function Jay1000PClient() {
           .box-grid       { grid-template-columns: 1fr !important; }
           .trust-grid     { grid-template-columns: 1fr !important; }
           .more-grid      { grid-template-columns: 1fr !important; }
-          .shorts-grid    { grid-template-columns: repeat(3, 1fr) !important; }
+          .shorts-grid    { grid-template-columns: 1fr !important; gap: 24px !important; }
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
         }
       `}</style>
