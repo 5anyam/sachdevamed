@@ -52,9 +52,20 @@ function StarRow({ r }: { r: number }) {
 
 function Gallery() {
   const [main, setMain] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const startTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => setMain(m => (m + 1) % GALLERY.length), 4000);
+  };
+  useEffect(() => {
+    startTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, []);
+  const pick = (i: number) => { setMain(i); startTimer(); };
   return (
     <div>
-      <div style={{ position: 'relative', width: '100%', paddingBottom: '100%', background: '#fff', borderRadius: 14, overflow: 'hidden', border: '2px solid #E5E7EB', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+      {/* 970×600 landscape frame — all gallery images share this ratio, so no letterboxing */}
+      <div style={{ position: 'relative', width: '100%', paddingBottom: '61.86%', background: '#fff', borderRadius: 14, overflow: 'hidden', border: '2px solid #E5E7EB', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
         {GALLERY.map((src, i) => (
           <div key={src} style={{ position: 'absolute', inset: 8, opacity: main === i ? 1 : 0, transition: 'opacity 0.15s ease', pointerEvents: 'none' }}>
             <Image src={src} alt={i === 0 ? PNAME : `${PNAME} — feature ${i}`} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority={i === 0} />
@@ -68,7 +79,7 @@ function Gallery() {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8, marginTop: 10 }}>
         {GALLERY.map((src, i) => (
-          <button key={i} onClick={() => setMain(i)} style={{ display: 'block', position: 'relative', width: '100%', paddingTop: '100%', border: `2px solid ${i === main ? ACC : '#E5E7EB'}`, borderRadius: 8, overflow: 'hidden', opacity: i === main ? 1 : 0.6, cursor: 'pointer', background: '#fff', transition: 'all 0.2s' }}>
+          <button key={i} onClick={() => pick(i)} style={{ display: 'block', position: 'relative', width: '100%', paddingTop: '61.86%', border: `2px solid ${i === main ? ACC : '#E5E7EB'}`, borderRadius: 8, overflow: 'hidden', opacity: i === main ? 1 : 0.6, cursor: 'pointer', background: '#fff', transition: 'all 0.2s' }}>
             <div style={{ position: 'absolute', inset: 4 }}>
               <Image src={src} alt="" fill style={{ objectFit: 'contain' }} sizes="120px" />
             </div>
@@ -104,6 +115,33 @@ function BenefitCard({ children }: { children: React.ReactNode }) {
   return (
     <div ref={ref} style={{ padding: 'clamp(14px,2vw,20px)', background: lit ? '#fff' : BG, borderRadius: 12, border: `1.5px solid ${lit ? '#CBD5E0' : '#E5E7EB'}`, boxShadow: lit ? '0 4px 20px rgba(0,0,0,0.07)' : 'none', transition: 'background 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease' }}>
       {children}
+    </div>
+  );
+}
+
+
+/* Click-to-play YouTube facade — no player JS loads until tapped, then plays immediately */
+function YTVideo({ id, title, vertical }: { id: string; title: string; vertical?: boolean }) {
+  const [play, setPlay] = useState(false);
+  return (
+    <div style={{ position: 'relative', width: '100%', paddingBottom: vertical ? '177.78%' : '56.25%', borderRadius: vertical ? 12 : 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)', background: '#000' }}>
+      {play ? (
+        <iframe
+          src={`https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0`}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+        />
+      ) : (
+        <button onClick={() => setPlay(true)} aria-label={`Play video: ${title}`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 'none', cursor: 'pointer', background: '#000' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt={title} loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
+          <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 62, height: 44, background: '#FF0000', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
+            <span style={{ width: 0, height: 0, borderTop: '9px solid transparent', borderBottom: '9px solid transparent', borderLeft: '15px solid #fff', marginLeft: 4 }} />
+          </span>
+        </button>
+      )}
     </div>
   );
 }
@@ -199,7 +237,7 @@ export default function Jay1000PClient() {
                 {[
                   { icon: '✈️', title: 'FAA Approved',                    sub: 'Can be taken on any flight' },
                   { icon: '⚖️', title: '1.98 Kg',                        sub: 'Ultra Light Weight' },
-                  { icon: '🔋', title: '2 Batteries Included in the Box', sub: null },
+                  { icon: '🔋🔋', title: '2 Batteries Included in the Box', sub: null },
                 ].map((h, i, arr) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '11px 2px', borderBottom: i < arr.length - 1 ? '1px solid rgba(45,55,72,0.12)' : 'none' }}>
                     <span style={{ fontSize: 18, flexShrink: 0, width: 26, textAlign: 'center', marginTop: 1 }}>{h.icon}</span>
@@ -215,7 +253,7 @@ export default function Jay1000PClient() {
                   '*CE, ISO, FDA, CDSCO and FAA approved — permitted on all commercial flights worldwide',
                   '*Pulse dose model with settings from 1 to 5 as per patient\'s requirement',
                   '*93% ± 3% oxygen concentration at all flow settings',
-                  '*Only 1.98 kg — lighter than most laptops, fits in the air-vented carry bag',
+                  '*Only 1.98 kg — lighter than most laptops, fits in the air-vented shoulder bag',
                   '*Comes with car charger, 2 spare filters, all standard accessories and 2 rechargeable batteries',
                 ].map((line, i) => (
                   <p key={i} style={{ fontSize: 11, color: '#374151', lineHeight: 1.65, marginBottom: i < 4 ? 2 : 0 }}>{line}</p>
@@ -327,7 +365,7 @@ export default function Jay1000PClient() {
 
             <BenefitCard>
               <div style={{ marginBottom: 12 }}>
-                <Image src="/longfian-logo.png" alt="Longfian" width={130} height={26} style={{ height: 26, width: 'auto', objectFit: 'contain' }} />
+                <Image src="/longfianlogo.jpeg" alt="Longfian" width={162} height={30} style={{ height: 30, width: 'auto', objectFit: 'contain' }} />
               </div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Over 25 Years of Experience</h3>
               <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Longfian is the world&apos;s biggest manufacturer for oxygen concentrators with decades of experience.</p>
@@ -343,7 +381,7 @@ export default function Jay1000PClient() {
               <div style={{ fontSize: 28, marginBottom: 12 }}>⚖️</div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 4 }}>Only 1.98 Kg</h3>
               <p style={{ fontSize: 12, fontWeight: 600, color: ACC, marginBottom: 6 }}>Ultra Light Weight</p>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with shoulder carry bag for ease in carrying during travel.</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with shoulder bag for ease in carrying during travel.</p>
             </BenefitCard>
 
             <BenefitCard>
@@ -425,11 +463,11 @@ export default function Jay1000PClient() {
               </div>
             ))}
           </div>
-          <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.9)', textAlign: 'center', marginTop: 18 }}>
-            Battery Full Charge Time — Approx. 2 hours
-          </p>
-          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 10, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 14, lineHeight: 1.6 }}>
             *Values are approximate and may vary based on usage pattern and battery age.
+          </p>
+          <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.9)', textAlign: 'center', marginTop: 12 }}>
+            Battery Full Charge Time — Approx. 2 hours
           </p>
         </div>
       </section>
@@ -466,7 +504,7 @@ export default function Jay1000PClient() {
               </div>
               {[
                 ['Weight',      '1.98 kg'],
-                ['Dimensions',  '183 × 86 × 199 mm'],
+                ['Dimensions',  '18 × 8.5 × 20 cm'],
                 ['Display',     'LCD — battery, flow, hours'],
                 ['Carry Bag',   'Shoulder Bag'],
               ].map(([lbl, val], i) => (
@@ -500,17 +538,14 @@ export default function Jay1000PClient() {
       {/* ──── ALL VIDEOS ──── */}
       <section style={{ background: DARK, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <Label text="Watch" />
-            <H2 light>LONGFIAN JAY-1000P — VIDEOS</H2>
+          <div style={{ textAlign: 'center', marginBottom: 28 }}>
+            <h2 style={{ fontSize: 'clamp(20px,2.5vw,30px)', fontWeight: 900, letterSpacing: '-0.01em', color: '#fff', lineHeight: 1.1 }}>VIDEOS</h2>
           </div>
 
           {/* Featured YouTube — full width */}
           <div style={{ marginBottom: 32 }}>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Official Product Video</p>
-            <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
-              <iframe src="https://www.youtube.com/embed/aC2HtnMiPw0" title="Longfian JAY-1000P — Official Product Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} loading="lazy" />
-            </div>
+            <YTVideo id="aC2HtnMiPw0" title="Longfian JAY-1000P — Official Product Video" />
           </div>
 
           {/* YouTube Shorts — 3 col vertical */}
@@ -522,9 +557,7 @@ export default function Jay1000PClient() {
                 { id: 'zxOz_Bylfek',  title: 'JAY-1000P Short 2' },
                 { id: 'FQ3b2cj9Vjw',  title: 'JAY-1000P Short 3' },
               ].map((v) => (
-                <div key={v.id} style={{ position: 'relative', width: '100%', paddingBottom: '177.78%', borderRadius: 12, overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
-                  <iframe src={`https://www.youtube.com/embed/${v.id}`} title={v.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} loading="lazy" />
-                </div>
+                <YTVideo key={v.id} id={v.id} title={v.title} vertical />
               ))}
             </div>
           </div>
@@ -532,34 +565,7 @@ export default function Jay1000PClient() {
           {/* Second YouTube — full width */}
           <div>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More Videos</p>
-            <div style={{ position: 'relative', width: '100%', paddingBottom: '56.25%', borderRadius: 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
-              <iframe src="https://www.youtube.com/embed/ypFm6RjQBQ8" title="Longfian JAY-1000P Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ──── CERTIFICATIONS ──── */}
-      <section style={{ background: '#fff', padding: `${VPAD} 0` }}>
-        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <Label text="Globally Trusted" />
-            <H2>CERTIFIED EVERYWHERE IT MATTERS</H2>
-          </div>
-          <div className="cert-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
-            {[
-              { cert: 'CE',    name: 'European Conformity', desc: 'Meets EU safety, health & environmental protection standards for medical devices.' },
-              { cert: 'ISO',   name: 'ISO 9001',            desc: 'International quality management system — consistent, reliable manufacturing.' },
-              { cert: 'FDA',   name: 'US FDA Cleared',      desc: '510(k) cleared by the US Food & Drug Administration (K243833).' },
-              { cert: 'CDSCO', name: 'India CDSCO',         desc: "Approved by India's Central Drugs Standard Control Organisation for import & sale." },
-              { cert: 'FAA',   name: 'Flight Approved',     desc: 'Meets FAA standards for Portable Oxygen Concentrators — permitted on all commercial flights.' },
-            ].map((c, i) => (
-              <div key={i} style={{ textAlign: 'center', padding: 'clamp(16px,2vw,24px) clamp(12px,1.5vw,16px)', background: BG, borderRadius: 12, border: '1.5px solid #E5E7EB' }}>
-                <div style={{ display: 'inline-block', background: ACC, color: '#fff', fontSize: 11, fontWeight: 900, letterSpacing: '0.12em', padding: '5px 14px', borderRadius: 6, marginBottom: 12 }}>{c.cert}</div>
-                <p style={{ fontSize: 13, fontWeight: 800, color: DARK, marginBottom: 6 }}>{c.name}</p>
-                <p style={{ fontSize: 11, color: GREY, lineHeight: 1.65 }}>{c.desc}</p>
-              </div>
-            ))}
+            <YTVideo id="ypFm6RjQBQ8" title="Longfian JAY-1000P Video" />
           </div>
         </div>
       </section>
@@ -601,25 +607,10 @@ export default function Jay1000PClient() {
             <Label text="Complete Package" />
             <H2>WHAT&apos;S IN THE BOX</H2>
           </div>
-          <div className="box-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, maxWidth: 960, margin: '0 auto' }}>
-            {[
-              { icon: '🔬', item: 'JAY-1000P Unit',       desc: 'The main concentrator device' },
-              { icon: '🔋', item: '2 Batteries',           desc: 'Both batteries included' },
-              { icon: '👜', item: 'Carry Bag',             desc: 'Shoulder & backpack, air vented' },
-              { icon: '🔌', item: 'AC Power Adapter',      desc: 'Standard household charger' },
-              { icon: '🚗', item: 'Car Charger',           desc: 'DC adapter for vehicle use' },
-              { icon: '👃', item: 'Nasal Cannula',         desc: 'For oxygen delivery' },
-              { icon: '🔧', item: '2 Spare Filters',       desc: 'Replacement air filters' },
-              { icon: '📋', item: 'Warranty Card',         desc: '2-Year Warranty by Sachdeva Medline' },
-            ].map((b, i) => (
-              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '16px', background: '#fff', borderRadius: 10, border: '1.5px solid #E5E7EB' }}>
-                <span style={{ fontSize: 22, flexShrink: 0 }}>{b.icon}</span>
-                <div>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: DARK, marginBottom: 3 }}>{b.item}</p>
-                  <p style={{ fontSize: 11, color: GREY, lineHeight: 1.5 }}>{b.desc}</p>
-                </div>
-              </div>
-            ))}
+          <div style={{ maxWidth: 960, margin: '0 auto' }}>
+            <div style={{ position: 'relative', width: '100%', paddingBottom: '61.86%', borderRadius: 14, overflow: 'hidden', border: '1.5px solid #E5E7EB', background: '#fff', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+              <Image src="/products/jay-1000p/in-the-box.jpg" alt="What's in the box — Longfian JAY-1000P" fill style={{ objectFit: 'cover' }} sizes="(max-width:768px) 100vw, 960px" />
+            </div>
           </div>
         </div>
       </section>
