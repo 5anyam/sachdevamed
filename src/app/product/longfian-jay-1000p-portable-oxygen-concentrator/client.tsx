@@ -546,26 +546,30 @@ export default function Jay1000PClient() {
             <h2 style={{ fontSize: 'clamp(20px,2.5vw,30px)', fontWeight: 900, letterSpacing: '-0.01em', color: '#fff', lineHeight: 1.1 }}>VIDEOS</h2>
           </div>
 
-          {/* Featured — full width landscape */}
+          {/* Featured — big landscape (full-bleed on mobile) */}
           <div style={{ marginBottom: 32 }}>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Official Product Video</p>
-            <LocalVideo src="/videos/official.mp4" />
+            <div className="video-wide">
+              <LocalVideo src="/videos/official.mp4" />
+            </div>
           </div>
 
-          {/* Shorts — 3 col vertical on desktop, stacked full-width on mobile */}
+          {/* Shorts — vertical, kept smaller than the landscape videos */}
           <div style={{ marginBottom: 32 }}>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Shorts</p>
-            <div className="shorts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+            <div className="shorts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, maxWidth: 780, margin: '0 auto' }}>
               {['/videos/short-1.mp4', '/videos/short-2.mp4', '/videos/short-3.mp4'].map((src) => (
                 <LocalVideo key={src} src={src} vertical />
               ))}
             </div>
           </div>
 
-          {/* Second — full width landscape */}
+          {/* Second — big landscape (full-bleed on mobile) */}
           <div>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More Videos</p>
-            <LocalVideo src="/videos/overview.mp4" />
+            <div className="video-wide">
+              <LocalVideo src="/videos/overview.mp4" />
+            </div>
           </div>
         </div>
       </section>
@@ -672,8 +676,11 @@ export default function Jay1000PClient() {
           .box-grid          { grid-template-columns: repeat(2, 1fr) !important; }
           .trust-grid        { grid-template-columns: 1fr 1fr !important; }
           .more-grid         { grid-template-columns: 1fr 1fr !important; }
-          .shorts-grid       { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .shorts-grid       { grid-template-columns: 1fr !important; gap: 20px !important; max-width: 72% !important; }
           .highlights-grid   { grid-template-columns: 1fr 1fr !important; }
+          /* landscape videos go edge-to-edge on mobile so they look bigger */
+          .video-wide        { margin-left: calc(50% - 50vw) !important; margin-right: calc(50% - 50vw) !important; }
+          .video-wide > div  { border-radius: 0 !important; }
         }
         @media (max-width: 480px) {
           .benefits-grid  { grid-template-columns: 1fr !important; }
@@ -681,7 +688,7 @@ export default function Jay1000PClient() {
           .box-grid       { grid-template-columns: 1fr !important; }
           .trust-grid     { grid-template-columns: 1fr !important; }
           .more-grid      { grid-template-columns: 1fr !important; }
-          .shorts-grid    { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .shorts-grid    { grid-template-columns: 1fr !important; gap: 20px !important; max-width: 72% !important; }
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
         }
       `}</style>
