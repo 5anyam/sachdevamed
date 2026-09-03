@@ -120,7 +120,8 @@ function BenefitCard({ children }: { children: React.ReactNode }) {
 }
 
 
-/* Local product video — autoplays muted when scrolled into view, pauses when scrolled away */
+/* Local product video — autoplays muted when scrolled into view, pauses when scrolled away.
+   Only one video plays at a time: whenever one starts, every other <video> on the page is paused. */
 function LocalVideo({ src, vertical }: { src: string; vertical?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
   useEffect(() => {
@@ -134,6 +135,11 @@ function LocalVideo({ src, vertical }: { src: string; vertical?: boolean }) {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+  const pauseOthers = () => {
+    document.querySelectorAll('video').forEach(v => {
+      if (v !== ref.current && !v.paused) v.pause();
+    });
+  };
   return (
     <div style={{ position: 'relative', width: '100%', paddingBottom: vertical ? '177.78%' : '56.25%', borderRadius: vertical ? 12 : 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)', background: '#000' }}>
       <video
@@ -144,6 +150,7 @@ function LocalVideo({ src, vertical }: { src: string; vertical?: boolean }) {
         playsInline
         controls
         preload="metadata"
+        onPlay={pauseOthers}
         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
       />
     </div>
