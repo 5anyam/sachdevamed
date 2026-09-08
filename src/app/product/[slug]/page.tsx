@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ProductClient from './product-client';
 import { PRODUCTS, getProductBySlug } from '../../../../lib/products-data';
+import { buildFAQJsonLd } from '../../../../lib/product-faqs';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -109,6 +110,10 @@ export default async function Page({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFAQJsonLd(product.slug)) }}
       />
       <ProductClient product={product} />
     </>

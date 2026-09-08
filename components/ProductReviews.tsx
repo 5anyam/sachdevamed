@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { StarIcon as StarOutlineIcon, CheckBadgeIcon, ChatBubbleLeftEllipsisIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { toast } from '../hooks/use-toast';
+import { getCuratedReviews } from '../lib/product-reviews';
 
 interface Review {
   id: number;
@@ -80,9 +81,11 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
     rating: 0,
   });
 
-  const API_BASE = 'https://cms.sachdevamedline.com/wp-json/wc/v3';
-  const CONSUMER_KEY = 'ck_7610f309972822bfa8e87304ea6c47e9e93b8ff6';
-  const CONSUMER_SECRET = 'cs_0f117bc7ec4611ca378adde03010f619c0af59b2';
+  // Host is env-driven so the CMS can be repointed without a code change.
+  const CMS_HOST = process.env.NEXT_PUBLIC_CMS_URL || 'https://cms.sachdevamedline.com';
+  const API_BASE = `${CMS_HOST}/wp-json/wc/v3`;
+  const CONSUMER_KEY = process.env.NEXT_PUBLIC_CONSUMER_KEY || 'ck_7610f309972822bfa8e87304ea6c47e9e93b8ff6';
+  const CONSUMER_SECRET = process.env.NEXT_PUBLIC_CONSUMER_SECRET || 'cs_0f117bc7ec4611ca378adde03010f619c0af59b2';
 
   // ✅ Responsive Slides Per View
   useEffect(() => {
@@ -130,6 +133,15 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
   };
 
   const loadReviews = async (): Promise<void> => {
+    // Curated reviews render regardless of whether the CMS is reachable.
+    const curated: Review[] = getCuratedReviews(productId).map((c) => ({
+      id: c.id,
+      reviewer: c.location ? `${c.reviewer} · ${c.location}` : c.reviewer,
+      review: c.review,
+      rating: c.rating,
+      date_created: c.date_created,
+    }));
+
     try {
       setLoading(true);
       const url =
@@ -139,7 +151,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
 
       const res = await fetch(url);
       if (!res.ok) {
-        setReviews([]);
+        setReviews(curated);
         return;
       }
 
@@ -159,9 +171,13 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
         };
       });
 
-      setReviews(mapped);
+      // Drop curated entries already imported into WooCommerce, so they don't show twice.
+      const fromCms = new Set(mapped.map((m) => `${m.reviewer}|${m.review.slice(0, 60)}`));
+      const unimported = curated.filter((c) => !fromCms.has(`${c.reviewer}|${c.review.slice(0, 60)}`));
+
+      setReviews([...unimported, ...mapped]);
     } catch {
-      setReviews([]);
+      setReviews(curated);
     } finally {
       setLoading(false);
     }
@@ -329,11 +345,12 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
     <section id="reviews-section" className="bg-white rounded-2xl shadow-sm border border-gray-200">
       {/* Modern Header with Stats */}
       <div className="p-6 border-b border-gray-200">
+        {/* The page section already carries the "What customers are saying" heading. */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-gray-900 font-bold text-xl sm:text-2xl flex items-center gap-2">
-            <ChatBubbleLeftEllipsisIcon className="h-6 w-6 sm:h-7 sm:w-7 text-emerald-600" />
-            Customer Reviews
-          </h2>
+          <p className="text-gray-600 text-sm flex items-center gap-2">
+            <ChatBubbleLeftEllipsisIcon className="h-5 w-5 text-emerald-600 flex-shrink-0" />
+            Verified reviews for {productName}
+          </p>
           <button
             onClick={() => setShowForm((s) => !s)}
             className="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 transition-all duration-200 shadow-sm hover:shadow-md"

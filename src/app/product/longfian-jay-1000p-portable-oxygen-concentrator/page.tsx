@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Jay1000PClient from './client';
+import { buildFAQJsonLd } from '../../../../lib/product-faqs';
 
 const TITLE = 'Longfian JAY-1000P Portable Oxygen Concentrator | FDA & FAA Approved | Sachdeva Medline';
 const DESCRIPTION =
@@ -112,12 +113,18 @@ const jsonLd = {
   award: 'CE Certified · ISO 9001 · FDA Cleared · CDSCO Registered · FAA Approved',
 };
 
+const SLUG = 'longfian-jay-1000p-portable-oxygen-concentrator';
+
 export default function Page() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFAQJsonLd(SLUG)) }}
       />
       <Jay1000PClient />
     </>
