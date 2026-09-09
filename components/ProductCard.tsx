@@ -21,11 +21,11 @@ interface Product {
 
 export default function ProductCard({ product }: { product: Product }) {
   const productUrl = `/product/${productToSlug(product)}`;
-  const rating = Number(product.average_rating) || 4.5;
+  const rating = Number(product.average_rating) || 0;
   const salePrice = Number(product.price);
   const originalPrice = Number(product.regular_price);
   const isOnSale = originalPrice > salePrice;
-  const reviewCount = product.rating_count || 42;
+  const reviewCount = product.rating_count || 0;
 
   const discountPercentage = isOnSale
     ? Math.round(((originalPrice - salePrice) / originalPrice) * 100)
@@ -71,14 +71,16 @@ export default function ProductCard({ product }: { product: Product }) {
       {/* Product Info */}
       <div className="pt-3 px-1 flex flex-col gap-2">
         
-        {/* Rating */}
-        <div className="flex items-center gap-1.5 text-xs">
-           <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md">
-              <StarIconSolid className="w-3 h-3 text-yellow-400" />
-              <span className="font-semibold text-gray-900">{rating.toFixed(1)}</span>
-           </div>
-           <span className="text-gray-400">({reviewCount})</span>
-        </div>
+        {/* Rating — only shown when the product actually has ratings */}
+        {reviewCount > 0 && (
+          <div className="flex items-center gap-1.5 text-xs">
+             <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md">
+                <StarIconSolid className="w-3 h-3 text-yellow-400" />
+                <span className="font-semibold text-gray-900">{rating.toFixed(1)}</span>
+             </div>
+             <span className="text-gray-400">({reviewCount})</span>
+          </div>
+        )}
 
         {/* Product Name */}
         <Link href={productUrl} className="hover:text-gray-600 transition-colors">

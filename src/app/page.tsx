@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PRODUCTS, StaticProduct } from '../../lib/products-data';
+import { getReviewStats } from '../../lib/product-reviews';
 import { Star, ShieldCheck, Truck, Check, ChevronRight, Phone, Clock, Wrench, BadgeCheck, HeartPulse, Package } from 'lucide-react';
 
 const GREEN = '#2D3748';
@@ -34,6 +35,7 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 function ProductCard({ product }: { product: StaticProduct }) {
+  const cardStats = getReviewStats(product.id);
   const discount = Math.round(((product.regularPrice - product.price) / product.regularPrice) * 100);
   return (
     <Link
@@ -63,16 +65,24 @@ function ProductCard({ product }: { product: StaticProduct }) {
         <h3 style={{ fontSize: 20, fontWeight: 700, color: DARK, marginBottom: 6, lineHeight: 1.2, letterSpacing: '-0.01em' }}>{product.name}</h3>
         <p style={{ fontSize: 13, color: 'rgba(15,17,23,0.55)', marginBottom: 12, lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{product.tagline}</p>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-          <StarRating rating={product.rating} />
-          <span style={{ fontSize: 11, color: 'rgba(15,17,23,0.4)' }}>({product.reviewCount} reviews)</span>
-        </div>
+        {cardStats.count > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+            <StarRating rating={cardStats.average} />
+            <span style={{ fontSize: 11, color: 'rgba(15,17,23,0.4)' }}>({cardStats.count} review{cardStats.count !== 1 ? 's' : ''})</span>
+          </div>
+        )}
 
         <div style={{ marginTop: 'auto' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 14 }}>
-            <span style={{ fontSize: 26, fontWeight: 800, color: DARK, letterSpacing: '-0.02em' }}>₹{product.price.toLocaleString('en-IN')}</span>
-            {product.regularPrice > product.price && (
-              <span style={{ fontSize: 14, color: 'rgba(15,17,23,0.35)', textDecoration: 'line-through' }}>₹{product.regularPrice.toLocaleString('en-IN')}</span>
+            {product.price > 0 ? (
+              <>
+                <span style={{ fontSize: 26, fontWeight: 800, color: DARK, letterSpacing: '-0.02em' }}>₹{product.price.toLocaleString('en-IN')}</span>
+                {product.regularPrice > product.price && (
+                  <span style={{ fontSize: 14, color: 'rgba(15,17,23,0.35)', textDecoration: 'line-through' }}>₹{product.regularPrice.toLocaleString('en-IN')}</span>
+                )}
+              </>
+            ) : (
+              <span style={{ fontSize: 18, fontWeight: 800, color: DARK, letterSpacing: '-0.01em' }}>Price on Request</span>
             )}
           </div>
           <div style={{ background: GREEN, color: '#fff', textAlign: 'center', padding: '12px 16px', fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', borderRadius: 8, transition: 'background 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}

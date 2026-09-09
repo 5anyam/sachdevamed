@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star } from 'lucide-react';
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
+import { getReviewStats } from '../../../../lib/product-reviews';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
@@ -170,6 +171,7 @@ export default function Jay1000PClient() {
   const [adding, setAdding] = useState(false);
   const [buying, setBuying] = useState(false);
   const reviewsRef = useRef<HTMLDivElement>(null);
+  const reviewStats = getReviewStats(PID);
 
   const cartItem = {
     id: PID, name: PNAME,
@@ -234,13 +236,15 @@ export default function Jay1000PClient() {
               </span>
             </h1>
 
-            {/* reviews — #3: 623 */}
-            <button onClick={() => reviewsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-              <StarRow r={4.9} />
-              <span style={{ fontSize: 12, color: 'rgba(15,17,23,0.5)', borderBottom: '1px solid rgba(15,17,23,0.2)' }}>
-                4.9 · 623 Verified Reviews
-              </span>
-            </button>
+            {/* Rating reflects the real reviews on the page; hidden until there are some. */}
+            {reviewStats.count > 0 && (
+              <button onClick={() => reviewsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                <StarRow r={reviewStats.average} />
+                <span style={{ fontSize: 12, color: 'rgba(15,17,23,0.5)', borderBottom: '1px solid rgba(15,17,23,0.2)' }}>
+                  {reviewStats.average} · {reviewStats.count} Verified Review{reviewStats.count !== 1 ? 's' : ''}
+                </span>
+              </button>
+            )}
 
             {/* ── KEY HIGHLIGHTS BOX ── */}
             <div style={{ marginBottom: 4, border: '2.5px solid #2D3748', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 16px rgba(15,17,23,0.10)' }}>

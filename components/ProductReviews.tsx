@@ -359,7 +359,9 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
           </button>
         </div>
 
-        {/* Rating Summary */}
+        {/* Rating Summary — hidden until there is at least one review, so the
+            section never renders an empty "0.0 / Based on 0 reviews" block. */}
+        {reviews.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Average Rating */}
           <div className="flex items-center gap-4">
@@ -391,6 +393,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
             ))}
           </div>
         </div>
+        )}
       </div>
 
       <div className="p-6">

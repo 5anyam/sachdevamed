@@ -23,8 +23,6 @@ export interface StaticProduct {
   howToUse: string;
   category: string;
   badge?: string;
-  rating: number;
-  reviewCount: number;
   capsules: number;
   videos?: ProductVideo[];
 }
@@ -60,8 +58,6 @@ export const PRODUCTS: StaticProduct[] = [
       'Place on a flat surface with at least 20 cm clearance on all sides. Connect the nasal cannula or mask. Set the prescribed flow rate using the dial. Use as directed by your physician. Clean the external filter every 2 weeks with mild soap and allow to dry completely before reinserting.',
     category: 'Oxygen Concentrator',
     badge: 'Best Seller',
-    rating: 4.8,
-    reviewCount: 214,
     capsules: 0,
   },
   {
@@ -73,8 +69,9 @@ export const PRODUCTS: StaticProduct[] = [
     price: 24900,
     regularPrice: 24900,
     images: [
-      'https://sachdevamedline.com/wp-content/uploads/2023/12/j1.webp',
-      'https://sachdevamedline.com/wp-content/uploads/2023/12/j2.webp',
+      '/products/jay-5aw/01.jpg',
+      '/products/jay-5aw/02.jpg',
+      '/products/jay-5aw/03.jpg',
     ],
     benefits: [
       'Integrated trolley wheels and handle for easy room-to-room movement',
@@ -94,8 +91,6 @@ export const PRODUCTS: StaticProduct[] = [
       'Fill the humidifier bottle with distilled water to the marked fill line. Connect nasal cannula or mask to the outlet port. Set the flow rate as prescribed. Use the wheel handle to move between rooms. Clean the filter every 2 weeks — wash gently and allow to fully dry before reinserting.',
     category: 'Oxygen Concentrator',
     badge: 'Most Convenient',
-    rating: 4.7,
-    reviewCount: 156,
     capsules: 0,
   },
   {
@@ -128,8 +123,6 @@ export const PRODUCTS: StaticProduct[] = [
       'Place the recliner mechanism on your existing bed frame. Assemble using the included guide — no tools required, takes under 5 minutes. Plug into a standard 220V socket (also compatible with inverter). Use the wireless remote to raise or lower the backrest as needed. Keep the motor area dry and clean monthly.',
     category: 'Patient Beds',
     badge: 'Trending',
-    rating: 4.6,
-    reviewCount: 87,
     capsules: 0,
   },
   {
@@ -173,8 +166,6 @@ export const PRODUCTS: StaticProduct[] = [
       'Press the power button to switch on. Use the + / – buttons to select your prescribed flow level (1–5). Attach the nasal cannula to the oxygen outlet port and breathe normally — the device delivers a pulse of oxygen automatically with each inhalation. For travel, keep the device in the included shoulder bag (the bag has built-in air vents so it can operate while inside). To charge, connect the AC adapter and allow 2 hours for a full charge; the car charger can also be used for vehicle charging. Replace the air filter at home as needed; contact Sachdeva Medline for molecular sieve maintenance.',
     category: 'Portable Oxygen Concentrator',
     badge: 'Flight Safe',
-    rating: 4.9,
-    reviewCount: 47,
     capsules: 0,
     videos: [
       { id: '15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj', title: 'JAY-1000P Product Video (HD)' },
@@ -191,6 +182,105 @@ export const PRODUCTS: StaticProduct[] = [
       { id: '1GEW--Dc2G_98oxHJbQbkTe6posEk0VgO', title: 'Feature Highlight' },
       { id: '1ZlfHxf-QVVRQp5E1cFg7EoqKNlxEAc6B', title: 'JAY-1000P Video' },
     ],
+  },
+  {
+    id: 5,
+    slug: 'longfian-jay-5cw-oxygen-concentrator',
+    name: 'Longfian JAY-5CW',
+    shortName: 'Longfian JAY-5CW',
+    tagline: '5 LPM concentrator with nebulizer outlet and full lithium sieve beds - only 16 kg',
+    price: 0,
+    regularPrice: 0,
+    images: [
+      '/products/jay-5cw/01.jpg',
+      '/products/jay-5cw/02.jpg',
+      '/products/jay-5cw/03.jpg',
+    ],
+    benefits: [
+      'Above 93% oxygen concentration at up to 5 litres per minute',
+      'Built-in nebulizer outlet - take nebulised medication without a second machine',
+      'Full lithium sieve beds, the same grade used by Philips units',
+      'Only 16 kg with castor wheels - easy to move room to room',
+      'Low noise under 43 dB and low power consumption of 350W',
+    ],
+    ingredients: [
+      { name: 'Flow Rate', dose: '0-5 LPM', benefit: 'Adjustable to the prescribed rate' },
+      { name: 'Oxygen Purity', dose: 'Above 93%', benefit: 'Medical-grade oxygen output' },
+      { name: 'Net Weight', dose: '16 kg', benefit: 'Lighter than most 5 litre units' },
+      { name: 'Noise Level', dose: 'Under 43 dB', benefit: 'Quiet enough for bedroom use' },
+      { name: 'Product Life', dose: '25,000 hrs', benefit: 'Years of continuous daily therapy' },
+    ],
+    howToUse:
+      'Place on a flat surface with at least 20 cm clearance on all sides. Fill the humidifier bottle to the marked line with distilled water. Connect the nasal cannula and set the prescribed flow rate on the flowmeter. Clean the external filter every 2 weeks and allow it to dry fully before reinserting.',
+    category: 'Oxygen Concentrator',
+    badge: 'Latest Model',
+    capsules: 0,
+  },
+  {
+    id: 6,
+    slug: 'longfian-jay-5hw-oxygen-concentrator',
+    name: 'Longfian JAY-5HW',
+    shortName: 'Longfian JAY-5HW',
+    tagline: '5 LPM concentrator with live purity display, inbuilt HEPA filter and nebuliser',
+    price: 0,
+    regularPrice: 0,
+    images: [
+      '/products/jay-5hw/09.png',
+      '/products/jay-5hw/01.jpg',
+      '/products/jay-5hw/02.jpg',
+    ],
+    benefits: [
+      'Live oxygen concentration, flow rate and running hours shown on the LED display',
+      'Inbuilt HEPA filter and nebuliser feature in a single unit',
+      '93% plus/minus 3% oxygen purity at every flow rate',
+      'Whisper quiet at 38 dB(A) - among the quietest 5 litre units available',
+      'Full alarm set: low purity, high/low pressure, power failure, overheat',
+    ],
+    ingredients: [
+      { name: 'Flow Rate', dose: '0-5 L/min', benefit: 'Adjustable to the prescribed rate' },
+      { name: 'Oxygen Purity', dose: '93% +/- 3%', benefit: 'Consistent at all flow rates' },
+      { name: 'Noise Level', dose: '38 dB(A)', benefit: 'Quieter than a library' },
+      { name: 'Dimensions', dose: '36 x 28 x 65 cm', benefit: 'Compact floor footprint' },
+      { name: 'Warranty', dose: '2 Years', benefit: 'Or 8,000 working hours' },
+    ],
+    howToUse:
+      'Place on a flat surface with at least 20 cm clearance on all sides. Fill the humidifier bottle with distilled water. Connect the nasal cannula and set the prescribed flow rate. The display shows live oxygen purity so you can confirm therapy at a glance. Clean the filter every 2 weeks.',
+    category: 'Oxygen Concentrator',
+    badge: 'Purity On Display',
+    capsules: 0,
+  },
+  {
+    id: 7,
+    slug: 'longfian-b-1-oxygen-concentrator',
+    name: 'Longfian B-1',
+    shortName: 'Longfian B-1',
+    tagline: 'Compact 6.3 kg concentrator with 1-7 litre adjustable flow - just 90W',
+    price: 0,
+    regularPrice: 0,
+    images: [
+      '/products/b-1/08.jpg',
+      '/products/b-1/07.jpg',
+      '/products/b-1/01.jpg',
+    ],
+    benefits: [
+      'Only 6.3 kg and 275 x 215 x 315 mm - fits on a bedside table',
+      'Flow adjustable from 1 to 7 litres as per requirement',
+      '93% oxygen concentration at the 1 litre setting',
+      'Draws under 90W - runs comfortably on a home inverter',
+      'Low noise operation, suitable for home, outdoor and travel use',
+    ],
+    ingredients: [
+      { name: 'Flow Rate', dose: '1-7 L/min', benefit: 'Wide adjustable range' },
+      { name: 'Oxygen Purity', dose: '93% at 1 L', benefit: 'Highest at the lower settings' },
+      { name: 'Net Weight', dose: '6.3 kg', benefit: 'Lightest in the Longfian range' },
+      { name: 'Power Draw', dose: '90 W', benefit: 'Inverter and generator friendly' },
+      { name: 'Dimensions', dose: '275 x 215 x 315 mm', benefit: 'Tabletop footprint' },
+    ],
+    howToUse:
+      'Place on a firm, flat surface with clear space around the air intake. Connect the nasal cannula to the outlet port and set the flow using the control dial as prescribed by your doctor. Oxygen concentration is highest at the lower flow settings. Clean the filter every 2 weeks.',
+    category: 'Oxygen Concentrator',
+    badge: 'Most Compact',
+    capsules: 0,
   },
 ];
 

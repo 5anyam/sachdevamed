@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import ProductClient from './product-client';
 import { PRODUCTS, getProductBySlug } from '../../../../lib/products-data';
 import { buildFAQJsonLd } from '../../../../lib/product-faqs';
+import { getReviewStats } from '../../../../lib/product-reviews';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -96,14 +97,22 @@ export default async function Page({ params }: Props) {
         },
       },
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: product.rating.toString(),
-      reviewCount: product.reviewCount.toString(),
-      bestRating: '5',
-      worstRating: '1',
-    },
+    /* aggregateRating is added below only when real reviews back it — Google
+       issues a manual action for rating markup not visible on the page. */
   };
+
+  const stats = getReviewStats(product.id);
+  if (stats.count > 0) {
+    Object.assign(jsonLd, {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: stats.average.toString(),
+        reviewCount: stats.count.toString(),
+        bestRating: '5',
+        worstRating: '1',
+      },
+    });
+  }
 
   return (
     <>

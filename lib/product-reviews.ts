@@ -45,3 +45,21 @@ export const CURATED_REVIEWS: CuratedReview[] = [
 export function getCuratedReviews(productId: number): CuratedReview[] {
   return CURATED_REVIEWS.filter((r) => r.productId === productId);
 }
+
+export interface ReviewStats {
+  count: number;
+  /** Mean rating, rounded to 1 decimal. 0 when there are no reviews. */
+  average: number;
+}
+
+/**
+ * Star ratings shown on cards, product pages and in Product structured data all
+ * read from here, so a rating is only ever claimed when real reviews back it.
+ * Callers must hide the rating UI when `count` is 0 rather than printing "0.0".
+ */
+export function getReviewStats(productId: number): ReviewStats {
+  const list = getCuratedReviews(productId);
+  if (!list.length) return { count: 0, average: 0 };
+  const mean = list.reduce((sum, r) => sum + r.rating, 0) / list.length;
+  return { count: list.length, average: Math.round(mean * 10) / 10 };
+}

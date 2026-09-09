@@ -12,6 +12,7 @@ import {
 import { StaticProduct, ProductVideo, PRODUCTS } from '../../../../lib/products-data';
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
+import { getReviewStats } from '../../../../lib/product-reviews';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
@@ -255,6 +256,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
   const router = useRouter();
   const { addToCart } = useCart();
   const reviewsRef = useRef<HTMLDivElement>(null);
+  const reviewStats = getReviewStats(product.id);
 
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [isBuyingNow, setIsBuyingNow] = useState(false);
@@ -324,16 +326,18 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
               {product.name}
             </h1>
 
-            {/* Rating */}
-            <button
-              onClick={() => reviewsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-              style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-            >
-              <StarRating rating={product.rating} />
-              <span style={{ fontSize: 12, color: 'rgba(15,17,23,0.5)', borderBottom: '1px solid rgba(15,17,23,0.2)' }}>
-                {product.rating.toFixed(1)} ({product.reviewCount} Reviews)
-              </span>
-            </button>
+            {/* Rating — reflects the real reviews on the page; hidden until there are some. */}
+            {reviewStats.count > 0 && (
+              <button
+                onClick={() => reviewsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+              >
+                <StarRating rating={reviewStats.average} />
+                <span style={{ fontSize: 12, color: 'rgba(15,17,23,0.5)', borderBottom: '1px solid rgba(15,17,23,0.2)' }}>
+                  {reviewStats.average.toFixed(1)} ({reviewStats.count} Review{reviewStats.count !== 1 ? 's' : ''})
+                </span>
+              </button>
+            )}
 
             {/* Tagline */}
             <p style={{ fontSize: 14, color: 'rgba(15,17,23,0.6)', lineHeight: 1.75, marginBottom: 20 }}>{product.tagline}</p>

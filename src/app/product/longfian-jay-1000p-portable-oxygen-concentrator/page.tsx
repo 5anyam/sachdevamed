@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Jay1000PClient from './client';
 import { buildFAQJsonLd } from '../../../../lib/product-faqs';
+import { getReviewStats } from '../../../../lib/product-reviews';
 
 const TITLE = 'Longfian JAY-1000P Portable Oxygen Concentrator | FDA & FAA Approved | Sachdeva Medline';
 const DESCRIPTION =
@@ -103,24 +104,34 @@ const jsonLd = {
       },
     },
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '623',
-    bestRating: '5',
-    worstRating: '1',
-  },
   award: 'CE Certified · ISO 9001 · FDA Cleared · CDSCO Registered · FAA Approved',
 };
 
 const SLUG = 'longfian-jay-1000p-portable-oxygen-concentrator';
+const PID = 4;
+
+/* aggregateRating is emitted only when real reviews back it — Google issues a
+   manual action for rating markup that isn't visible on the page. */
+const stats = getReviewStats(PID);
+const productJsonLd = stats.count
+  ? {
+      ...jsonLd,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: stats.average.toString(),
+        reviewCount: stats.count.toString(),
+        bestRating: '5',
+        worstRating: '1',
+      },
+    }
+  : jsonLd;
 
 export default function Page() {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
       <script
         type="application/ld+json"

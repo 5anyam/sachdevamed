@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { StaticProduct } from '../../../lib/products-data';
+import { getReviewStats } from '../../../lib/product-reviews';
 import { Star, ChevronRight } from 'lucide-react';
 
 const GREEN = '#2D3748';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 function ProductCard({ product }: { product: StaticProduct }) {
+  const cardStats = getReviewStats(product.id);
   const discount = Math.round(((product.regularPrice - product.price) / product.regularPrice) * 100);
   return (
     <Link
@@ -36,15 +38,19 @@ function ProductCard({ product }: { product: StaticProduct }) {
         <p style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREEN, marginBottom: 6, fontWeight: 600 }}>{product.category}</p>
         <h3 style={{ fontSize: 18, fontWeight: 700, color: DARK, marginBottom: 6, lineHeight: 1.2, letterSpacing: '-0.01em' }}>{product.name}</h3>
         <p style={{ fontSize: 12, color: 'rgba(15,17,23,0.5)', marginBottom: 12, lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{product.tagline}</p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-          <div style={{ display: 'flex', gap: 2 }}>
-            {[1,2,3,4,5].map(i => <Star key={i} style={{ width: 13, height: 13, fill: i <= Math.round(product.rating) ? GREEN : '#dde8dd', color: i <= Math.round(product.rating) ? GREEN : '#dde8dd' }} />)}
+        {cardStats.count > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+            <div style={{ display: 'flex', gap: 2 }}>
+              {[1,2,3,4,5].map(i => <Star key={i} style={{ width: 13, height: 13, fill: i <= Math.round(cardStats.average) ? GREEN : '#dde8dd', color: i <= Math.round(cardStats.average) ? GREEN : '#dde8dd' }} />)}
+            </div>
+            <span style={{ fontSize: 11, color: 'rgba(15,17,23,0.4)' }}>({cardStats.count})</span>
           </div>
-          <span style={{ fontSize: 11, color: 'rgba(15,17,23,0.4)' }}>({product.reviewCount})</span>
-        </div>
+        )}
         <div style={{ marginTop: 'auto' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 12 }}>
-            <span style={{ fontSize: 24, fontWeight: 800, color: DARK, letterSpacing: '-0.02em' }}>₹{product.price.toLocaleString('en-IN')}</span>
+            {product.price > 0
+              ? <span style={{ fontSize: 24, fontWeight: 800, color: DARK, letterSpacing: '-0.02em' }}>₹{product.price.toLocaleString('en-IN')}</span>
+              : <span style={{ fontSize: 17, fontWeight: 800, color: DARK, letterSpacing: '-0.01em' }}>Price on Request</span>}
             {product.regularPrice > product.price && (
               <span style={{ fontSize: 13, color: 'rgba(15,17,23,0.35)', textDecoration: 'line-through' }}>₹{product.regularPrice.toLocaleString('en-IN')}</span>
             )}
