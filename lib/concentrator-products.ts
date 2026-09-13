@@ -81,11 +81,11 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     gallery: g('jay-5cw', ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '05.jpg']),
     highlights: [
       { icon: '💨', title: '5 L/min Flow', sub: 'Above 93% oxygen concentration' },
-      { icon: '⚖️', title: 'Only 16 Kg', sub: 'Smaller size for ease in carrying' },
-      { icon: '🌬️', title: 'Nebulizer Outlet Included', sub: 'Improved latest manufactured model' },
+      { icon: '⚖️', title: 'Only 16 kg', sub: 'Smaller size, easier to carry' },
+      { icon: '🌬️', title: 'Nebulizer Outlet Included', sub: 'The latest improved model' },
     ],
     notes: [
-      '*Full Lithium sieve beds — the same grade used by Philips',
+      '*Full lithium sieve beds — the same grade used by Philips',
       '*Product life of up to 25,000 hours',
       '*Digital display with all safety alarms',
       '*Low noise under 43 dB and low power consumption of 350W',
@@ -100,8 +100,8 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     ],
     benefits: [
       { icon: '🔬', title: 'Full Lithium Sieve Beds', text: 'Uses the same grade of lithium molecular sieve as Philips units — better oxygen yield and a longer service life than standard zeolite beds.' },
-      { icon: '🌬️', title: 'Built-in Nebulizer Outlet', text: 'The improved latest model adds a dedicated nebulizer port, so you can take nebulised medication without a separate machine.' },
-      { icon: '⚖️', title: 'Only 16 Kg', accent: 'Light & Compact', text: 'Smaller and lighter than most 5 litre concentrators, with castor wheels to move it room to room without lifting.' },
+      { icon: '🌬️', title: 'Built-in Nebulizer Outlet', text: 'The latest improved model adds a dedicated nebulizer port, so you can take nebulised medication without a separate machine.' },
+      { icon: '⚖️', title: 'Only 16 kg', accent: 'Light & Compact', text: 'Smaller and lighter than most 5 litre concentrators, with castor wheels, so it moves from room to room without lifting.' },
       { icon: '⏱️', title: 'Up to 25,000 Hours', text: 'Rated for a product life of 25,000 working hours — years of continuous daily therapy.' },
       { icon: '📊', title: 'Digital Display', text: 'Clear digital readout with all safety alarms built in — no complicated menus to learn.' },
       { icon: '🔇', title: 'Under 43 dB', text: 'Quiet enough to run beside a bed at night without disturbing sleep.' },
@@ -203,7 +203,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     benefits: [
       { icon: '📟', title: 'Purity Visible On Display', text: 'The LED panel shows live oxygen concentration, flow rate and a timing function — you can confirm the therapy is working at a glance.' },
       { icon: '🌬️', title: 'HEPA Filter & Nebuliser', text: 'An inbuilt HEPA filter cleans incoming air, and the nebuliser feature lets you take medication without a separate machine.' },
-      { icon: '💧', title: '93% ± 3% Oxygen Purity', text: 'Delivers up to 93% ±3% oxygen consistently at all flow rates, using advanced PSA molecular sieve technology.' },
+      { icon: '💧', title: '93% ± 3% Oxygen Purity', text: 'Delivers 93% ± 3% oxygen consistently at all flow rates, using advanced PSA molecular sieve technology.' },
       { icon: '🔇', title: 'Only 38 dB(A)', accent: 'Whisper Quiet', text: 'Quiet performance at ≤ 38 dB(A) — one of the quietest 5 litre concentrators, ideal for overnight use.' },
       { icon: '🔔', title: 'Safety First', text: 'Built-in alarms for low purity, high and low pressure, power failure, overheating and system failure.' },
       { icon: '👆', title: 'User-Friendly Design', text: 'Intuitive control panel, large display and an easy-to-read flowmeter — simple for elderly patients and caregivers.' },
@@ -278,8 +278,8 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     slug: 'longfian-jay-5aw-5-litres-medical-grade-oxygen-concentrator',
     name: 'Longfian JAY-5AW',
     subtitle: '5 Litre Medical Grade Oxygen Concentrator',
-    price: 0, // TODO: selling price in ₹
-    mrp: 0, // TODO: MRP in ₹
+    price: 24900,
+    mrp: 24900,
     badge: 'Most Convenient',
     frame: 'wide',
     gallery: g('jay-5aw', ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg']),
@@ -295,7 +295,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
       '*Power failure, high/low pressure, low purity and temperature alarms with LCD indicators',
       '*CE, ISO, CDSCO and FDA approved',
     ],
-    tagline: 'Designed for stable, long duration oxygen therapy in home and clinical settings',
+    tagline: 'Designed for stable, long-duration oxygen therapy in home and clinical settings',
     stats: [
       { val: '25+', lbl: 'Years of Experience', sub: 'Longfian — established 1999' },
       { val: '#1', lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer" },
@@ -386,27 +386,27 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     frame: 'square',
     gallery: g('b-1', ['08.jpg', '07.jpg', '01.jpg', '04.jpg', '02.jpg', '05.jpg', '06.jpg', '03.jpg']),
     highlights: [
-      { icon: '⚖️', title: 'Only 6.3 Kg', sub: 'The lightest concentrator in the range' },
+      { icon: '⚖️', title: 'Only 6.3 kg', sub: 'The lightest concentrator in the range' },
       { icon: '🎚️', title: '1 – 7 L Adjustable Flow', sub: '93% oxygen purity at the 1 L setting' },
       { icon: '⚡', title: 'Just 90W', sub: 'Very low running cost' },
     ],
     notes: [
-      '*Flow adjustable from 1 to 7 litres as per requirement',
+      '*Flow adjustable from 1 to 7 litres as required',
       '*Oxygen purity reaches 93% at the 1 litre setting and reduces as flow increases',
       '*Only 6.3 kg and 275 × 215 × 315 mm — fits on a bedside table',
       '*Power consumption of just 90W — runs comfortably on an inverter',
-      '*Low noise operation, suitable for home and outdoor use',
+      '*Low-noise operation, suitable for home and outdoor use',
     ],
     tagline: 'The smallest and lightest Longfian concentrator — for home, outdoor and travel use',
     stats: [
       { val: '25+', lbl: 'Years of Experience', sub: 'Longfian — established 1999' },
       { val: '#1', lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer" },
-      { val: '6.3 Kg', lbl: 'Net Weight', sub: 'Lightest in the Longfian range' },
-      { val: '90W', lbl: 'Power Draw', sub: 'Inverter and generator friendly' },
+      { val: '6.3 kg', lbl: 'Net Weight', sub: 'Lightest in the Longfian range' },
+      { val: '90W', lbl: 'Power Draw', sub: 'Inverter- and generator-friendly' },
     ],
     benefits: [
-      { icon: '⚖️', title: 'Only 6.3 Kg', accent: 'Small & Light', text: 'At 275 × 215 × 315 mm it sits comfortably on a bedside table or shelf — a fraction of the size of a standard home concentrator.' },
-      { icon: '🎚️', title: 'Flow Adjustable 1 – 7 L', text: 'A wide adjustment range so the output can be matched to what your doctor has prescribed. Oxygen concentration is highest at the lower settings.' },
+      { icon: '⚖️', title: 'Only 6.3 kg', accent: 'Small & Light', text: 'At 275 × 215 × 315 mm, it sits comfortably on a bedside table or shelf — a fraction of the size of a standard home concentrator.' },
+      { icon: '🎚️', title: 'Flow Adjustable 1 – 7 L', text: 'A wide adjustment range lets you match the output to the prescribed flow. Oxygen concentration is highest at the lower settings.' },
       { icon: '⚡', title: 'Just 90W', text: 'Draws under 90W — far less than a standard concentrator, so it runs comfortably on a home inverter during power cuts.' },
       { icon: '🏠', title: 'Home, Outdoor or Travel', text: 'Compact enough to carry between rooms, take to a relative\'s house, or use while travelling by car.' },
       { icon: '🔇', title: 'Low Noise', text: 'Quiet operation makes it comfortable to use in a bedroom or a shared living space.' },
@@ -431,7 +431,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
           ['Net Weight', '6.3 kg'],
           ['Dimensions (L × W × H)', '275 × 215 × 315 mm'],
           ['Power Consumption', '≤ 90 W'],
-          ['Noise Level', 'Low noise operation'],
+          ['Noise Level', 'Low-noise operation'],
         ],
       },
       {

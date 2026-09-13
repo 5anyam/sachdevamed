@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
+import { PRODUCTS } from '../lib/products-data';
 
 const GREEN = '#2D3748';
 const DARK = '#0F1117';
@@ -15,7 +16,7 @@ export default function Footer() {
         <div style={{ display: 'inline-flex', whiteSpace: 'nowrap', animation: 'mq-fwd 24s linear infinite' }}>
           {[...Array(2)].map((_, r) => (
             <span key={r} style={{ display: 'inline-flex' }}>
-              {['AUTHORISED LONGFIAN DEALER', 'TRUSTED SINCE 1981', 'PAN-INDIA DELIVERY', 'GENUINE PRODUCTS ONLY', 'EXPERT AFTER-SALE SERVICE'].map((t) => (
+              {['AUTHORISED LONGFIAN DEALER', 'TRUSTED SINCE 1981', 'PAN-INDIA DELIVERY', 'GENUINE PRODUCTS ONLY', 'EXPERT AFTER-SALES SERVICE'].map((t) => (
                 <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 16, padding: '0 24px', fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
                   {t}
                   <span style={{ color: GREEN, fontSize: 6 }}>◆</span>
@@ -63,10 +64,7 @@ export default function Footer() {
             <h4 style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREEN, marginBottom: 20, fontWeight: 700 }}>PRODUCTS</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                { name: 'Longfian JAY-5 (5 LPM)', to: '/product/longfian-jay-5' },
-                { name: 'Longfian JAY-10 (10 LPM)', to: '/product/longfian-jay-10' },
-                { name: 'Longfian JAY-5W (Wheels)', to: '/product/longfian-jay-5w' },
-                { name: 'Electric Recliner Bed', to: '/product/electric-recliner-bed' },
+                ...PRODUCTS.map((p) => ({ name: p.name, to: `/product/${p.slug}` })),
                 { name: 'All Products', to: '/shop' },
               ].map(({ name, to }) => (
                 <li key={name}>

@@ -2,42 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-
-type Product = {
-  id: number;
-  name: string;
-  slug: string;
-  url: string;
-  image?: string;
-  price?: string;
-};
-
-const CATALOG: Product[] = [
-  {
-    id: 85,
-    name: 'Advanced Liver Detox',
-    slug: 'advanced-liver-detox',
-    url: 'https://www.amraj.in/product/advanced-liver-detox',
-    image: 'https://cms.amraj.in/wp-content/uploads/2025/07/IMG_6762-scaled.jpg',
-    price: '₹1,499'
-  },
-  {
-    id: 86,
-    name: 'Advanced Prostate Care',
-    slug: 'advanced-prostate-care',
-    url: 'https://www.amraj.in/product/advanced-prostate-care',
-    image: 'https://cms.amraj.in/wp-content/uploads/2025/06/IMG_6765-1-scaled.jpg',
-    price: '₹1,799'
-  },
-  {
-    id: 87,
-    name: 'Weight Management Pro',
-    slug: 'weight-management-pro',
-    url: 'https://www.amraj.in/product/weight-management-pro',
-    image: 'https://cms.amraj.in/wp-content/uploads/2025/06/IMG_6768-1-scaled.jpg',
-    price: '₹1,599'
-  }
-];
+import { PRODUCTS } from '../../../lib/products-data';
 
 function getQuery(): string {
   if (typeof window === 'undefined') return '';
@@ -56,12 +21,15 @@ export default function SearchPage() {
   }, []);
 
   const results = useMemo(() => {
-    if (!query) return CATALOG;
-    const q = query.toLowerCase();
-    return CATALOG.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      p.slug.toLowerCase().includes(q)
-    );
+    if (!query) return PRODUCTS;
+    // Every word must match somewhere, so "jay 5" and "portable oxygen" both work.
+    const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    const escape = (w: string) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return PRODUCTS.filter((p) => {
+      const title = `${p.name} ${p.slug} ${p.category}`.toLowerCase();
+      const tagline = p.tagline.toLowerCase();
+      return words.every((w) => title.includes(w) || new RegExp(`\\b${escape(w)}\\b`).test(tagline));
+    });
   }, [query]);
 
   return (
@@ -72,20 +40,27 @@ export default function SearchPage() {
       </p>
 
       {results.length === 0 ? (
-        <p className="text-gray-500">No products found.</p>
+        <div className="py-10">
+          <p className="text-gray-500 mb-4">No products found for &ldquo;{query}&rdquo;.</p>
+          <Link href="/shop" className="text-sm font-semibold text-gray-900 underline">
+            View all products
+          </Link>
+        </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {results.map(p => (
-            <article key={p.id} className="border rounded-xl overflow-hidden hover:shadow-lg transition">
-              <Link href={p.url} target="_blank" className="block">
-                <div className="aspect-[4/3] bg-gray-100">
-                  {p.image ? (
-                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
-                  ) : null}
+          {results.map((p) => (
+            <article key={p.id} className="border rounded-xl overflow-hidden hover:shadow-lg transition bg-white">
+              <Link href={`/product/${p.slug}`} className="block">
+                <div className="aspect-[4/3] bg-gray-50">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.images[0]} alt={p.name} className="w-full h-full object-contain p-3" loading="lazy" />
                 </div>
                 <div className="p-3">
+                  <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">{p.category}</p>
                   <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">{p.name}</h3>
-                  {p.price && <div className="text-teal-600 font-semibold text-sm mt-1">{p.price}</div>}
+                  <div className="text-gray-900 font-semibold text-sm mt-1">
+                    {p.price > 0 ? `₹${p.price.toLocaleString('en-IN')}` : 'Price on Request'}
+                  </div>
                 </div>
               </Link>
             </article>

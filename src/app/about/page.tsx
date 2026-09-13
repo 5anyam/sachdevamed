@@ -44,7 +44,7 @@ export default function AboutPage() {
               Sachdeva Medline is a major medical supplies importer and wholesaler based in Delhi. Founded in 1981 by Mr. S.K. Sachdeva, we have spent over 45 years building trust with hospitals, clinics, and home-care patients across India.
             </p>
             <p style={{ fontSize: 14, color: 'rgba(15,17,23,0.65)', lineHeight: 1.85, marginBottom: 28 }}>
-              We are the authorised dealer for <strong style={{ color: DARK }}>Longfian oxygen concentrators</strong> and supply a wide range of medical equipment — from oxygen therapy devices to patient care beds — all backed by genuine warranties and expert after-sale service.
+              We are the authorised dealer for <strong style={{ color: DARK }}>Longfian oxygen concentrators</strong> and supply a wide range of medical equipment — from oxygen therapy devices to patient care beds — all backed by genuine warranties and expert after-sales service.
             </p>
             <div style={{ display: 'flex', gap: 16 }}>
               <Link href="/shop" style={{ background: GREEN, color: '#fff', padding: '12px 24px', borderRadius: 8, fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s', boxShadow: `0 4px 14px rgba(61,170,53,0.3)` }}
@@ -121,11 +121,11 @@ export default function AboutPage() {
           </div>
           <div className="why-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
             {[
-              { icon: BadgeCheck, title: 'Authorised Dealer', desc: 'Official authorised dealer for Longfian Science — every unit is brand new, sealed, with full manufacturer warranty.' },
+              { icon: BadgeCheck, title: 'Authorised Dealer', desc: 'Official authorised dealer for Longfian Scitech — every unit is brand new, sealed and backed by a full manufacturer’s warranty.' },
               { icon: HeartPulse, title: 'Expert Guidance', desc: 'Our trained team helps you choose the right equipment for your prescription, condition, and budget — without any sales pressure.' },
               { icon: Truck, title: 'Pan-India Delivery', desc: 'Fast, insured delivery across 500+ cities in India. Dispatched within 24 hours with real-time tracking.' },
-              { icon: Wrench, title: 'After-Sale Service', desc: 'Dedicated service support for maintenance, spare parts, and troubleshooting — long after your purchase.' },
-              { icon: ShieldCheck, title: 'Genuine Products Only', desc: 'Every product comes with original documentation, warranty card, and manufacturer seal. No refurbished or grey-market goods.' },
+              { icon: Wrench, title: 'After-Sales Service', desc: 'Dedicated service support for maintenance, spare parts, and troubleshooting — long after your purchase.' },
+              { icon: ShieldCheck, title: 'Genuine Products Only', desc: 'Every product comes with original documentation, a warranty card and the manufacturer’s seal. No refurbished or grey-market goods.' },
               { icon: Phone, title: 'Always Reachable', desc: 'Call or WhatsApp us — our team is available to guide you through setup, troubleshooting, or any product queries.' },
             ].map((item, i) => (
               <div key={i} style={{ background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 12, padding: '32px 28px', boxShadow: '0 2px 8px rgba(61,170,53,0.05)', transition: 'box-shadow 0.2s, transform 0.2s' }}

@@ -31,8 +31,8 @@ export const PRODUCTS: StaticProduct[] = [
   {
     id: 1,
     slug: 'longfian-jay-5-5-litres-medical-grade-oxygen-concentrator',
-    name: 'Longfian Jay-5',
-    shortName: 'Longfian Jay-5',
+    name: 'Longfian JAY-5',
+    shortName: 'Longfian JAY-5',
     tagline: '5 LPM medical-grade oxygen concentrator — reliable, quiet & 24/7 capable',
     price: 24900,
     regularPrice: 24900,
@@ -63,8 +63,8 @@ export const PRODUCTS: StaticProduct[] = [
   {
     id: 2,
     slug: 'longfian-jay-5aw-5-litres-medical-grade-oxygen-concentrator',
-    name: 'Longfian Jay-5AW',
-    shortName: 'Longfian Jay-5AW',
+    name: 'Longfian JAY-5AW',
+    shortName: 'Longfian JAY-5AW',
     tagline: '5 LPM concentrator with built-in wheels & humidifier — mobility meets comfort',
     price: 24900,
     regularPrice: 24900,
@@ -130,9 +130,9 @@ export const PRODUCTS: StaticProduct[] = [
     slug: 'longfian-jay-1000p-portable-oxygen-concentrator',
     name: 'Longfian JAY-1000P',
     shortName: 'JAY-1000P',
-    tagline: 'FDA & FAA approved portable oxygen concentrator — 1.98 kg, fly anywhere, all-day battery',
-    price: 45000, // TODO: update price
-    regularPrice: 52000, // TODO: update MRP
+    tagline: 'FDA & FAA approved portable oxygen concentrator — 1.98 kg, fly anywhere, up to 10 hours of battery backup',
+    price: 95000,
+    regularPrice: 149000,
     images: [
       // Product shots
       'https://drive.google.com/thumbnail?id=1PMlRVzIuLxUaFu6tC-GPJL8H8tolqD0T&sz=w1200',
@@ -188,7 +188,7 @@ export const PRODUCTS: StaticProduct[] = [
     slug: 'longfian-jay-5cw-oxygen-concentrator',
     name: 'Longfian JAY-5CW',
     shortName: 'Longfian JAY-5CW',
-    tagline: '5 LPM concentrator with nebulizer outlet and full lithium sieve beds - only 16 kg',
+    tagline: '5 LPM concentrator with nebulizer outlet and full lithium sieve beds — only 16 kg',
     price: 0,
     regularPrice: 0,
     images: [
@@ -198,13 +198,13 @@ export const PRODUCTS: StaticProduct[] = [
     ],
     benefits: [
       'Above 93% oxygen concentration at up to 5 litres per minute',
-      'Built-in nebulizer outlet - take nebulised medication without a second machine',
+      'Built-in nebulizer outlet — take nebulised medication without a second machine',
       'Full lithium sieve beds, the same grade used by Philips units',
-      'Only 16 kg with castor wheels - easy to move room to room',
+      'Only 16 kg with castor wheels — easy to move room to room',
       'Low noise under 43 dB and low power consumption of 350W',
     ],
     ingredients: [
-      { name: 'Flow Rate', dose: '0-5 LPM', benefit: 'Adjustable to the prescribed rate' },
+      { name: 'Flow Rate', dose: '0–5 LPM', benefit: 'Adjustable to the prescribed rate' },
       { name: 'Oxygen Purity', dose: 'Above 93%', benefit: 'Medical-grade oxygen output' },
       { name: 'Net Weight', dose: '16 kg', benefit: 'Lighter than most 5 litre units' },
       { name: 'Noise Level', dose: 'Under 43 dB', benefit: 'Quiet enough for bedroom use' },
@@ -232,15 +232,15 @@ export const PRODUCTS: StaticProduct[] = [
     benefits: [
       'Live oxygen concentration, flow rate and running hours shown on the LED display',
       'Inbuilt HEPA filter and nebuliser feature in a single unit',
-      '93% plus/minus 3% oxygen purity at every flow rate',
-      'Whisper quiet at 38 dB(A) - among the quietest 5 litre units available',
+      '93% ± 3% oxygen purity at every flow rate',
+      'Whisper quiet at 38 dB(A) — among the quietest 5 litre units available',
       'Full alarm set: low purity, high/low pressure, power failure, overheat',
     ],
     ingredients: [
-      { name: 'Flow Rate', dose: '0-5 L/min', benefit: 'Adjustable to the prescribed rate' },
-      { name: 'Oxygen Purity', dose: '93% +/- 3%', benefit: 'Consistent at all flow rates' },
+      { name: 'Flow Rate', dose: '0–5 L/min', benefit: 'Adjustable to the prescribed rate' },
+      { name: 'Oxygen Purity', dose: '93% ± 3%', benefit: 'Consistent at all flow rates' },
       { name: 'Noise Level', dose: '38 dB(A)', benefit: 'Quieter than a library' },
-      { name: 'Dimensions', dose: '36 x 28 x 65 cm', benefit: 'Compact floor footprint' },
+      { name: 'Dimensions', dose: '36 × 28 × 65 cm', benefit: 'Compact floor footprint' },
       { name: 'Warranty', dose: '2 Years', benefit: 'Or 8,000 working hours' },
     ],
     howToUse:
@@ -254,7 +254,7 @@ export const PRODUCTS: StaticProduct[] = [
     slug: 'longfian-b-1-oxygen-concentrator',
     name: 'Longfian B-1',
     shortName: 'Longfian B-1',
-    tagline: 'Compact 6.3 kg concentrator with 1-7 litre adjustable flow - just 90W',
+    tagline: 'Compact 6.3 kg concentrator with 1–7 litre adjustable flow — just 90W',
     price: 0,
     regularPrice: 0,
     images: [
@@ -263,18 +263,18 @@ export const PRODUCTS: StaticProduct[] = [
       '/products/b-1/01.jpg',
     ],
     benefits: [
-      'Only 6.3 kg and 275 x 215 x 315 mm - fits on a bedside table',
+      'Only 6.3 kg and 275 × 215 × 315 mm — fits on a bedside table',
       'Flow adjustable from 1 to 7 litres as per requirement',
       '93% oxygen concentration at the 1 litre setting',
-      'Draws under 90W - runs comfortably on a home inverter',
+      'Draws under 90W — runs comfortably on a home inverter',
       'Low noise operation, suitable for home, outdoor and travel use',
     ],
     ingredients: [
-      { name: 'Flow Rate', dose: '1-7 L/min', benefit: 'Wide adjustable range' },
+      { name: 'Flow Rate', dose: '1–7 L/min', benefit: 'Wide adjustable range' },
       { name: 'Oxygen Purity', dose: '93% at 1 L', benefit: 'Highest at the lower settings' },
       { name: 'Net Weight', dose: '6.3 kg', benefit: 'Lightest in the Longfian range' },
       { name: 'Power Draw', dose: '90 W', benefit: 'Inverter and generator friendly' },
-      { name: 'Dimensions', dose: '275 x 215 x 315 mm', benefit: 'Tabletop footprint' },
+      { name: 'Dimensions', dose: '275 × 215 × 315 mm', benefit: 'Tabletop footprint' },
     ],
     howToUse:
       'Place on a firm, flat surface with clear space around the air intake. Connect the nasal cannula to the outlet port and set the flow using the control dial as prescribed by your doctor. Oxygen concentration is highest at the lower flow settings. Clean the filter every 2 weeks.',

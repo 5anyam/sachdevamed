@@ -8,6 +8,7 @@ import { useAuth } from '../lib/auth-context';
 import React, { useState, useRef, useEffect } from 'react';
 import { FiSearch, FiUser, FiMenu, FiX } from 'react-icons/fi';
 import { BiChevronDown } from 'react-icons/bi';
+import { PRODUCTS } from '../lib/products-data';
 
 const GREEN = '#2D3748';
 
@@ -17,10 +18,8 @@ const navItems = [
     name: 'Products',
     to: '/shop',
     submenu: [
-      { name: 'Longfian JAY-5 (5 LPM)', to: '/product/longfian-jay-5' },
-      { name: 'Longfian JAY-10 (10 LPM)', to: '/product/longfian-jay-10' },
-      { name: 'Longfian JAY-5W (Wheels)', to: '/product/longfian-jay-5w' },
-      { name: 'Electric Recliner Bed', to: '/product/electric-recliner-bed' },
+      ...PRODUCTS.map((p) => ({ name: p.name, to: `/product/${p.slug}` })),
+      { name: 'All Products', to: '/shop' },
     ],
   },
   { name: 'About Us', to: '/about' },

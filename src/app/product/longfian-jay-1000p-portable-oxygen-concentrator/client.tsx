@@ -9,6 +9,7 @@ import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star } from 
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 import { getReviewStats } from '../../../../lib/product-reviews';
+import ExperienceRibbon from '../../../../components/ExperienceRibbon';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
@@ -72,11 +73,7 @@ function Gallery() {
             <Image src={src} alt={i === 0 ? PNAME : `${PNAME} — feature ${i}`} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority={i === 0} />
           </div>
         ))}
-        {main === 0 && (
-          <span style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, background: DARK, color: '#fff', fontSize: 10, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '7px 12px', borderRadius: 5, boxShadow: '0 2px 10px rgba(0,0,0,0.18)' }}>
-            25+ Years of Experience
-          </span>
-        )}
+        <ExperienceRibbon />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8, marginTop: 10 }}>
         {GALLERY.map((src, i) => (
@@ -121,39 +118,152 @@ function BenefitCard({ children }: { children: React.ReactNode }) {
 }
 
 
-/* Local product video — autoplays muted when scrolled into view, pauses when scrolled away.
-   Only one video plays at a time: whenever one starts, every other <video> on the page is paused. */
+/* Scroll-driven playback for the product videos. Exactly one video plays at a time:
+   whichever is most fully in view. Browsers block audio until the visitor
+   has tapped the page, so a video can start muted; the first tap anywhere turns its
+   sound on, and every video after that starts unmuted. */
+const videoPlayer = (() => {
+  const visiblePx = new Map<HTMLVideoElement, number>();
+  const selfPaused = new WeakSet<HTMLVideoElement>();
+  const userPaused = new WeakSet<HTMLVideoElement>();
+  const autoMuted = new WeakSet<HTMLVideoElement>();
+  let userWantsMute = false;
+  let listening = false;
+
+  const pauseQuietly = (v: HTMLVideoElement) => {
+    if (v.paused) return;
+    selfPaused.add(v);
+    v.pause();
+  };
+
+  const start = (v: HTMLVideoElement) => {
+    if (!v.paused) return;
+    v.muted = userWantsMute;
+    v.play().catch(() => {
+      autoMuted.add(v);
+      v.muted = true;
+      v.play().catch(() => {});
+    });
+  };
+
+  // Score is the share of the video on screen (capped at the viewport for tall videos),
+  // so a short landscape video fully in view beats a tall one that is half visible.
+  // Near-ties go to the video closest to the middle of the screen.
+  const pick = () => {
+    const vh = window.innerHeight;
+    let best: HTMLVideoElement | null = null;
+    let bestScore = 0;
+    let bestOffset = Infinity;
+    for (const [v, px] of visiblePx) {
+      if (px === 0 || userPaused.has(v)) continue;
+      const r = v.getBoundingClientRect();
+      const score = Math.min(1, px / Math.min(r.height, vh));
+      if (score < 0.5) continue;
+      const offset = Math.abs(r.top + r.height / 2 - vh / 2);
+      if (score > bestScore + 0.05 || (Math.abs(score - bestScore) <= 0.05 && offset < bestOffset)) {
+        best = v;
+        bestScore = score;
+        bestOffset = offset;
+      }
+    }
+    for (const v of visiblePx.keys()) if (v !== best) pauseQuietly(v);
+    if (best) start(best);
+  };
+
+  // `click` / `keydown` carry user activation, so unmuting inside them is allowed.
+  const onGesture = (e: Event) => {
+    if ((e.target as Element | null)?.closest?.('video')) return;
+    for (const v of visiblePx.keys()) {
+      if (autoMuted.has(v) && !v.paused) {
+        autoMuted.delete(v);
+        v.muted = false;
+      }
+    }
+  };
+
+  return {
+    isAutoMuted: (v: HTMLVideoElement) => autoMuted.has(v),
+    register(v: HTMLVideoElement) {
+      if (!listening) {
+        listening = true;
+        document.addEventListener('click', onGesture);
+        document.addEventListener('keydown', onGesture);
+      }
+      const onPlay = () => {
+        userPaused.delete(v);
+        for (const o of visiblePx.keys()) if (o !== v) pauseQuietly(o);
+      };
+      const onPause = () => {
+        if (selfPaused.has(v)) selfPaused.delete(v);
+        else userPaused.add(v);
+      };
+      const onVolume = () => {
+        if (!v.muted) {
+          autoMuted.delete(v);
+          userWantsMute = false;
+        } else if (!autoMuted.has(v)) {
+          userWantsMute = true;
+        }
+      };
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          const px = entry.isIntersecting ? entry.intersectionRect.height : 0;
+          visiblePx.set(v, px);
+          if (px === 0) userPaused.delete(v);
+          pick();
+        },
+        { threshold: Array.from({ length: 21 }, (_, i) => i / 20) },
+      );
+      v.addEventListener('play', onPlay);
+      v.addEventListener('pause', onPause);
+      v.addEventListener('volumechange', onVolume);
+      visiblePx.set(v, 0);
+      io.observe(v);
+      return () => {
+        io.disconnect();
+        visiblePx.delete(v);
+        v.removeEventListener('play', onPlay);
+        v.removeEventListener('pause', onPause);
+        v.removeEventListener('volumechange', onVolume);
+      };
+    },
+  };
+})();
+
 function LocalVideo({ src, vertical }: { src: string; vertical?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const [needsTap, setNeedsTap] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    el.muted = true;
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) el.play().catch(() => {});
-      else el.pause();
-    }, { threshold: 0.4 });
-    obs.observe(el);
-    return () => obs.disconnect();
+    const sync = () => setNeedsTap(!el.paused && el.muted && videoPlayer.isAutoMuted(el));
+    const events = ['play', 'pause', 'volumechange'];
+    events.forEach((t) => el.addEventListener(t, sync));
+    const unregister = videoPlayer.register(el);
+    return () => {
+      events.forEach((t) => el.removeEventListener(t, sync));
+      unregister();
+    };
   }, []);
-  const pauseOthers = () => {
-    document.querySelectorAll('video').forEach(v => {
-      if (v !== ref.current && !v.paused) v.pause();
-    });
-  };
   return (
     <div style={{ position: 'relative', width: '100%', paddingBottom: vertical ? '177.78%' : '56.25%', borderRadius: vertical ? 12 : 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)', background: '#000' }}>
       <video
         ref={ref}
         src={src}
-        muted
         loop
         playsInline
         controls
         preload="metadata"
-        onPlay={pauseOthers}
         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
       />
+      {needsTap && (
+        <button
+          onClick={() => { if (ref.current) ref.current.muted = false; }}
+          style={{ position: 'absolute', top: 12, left: '50%', transform: 'translateX(-50%)', zIndex: 2, background: 'rgba(15,17,23,0.78)', color: '#fff', border: '1px solid rgba(255,255,255,0.25)', borderRadius: 999, padding: '8px 16px', fontSize: 12, fontWeight: 700, letterSpacing: '0.04em', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}
+        >
+          🔊 Tap for sound
+        </button>
+      )}
     </div>
   );
 }
@@ -251,11 +361,11 @@ export default function Jay1000PClient() {
               <div style={{ background: '#EAECF0', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 0 }}>
                 {[
                   { icon: '✈️', title: 'FAA Approved',                    sub: 'Can be taken on any flight' },
-                  { icon: '⚖️', title: '1.98 Kg',                        sub: 'Ultra Light Weight' },
+                  { icon: '⚖️', title: '1.98 kg',                        sub: 'Ultra-Lightweight' },
                   { icon: '🔋🔋', title: '2 Batteries Included in the Box', sub: null },
                 ].map((h, i, arr) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '11px 2px', borderBottom: i < arr.length - 1 ? '1px solid rgba(45,55,72,0.12)' : 'none' }}>
-                    <span style={{ fontSize: 18, flexShrink: 0, width: 26, textAlign: 'center', marginTop: 1 }}>{h.icon}</span>
+                    <span style={{ fontSize: 18, flexShrink: 0, minWidth: 26, whiteSpace: 'nowrap', textAlign: 'center', marginTop: 1 }}>{h.icon}</span>
                     <div>
                       <p style={{ fontSize: 14, fontWeight: 700, color: DARK, lineHeight: 1.25 }}>{h.title}</p>
                       {h.sub && <p style={{ fontSize: 12, color: GREY, lineHeight: 1.4, marginTop: 2 }}>{h.sub}</p>}
@@ -266,10 +376,10 @@ export default function Jay1000PClient() {
               <div style={{ background: '#D1D5DB', padding: '10px 14px', borderTop: '1.5px solid rgba(45,55,72,0.15)' }}>
                 {[
                   '*CE, ISO, FDA, CDSCO and FAA approved — permitted on all commercial flights worldwide',
-                  '*Pulse dose model with settings from 1 to 5 as per patient\'s requirement',
+                  '*Pulse dose model with settings from 1 to 5 as per the patient\'s requirement',
                   '*93% ± 3% oxygen concentration at all flow settings',
                   '*Only 1.98 kg — lighter than most laptops, fits in the air-vented shoulder bag',
-                  '*Comes with car charger, 2 spare filters, all standard accessories and 2 rechargeable batteries',
+                  '*Comes with a car charger, 2 spare filters, all standard accessories and 2 rechargeable batteries',
                 ].map((line, i) => (
                   <p key={i} style={{ fontSize: 11, color: '#374151', lineHeight: 1.65, marginBottom: i < 4 ? 2 : 0 }}>{line}</p>
                 ))}
@@ -278,7 +388,7 @@ export default function Jay1000PClient() {
 
             {/* #5 — tagline below box */}
             <p style={{ fontSize: 13, fontWeight: 600, color: ACC, lineHeight: 1.6, marginBottom: 20, marginTop: 12 }}>
-              Lightest and most affordable FAA (flight) approved portable oxygen concentrator available in India
+              The lightest and most affordable FAA (flight) approved portable oxygen concentrator available in India
             </p>
 
             {/* price */}
@@ -314,7 +424,7 @@ export default function Jay1000PClient() {
               {[
                 { icon: Truck,       title: 'Free Delivery',     sub: 'All over India' },
                 { icon: Package,     title: 'Delivery Time',     sub: '3–5 business days' },
-                { icon: RotateCcw,   title: 'Easy Returns',      sub: '7 Days Return Policy' },
+                { icon: RotateCcw,   title: 'Easy Returns',      sub: '7-Day Return Policy' },
                 { icon: ShieldCheck, title: '2-Year Warranty',   sub: '(1 Year on Batteries and Sieve Beds)' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
@@ -339,7 +449,7 @@ export default function Jay1000PClient() {
               { val: '25+',  lbl: 'Years of Experience',  sub: 'Longfian — established 1999' },
               { val: '#1',   lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer" },
             ].map((s, i) => (
-              <div key={i} style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
+              <div key={i} className="stat-cell" style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
                 <p style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
                 <p style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 3 }}>{s.lbl}</p>
                 <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{s.sub}</p>
@@ -352,7 +462,7 @@ export default function Jay1000PClient() {
               { val: '93% ± 3%', lbl: 'Oxygen Purity',  sub: 'Medical-grade PSA technology' },
               { val: '≤48 dB',   lbl: 'Noise Level',     sub: 'Quieter than a conversation' },
             ].map((s, i) => (
-              <div key={i} style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+              <div key={i} className="stat-cell" style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                 <p style={{ fontSize: 'clamp(22px,3vw,40px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
                 <p style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 3 }}>{s.lbl}</p>
                 <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{s.sub}</p>
@@ -383,7 +493,7 @@ export default function Jay1000PClient() {
                 <Image src="/longfianlogo.jpeg" alt="Longfian" width={162} height={30} style={{ height: 30, width: 'auto', objectFit: 'contain' }} />
               </div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Over 25 Years of Experience</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Longfian is the world&apos;s biggest manufacturer for oxygen concentrators with decades of experience.</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Longfian is the world&apos;s biggest manufacturer of oxygen concentrators with decades of experience.</p>
             </BenefitCard>
 
             <BenefitCard>
@@ -394,28 +504,28 @@ export default function Jay1000PClient() {
 
             <BenefitCard>
               <div style={{ fontSize: 28, marginBottom: 12 }}>⚖️</div>
-              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 4 }}>Only 1.98 Kg</h3>
-              <p style={{ fontSize: 12, fontWeight: 600, color: ACC, marginBottom: 6 }}>Ultra Light Weight</p>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with shoulder bag for ease in carrying during travel.</p>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 4 }}>Only 1.98 kg</h3>
+              <p style={{ fontSize: 12, fontWeight: 600, color: ACC, marginBottom: 6 }}>Ultra-Lightweight</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with a shoulder bag for easy carrying while travelling.</p>
             </BenefitCard>
 
             <BenefitCard>
               <div style={{ fontSize: 28, marginBottom: 12 }}>🔋🔋</div>
-              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Upto 10 Hours Battery Backup</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with 2 lithium ion rechargeable batteries.</p>
-              <p style={{ fontSize: 11, color: GREY, lineHeight: 1.5, marginTop: 6, fontStyle: 'italic' }}>(Battery backup time varies as per flow setting)</p>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Up to 10 Hours of Battery Backup</h3>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with 2 rechargeable lithium-ion batteries.</p>
+              <p style={{ fontSize: 11, color: GREY, lineHeight: 1.5, marginTop: 6, fontStyle: 'italic' }}>(Battery backup time varies with the flow setting)</p>
             </BenefitCard>
 
             <BenefitCard>
               <div style={{ fontSize: 28, marginBottom: 12 }}>💧</div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>93% ± 3% Oxygen Purity</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Advanced PSA Molecular sieve technology for above 93% oxygen concentration in every breath, every time.</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Advanced PSA molecular sieve technology delivers above 93% oxygen concentration in every breath, every time.</p>
             </BenefitCard>
 
             <BenefitCard>
               <div style={{ fontSize: 28, marginBottom: 12 }}>🔇</div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Whisper Quiet</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>At under 48 dB — it is quieter than a normal conversation / library.</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>At under 48 dB, it is quieter than a normal conversation and close to library-quiet.</p>
             </BenefitCard>
 
             <BenefitCard>
@@ -433,7 +543,7 @@ export default function Jay1000PClient() {
             <BenefitCard>
               <div style={{ fontSize: 28, marginBottom: 12 }}>🔔</div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Safety Alarms</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Audio and visual alarms for low battery, low oxygen concentration, high / low pressure and other issues.</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Audio and visual alarms for low battery, low oxygen concentration, high/low pressure and other issues.</p>
             </BenefitCard>
 
           </div>
@@ -446,7 +556,7 @@ export default function Jay1000PClient() {
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <H2 light>BATTERY BACKUP TIME</H2>
             <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8 }}>
-              Backup time varies as per the pulse flow setting. Double battery (2 batteries included in the box).
+              Backup time varies with the pulse flow setting. Two batteries are included in the box.
             </p>
           </div>
           <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.12)' }}>
@@ -600,7 +710,7 @@ export default function Jay1000PClient() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
               { period: '2 Years', item: 'Main Concentrator Unit',  note: 'Full parts & service coverage' },
-              { period: '1 Year',  item: 'Rechargeable Batteries',  note: 'Both batteries included in box' },
+              { period: '1 Year',  item: 'Rechargeable Batteries',  note: 'Both batteries included in the box' },
               { period: '1 Year',  item: 'Molecular Sieve Beds',    note: 'Core filtration component' },
             ].map((w, i) => (
               <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 16px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10 }}>
@@ -701,6 +811,8 @@ export default function Jay1000PClient() {
           .more-grid      { grid-template-columns: 1fr !important; }
           .shorts-grid    { grid-template-columns: 1fr !important; gap: 20px !important; max-width: 72% !important; }
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
+          .stat-cell { border-right: none !important; }
+          .stats-row1 .stat-cell + .stat-cell { border-top: 1px solid rgba(255,255,255,0.1); }
         }
       `}</style>
     </div>

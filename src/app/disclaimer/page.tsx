@@ -31,7 +31,7 @@ export default function DisclaimerPage() {
         </Section>
 
         <Section title="2. Product Use Disclaimer">
-          <p>Sachdeva Medline is an authorised dealer and reseller of medical equipment. We are not the manufacturer. Product performance, safety certifications, and clinical claims are the responsibility of the respective manufacturers (e.g., Longfian Science Co. Ltd.).</p>
+          <p>Sachdeva Medline is an authorised dealer and reseller of medical equipment. We are not the manufacturer. Product performance, safety certifications, and clinical claims are the responsibility of the respective manufacturers (e.g., Longfian Scitech Co., Ltd.).</p>
           <p style={{ marginTop: 12 }}>Sachdeva Medline is not liable for any harm or adverse effects resulting from improper use, self-medication, or use without medical supervision.</p>
         </Section>
 
@@ -48,7 +48,7 @@ export default function DisclaimerPage() {
         </Section>
 
         <Section title="6. Contact">
-          <p>If you have questions about this disclaimer, contact us:</p>
+          <p>If you have any questions about this disclaimer, please contact us:</p>
           <ul style={{ paddingLeft: 20, marginTop: 10, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 4 }}>
             <li><strong>Email:</strong> info@sachdevamedline.com</li>
             <li><strong>Phone:</strong> +91 98915 21090</li>

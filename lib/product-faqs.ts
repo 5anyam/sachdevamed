@@ -19,7 +19,7 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'How long does the battery last on a single charge?',
     answer:
-      'As a battery operated oxygen concentrator, backup depends on your pulse flow setting. On a single battery you get approximately 5 hours at Flow 1, 3 hours 50 minutes at Flow 2, 3 hours at Flow 3, 2 hours at Flow 4 and 1 hour 40 minutes at Flow 5. Two batteries are included in the box, which doubles these timings — up to about 10 hours at Flow Setting 1. Values are approximate and vary with usage pattern and battery age.',
+      'Because the JAY-1000P is a battery operated oxygen concentrator, its backup time depends on your pulse flow setting. On a single battery you get approximately 5 hours at Flow 1, 3 hours 50 minutes at Flow 2, 3 hours at Flow 3, 2 hours at Flow 4 and 1 hour 40 minutes at Flow 5. Two batteries are included in the box, which doubles these timings — up to about 10 hours at Flow Setting 1. Values are approximate and vary with usage pattern and battery age.',
   },
   {
     question: 'Is it a rechargeable oxygen concentrator? How long does charging take?',
@@ -39,7 +39,7 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'Do I need a doctor\'s prescription to buy it?',
     answer:
-      'Yes. An oxygen concentrator is a prescription medical device and should be used only under the guidance of a qualified physician. Your doctor will confirm whether pulse-dose delivery is appropriate for you and specify the flow setting and duration of use. Patients who need a fixed continuous flow (for example during sleep, or at higher oxygen requirements) may be advised a stationary home concentrator instead.',
+      'Yes. An oxygen concentrator is a prescription medical device and should be used only under the guidance of a qualified physician. Your doctor will confirm whether pulse-dose delivery is appropriate for you and specify the flow setting and duration of use. Patients who need a fixed continuous flow (for example during sleep, or at higher oxygen requirements) may be advised to use a stationary home concentrator instead.',
   },
   {
     question: 'What oxygen purity does it deliver?',
@@ -116,9 +116,9 @@ const homeOxygenConcentrator: FAQ[] = [
       "Yes. All Longfian oxygen concentrators sold by Sachdeva Medline come with the manufacturer's warranty covering manufacturing defects, and we assist with all warranty claims from day one. Please retain the warranty card included with your product.",
   },
   {
-    question: 'Do you provide after-sale support and servicing?',
+    question: 'Do you provide after-sales support and servicing?',
     answer:
-      'Yes. Sachdeva Medline provides comprehensive after-sale support including setup guidance, usage training and service assistance through 15+ service centres across India. You can reach us at +91 98915 21090 or +91 99110 06187.',
+      'Yes. Sachdeva Medline provides comprehensive after-sales support including setup guidance, usage training and service assistance through 15+ service centres across India. You can reach us at +91 98915 21090 or +91 99110 06187.',
   },
   {
     question: 'Can I use it for multiple family members?',

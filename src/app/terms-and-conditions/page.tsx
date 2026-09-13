@@ -30,7 +30,7 @@ export default function TermsAndConditionsPage() {
         </Section>
 
         <Section title="3. Order Placement & Confirmation">
-          <p>Placing an order does not constitute a confirmed sale until we send you an order confirmation. We reserve the right to cancel any order in case of pricing errors, out-of-stock situations, or suspected fraudulent activity. For Cash on Delivery (COD) orders, we may make verification calls before dispatch.</p>
+          <p>Placing an order does not constitute a confirmed sale until we send you an order confirmation. We reserve the right to cancel any order in case of pricing errors, out-of-stock situations, or suspected fraudulent activity. We do not offer Cash on Delivery (COD); all orders are prepaid online.</p>
         </Section>
 
         <Section title="4. Delivery">

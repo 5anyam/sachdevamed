@@ -121,7 +121,7 @@ function HeroSection() {
           </h1>
 
           <p style={{ fontSize: 15, fontWeight: 300, color: 'rgba(255,255,255,0.6)', lineHeight: 1.85, maxWidth: 420, marginBottom: 36 }}>
-            India&apos;s authorised dealer for <strong style={{ color: GREEN, fontWeight: 600 }}>Longfian Oxygen Concentrators</strong>. Genuine products, expert support, and pan-India delivery — straight to your doorstep.
+            India&apos;s authorised dealer for <strong style={{ color: GREEN, fontWeight: 600 }}>Longfian oxygen concentrators</strong>. Genuine products, expert support, and pan-India delivery — straight to your doorstep.
           </p>
 
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 40 }}>
@@ -144,7 +144,7 @@ function HeroSection() {
             {[
               { icon: BadgeCheck, label: 'Authorised Dealer' },
               { icon: Truck, label: 'Pan-India Delivery' },
-              { icon: Wrench, label: 'After-Sale Service' },
+              { icon: Wrench, label: 'After-Sales Service' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 7, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', padding: '7px 14px', borderRadius: 6 }}>
                 <item.icon style={{ width: 14, height: 14, color: GREEN }} />
@@ -231,7 +231,7 @@ function TrustBar() {
     { icon: BadgeCheck, label: 'NO COD Option' },
     { icon: ShieldCheck, label: 'ISO Certified Products' },
     { icon: Truck, label: 'Free Pan-India Delivery' },
-    { icon: Wrench, label: 'After-Sale Service' },
+    { icon: Wrench, label: 'After-Sales Service' },
     { icon: Clock, label: 'Fast Dispatch in 24 hrs' },
   ];
   return (
@@ -308,10 +308,10 @@ function StatsBar() {
 }
 
 const whyItems = [
-  { icon: BadgeCheck, title: 'Authorised Dealer', desc: 'Official and authorised dealer for Longfian Science — guaranteed genuine equipment with full manufacturer warranty.', num: '01' },
+  { icon: BadgeCheck, title: 'Authorised Dealer', desc: 'Official and authorised dealer for Longfian Scitech — guaranteed genuine equipment with full manufacturer warranty.', num: '01' },
   { icon: HeartPulse, title: 'Expert Guidance', desc: 'Our trained biomedical team helps you choose the right equipment for your specific medical condition and prescription.', num: '02' },
   { icon: Truck, title: 'Pan-India Delivery', desc: 'Fast and safe delivery across India. Dispatched within 24 hours, fully insured, with real-time tracking.', num: '03' },
-  { icon: Wrench, title: 'After-Sale Service', desc: 'Dedicated service network for maintenance, spare parts, and troubleshooting — long after your purchase.', num: '04' },
+  { icon: Wrench, title: 'After-Sales Service', desc: 'Dedicated service network for maintenance, spare parts, and troubleshooting — long after your purchase.', num: '04' },
   { icon: Package, title: 'Genuine Products Only', desc: 'Every unit is brand new, sealed, and comes with full documentation — no refurbished or grey-market goods.', num: '05' },
   { icon: ShieldCheck, title: 'Warranty Backed', desc: 'All Longfian concentrators come with manufacturer warranty. We assist with claims from day one.', num: '06' },
 ];

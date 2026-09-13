@@ -45,7 +45,7 @@ export default function ContactPage() {
             GET IN<br /><span style={{ color: GREEN }}>TOUCH.</span>
           </h1>
           <p style={{ fontSize: 15, fontWeight: 300, color: 'rgba(255,255,255,0.55)', maxWidth: 500, margin: '0 auto', lineHeight: 1.85 }}>
-            Questions about our products, delivery, or need expert guidance on choosing the right equipment? We&apos;d love to hear from you.
+            Have a question about our products or delivery, or need expert guidance on choosing the right equipment? We&apos;d love to hear from you.
           </p>
         </div>
       </section>
@@ -111,7 +111,7 @@ export default function ContactPage() {
                     <option value="">Select a subject</option>
                     <option value="product-inquiry">Product Inquiry</option>
                     <option value="order-support">Order / Delivery Support</option>
-                    <option value="service">After-Sale Service</option>
+                    <option value="service">After-Sales Service</option>
                     <option value="bulk">Bulk / Institutional Order</option>
                     <option value="other">Other</option>
                   </select>
@@ -186,7 +186,7 @@ export default function ContactPage() {
             {[
               { q: 'How quickly will I receive a response?', a: 'We typically respond to emails within 24 hours. Phone calls are answered Mon–Sat between 9 AM and 7 PM.' },
               { q: 'Do you deliver outside Delhi?', a: 'Yes — we deliver pan-India to 500+ cities. All orders are dispatched within 24 hours of confirmation.' },
-              { q: 'Do your products come with a warranty?', a: 'All Longfian oxygen concentrators come with full manufacturer warranty. We assist with claims from day one.' },
+              { q: 'Do your products come with a warranty?', a: 'All Longfian oxygen concentrators come with a full manufacturer’s warranty. We assist with claims from day one.' },
               { q: 'Can I get a bulk / institutional quote?', a: 'Yes. Select "Bulk / Institutional Order" in the contact form or call us directly for customised pricing.' },
             ].map((faq, i) => (
               <div key={i} style={{ background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 12, padding: '24px 28px', boxShadow: '0 2px 8px rgba(61,170,53,0.05)' }}>
@@ -203,10 +203,10 @@ export default function ContactPage() {
           <div style={{ position: 'relative', zIndex: 2 }}>
             <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase', color: GREEN, display: 'block', marginBottom: 18 }}>◆ Prefer Calling?</span>
             <h2 style={{ fontSize: 'clamp(44px,6.5vw,80px)', fontWeight: 900, color: '#fff', lineHeight: 0.92, marginBottom: 20, letterSpacing: '-0.02em' }}>
-              CALL US<br /><span style={{ color: GREEN }}>ANYTIME</span><br />WE&apos;RE READY.
+              CALL US<br /><span style={{ color: GREEN }}>TODAY.</span><br />WE&apos;RE READY.
             </h2>
             <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', maxWidth: 460, margin: '0 auto 36px', lineHeight: 1.85 }}>
-              Our team is available Monday to Saturday, 9 AM to 7 PM to guide you on the right equipment for your needs.
+              Our team is available Monday to Saturday, 9 AM to 7 PM, to guide you to the right equipment for your needs.
             </p>
             <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="tel:+919891521090"

@@ -10,6 +10,7 @@ import { useCart } from '../lib/cart';
 import { toast } from '../hooks/use-toast';
 import { getReviewStats } from '../lib/product-reviews';
 import type { ConcentratorProduct } from '../lib/concentrator-products';
+import ExperienceRibbon from './ExperienceRibbon';
 
 const ProductReviews = dynamic(() => import('./ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('./ProductFaq'), { ssr: false });
@@ -90,11 +91,7 @@ function Gallery({ images, frame, name }: { images: string[]; frame: 'square' | 
             <Image src={src} alt={i === 0 ? name : `${name} — view ${i + 1}`} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority={i === 0} />
           </div>
         ))}
-        {main === 0 && (
-          <span style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, background: DARK, color: '#fff', fontSize: 10, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '7px 12px', borderRadius: 5, boxShadow: '0 2px 10px rgba(0,0,0,0.18)' }}>
-            25+ Years of Experience
-          </span>
-        )}
+        <ExperienceRibbon />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8, marginTop: 10 }}>
         {images.map((src, i) => (
@@ -195,7 +192,7 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
               <div style={{ background: '#EAECF0', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 0 }}>
                 {product.highlights.map((h, i, arr) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '11px 2px', borderBottom: i < arr.length - 1 ? '1px solid rgba(45,55,72,0.12)' : 'none' }}>
-                    <span style={{ fontSize: 18, flexShrink: 0, width: 26, textAlign: 'center', marginTop: 1 }}>{h.icon}</span>
+                    <span style={{ fontSize: 18, flexShrink: 0, minWidth: 26, whiteSpace: 'nowrap', textAlign: 'center', marginTop: 1 }}>{h.icon}</span>
                     <div>
                       <p style={{ fontSize: 14, fontWeight: 700, color: DARK, lineHeight: 1.25 }}>{h.title}</p>
                       {h.sub && <p style={{ fontSize: 12, color: GREY, lineHeight: 1.4, marginTop: 2 }}>{h.sub}</p>}
@@ -273,7 +270,7 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
               {[
                 { icon: Truck, title: 'Free Delivery', sub: 'All over India' },
                 { icon: Package, title: 'Delivery Time', sub: '3–5 business days' },
-                { icon: RotateCcw, title: 'Easy Returns', sub: '7 Days Return Policy' },
+                { icon: RotateCcw, title: 'Easy Returns', sub: '7-Day Return Policy' },
                 { icon: ShieldCheck, title: 'Warranty', sub: 'Backed by Sachdeva Medline' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
@@ -294,7 +291,7 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
           <div className="stats-row1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
             {product.stats.slice(0, 2).map((s, i) => (
-              <div key={i} style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
+              <div key={i} className="stat-cell" style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
                 <p style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
                 <p style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 3 }}>{s.lbl}</p>
                 <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{s.sub}</p>
@@ -303,7 +300,7 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
           </div>
           <div className="stats-row2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
             {product.stats.slice(2, 4).map((s, i) => (
-              <div key={i} style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+              <div key={i} className="stat-cell" style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                 <p style={{ fontSize: 'clamp(22px,3vw,40px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
                 <p style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 3 }}>{s.lbl}</p>
                 <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{s.sub}</p>
@@ -495,6 +492,8 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
           .box-grid       { grid-template-columns: 1fr !important; }
           .trust-grid     { grid-template-columns: 1fr !important; }
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
+          .stat-cell { border-right: none !important; }
+          .stats-row1 .stat-cell + .stat-cell { border-top: 1px solid rgba(255,255,255,0.1); }
         }
       `}</style>
     </div>

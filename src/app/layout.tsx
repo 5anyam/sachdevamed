@@ -12,7 +12,7 @@ import { AuthProvider } from '../../lib/auth-context';
 
 export const metadata = {
   title: 'Sachdeva Medline — Authorised Longfian Oxygen Concentrator Dealer',
-  description: 'India\'s trusted medical equipment provider since 1981. Authorised dealer for Longfian oxygen concentrators and patient beds. Pan-India delivery, genuine products, expert after-sale service.',
+  description: 'India\'s trusted medical equipment provider since 1981. Authorised dealer for Longfian oxygen concentrators and patient beds. Pan-India delivery, genuine products, expert after-sales service.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

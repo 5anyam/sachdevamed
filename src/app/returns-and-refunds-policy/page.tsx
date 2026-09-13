@@ -42,7 +42,7 @@ export default function ReturnsRefundPolicyPage() {
             <ul style={{ paddingLeft: 20, display: 'flex', flexDirection: 'column', gap: 6 }}>
               <li>Products that have been used, modified, or tampered with</li>
               <li>Damage caused by improper use, voltage fluctuations, or accidents</li>
-              <li>Returns requested after 7 days of delivery</li>
+              <li>Returns requested more than 7 days after delivery</li>
               <li>Change of mind after delivery</li>
               <li>Products without original packaging, accessories, and documentation</li>
             </ul>

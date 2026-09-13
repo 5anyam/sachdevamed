@@ -40,7 +40,7 @@ export default function PrivacyPolicyPage() {
           <ul style={{ paddingLeft: 20, display: 'flex', flexDirection: 'column', gap: 6 }}>
             <li>To process and fulfil your orders</li>
             <li>To contact you regarding your order status or delivery</li>
-            <li>To provide after-sale support and service reminders</li>
+            <li>To provide after-sales support and service reminders</li>
             <li>To improve our website and product offerings</li>
             <li>To send promotional communications (with your consent — you can opt out at any time)</li>
           </ul>
@@ -65,7 +65,7 @@ export default function PrivacyPolicyPage() {
         </Section>
 
         <Section title="7. Data Security">
-          <p>We employ SSL encryption and follow IT Act 2000 standards to protect your personal data. However, no transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+          <p>We employ SSL encryption and comply with the Information Technology Act, 2000 to protect your personal data. However, no transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
         </Section>
 
         <Section title="8. Your Rights">

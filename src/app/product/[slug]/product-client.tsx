@@ -13,6 +13,7 @@ import { StaticProduct, ProductVideo, PRODUCTS } from '../../../../lib/products-
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 import { getReviewStats } from '../../../../lib/product-reviews';
+import ExperienceRibbon from '../../../../components/ExperienceRibbon';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
@@ -31,7 +32,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-function ImageGallery({ images }: { images: string[] }) {
+function ImageGallery({ images, ribbon }: { images: string[]; ribbon?: boolean }) {
   const [main, setMain] = useState(0);
   return (
     <div>
@@ -45,6 +46,7 @@ function ImageGallery({ images }: { images: string[] }) {
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
+        {ribbon && <ExperienceRibbon />}
       </div>
 
       {/* Thumbnails — 4-column grid, square cells */}
@@ -245,7 +247,7 @@ function RelatedCard({ product }: { product: StaticProduct }) {
         <p style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREEN, fontWeight: 600, marginBottom: 4 }}>{product.category}</p>
         <h4 style={{ fontSize: 16, fontWeight: 700, color: DARK, marginBottom: 8, lineHeight: 1.2 }}>{product.name}</h4>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-          <span style={{ fontSize: 20, fontWeight: 800, color: DARK }}>₹{product.price.toLocaleString('en-IN')}</span>
+          <span style={{ fontSize: product.price > 0 ? 20 : 15, fontWeight: 800, color: DARK }}>{product.price > 0 ? `₹${product.price.toLocaleString('en-IN')}` : 'Price on Request'}</span>
         </div>
       </div>
     </Link>
@@ -299,7 +301,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
 
           {/* LEFT: Images */}
           <div className="product-image-sticky" style={{ position: 'sticky', top: 24, alignSelf: 'start' }}>
-            <ImageGallery images={product.images} />
+            <ImageGallery images={product.images} ribbon={product.name.startsWith('Longfian')} />
           </div>
 
           {/* RIGHT: Info */}

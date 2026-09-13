@@ -48,7 +48,7 @@ export default function LoginPage() {
             Welcome Back
           </h2>
           <p className="mt-2 text-gray-600">
-            Sign in to your Amraj account to track your orders
+            Sign in to your Sachdeva Medline account to track your orders
           </p>
         </div>
 
@@ -104,7 +104,7 @@ export default function LoginPage() {
             href="/register"
             className="block text-teal-600 hover:text-teal-700 font-semibold transition-colors hover:underline"
           >
-            Do not have an account? Create One
+            Don&apos;t have an account? Create one
           </a>
           <a
             href="/forgot-password"

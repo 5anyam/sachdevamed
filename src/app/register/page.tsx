@@ -56,7 +56,7 @@ export default function RegisterPage() {
             Create Account
           </h2>
           <p className="mt-2 text-gray-600">
-            Join Amraj to track your orders and save your details
+            Join Sachdeva Medline to track your orders and save your details
           </p>
         </div>
 
