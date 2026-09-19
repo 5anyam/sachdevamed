@@ -13,7 +13,6 @@ import { StaticProduct, ProductVideo, PRODUCTS } from '../../../../lib/products-
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 import { getReviewStats } from '../../../../lib/product-reviews';
-import ExperienceRibbon from '../../../../components/ExperienceRibbon';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
@@ -32,7 +31,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-function ImageGallery({ images, ribbon }: { images: string[]; ribbon?: boolean }) {
+function ImageGallery({ images }: { images: string[] }) {
   const [main, setMain] = useState(0);
   return (
     <div>
@@ -46,7 +45,6 @@ function ImageGallery({ images, ribbon }: { images: string[]; ribbon?: boolean }
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
-        {ribbon && <ExperienceRibbon />}
       </div>
 
       {/* Thumbnails — 4-column grid, square cells */}
@@ -301,7 +299,7 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
 
           {/* LEFT: Images */}
           <div className="product-image-sticky" style={{ position: 'sticky', top: 24, alignSelf: 'start' }}>
-            <ImageGallery images={product.images} ribbon={product.name.startsWith('Longfian')} />
+            <ImageGallery images={product.images} />
           </div>
 
           {/* RIGHT: Info */}
@@ -480,13 +478,6 @@ export default function ProductClient({ product }: { product: StaticProduct }) {
       {/* Mobile Sticky Bottom CTA */}
       <div className="mobile-cta-outer" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: `2px solid #E5E7EB`, padding: '10px 12px', zIndex: 500, boxShadow: '0 -4px 16px rgba(0,0,0,0.08)', display: 'none' }}>
         <div style={{ display: 'flex', gap: 8, maxWidth: 600, margin: '0 auto' }}>
-          <button
-            onClick={handleAddToCart}
-            disabled={isAddingToCart}
-            style={{ flex: '0 0 auto', padding: '13px 14px', background: '#fff', color: DARK, border: `2px solid #E5E7EB`, borderRadius: 10, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}
-          >
-            {isAddingToCart ? '✓ ADDED' : 'ADD TO CART'}
-          </button>
           <button
             onClick={handleBuyNow}
             disabled={isBuyingNow}

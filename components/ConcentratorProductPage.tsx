@@ -10,7 +10,6 @@ import { useCart } from '../lib/cart';
 import { toast } from '../hooks/use-toast';
 import { getReviewStats } from '../lib/product-reviews';
 import type { ConcentratorProduct } from '../lib/concentrator-products';
-import ExperienceRibbon from './ExperienceRibbon';
 
 const ProductReviews = dynamic(() => import('./ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('./ProductFaq'), { ssr: false });
@@ -91,7 +90,6 @@ function Gallery({ images, frame, name }: { images: string[]; frame: 'square' | 
             <Image src={src} alt={i === 0 ? name : `${name} — view ${i + 1}`} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority={i === 0} />
           </div>
         ))}
-        <ExperienceRibbon />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8, marginTop: 10 }}>
         {images.map((src, i) => (
@@ -168,6 +166,9 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
               <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: ACC, color: '#fff' }}>
                 {product.badge}
+              </span>
+              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: '#EEF1F6', color: ACC, border: '1.5px solid #CBD5E0' }}>
+                25+ Years of Experience
               </span>
             </div>
 
@@ -271,7 +272,7 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
                 { icon: Truck, title: 'Free Delivery', sub: 'All over India' },
                 { icon: Package, title: 'Delivery Time', sub: '3–5 business days' },
                 { icon: RotateCcw, title: 'Easy Returns', sub: '7-Day Return Policy' },
-                { icon: ShieldCheck, title: 'Warranty', sub: 'Backed by Sachdeva Medline' },
+                { icon: ShieldCheck, title: '2 Years Warranty', sub: 'Backed by Sachdeva Medline' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
                   <item.icon style={{ width: 14, height: 14, color: ACC, flexShrink: 0, marginTop: 2 }} />
@@ -450,9 +451,7 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
         <div style={{ display: 'flex', gap: 8, maxWidth: 600, margin: '0 auto' }}>
           {priced ? (
             <>
-              <button onClick={doAdd} disabled={adding} style={{ flex: '0 0 auto', padding: '13px 14px', background: '#fff', color: DARK, border: `2px solid ${ACC}`, borderRadius: 10, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}>
-                {adding ? '✓ ADDED' : 'ADD TO CART'}
-              </button>
+              
               <button onClick={doBuy} disabled={buying} style={{ flex: 1, background: DARK, color: '#fff', padding: '13px 12px', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(15,17,23,0.25)', minWidth: 0 }}>
                 <Zap style={{ width: 13, height: 13, flexShrink: 0 }} />
                 <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -462,9 +461,7 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
             </>
           ) : (
             <>
-              <a href="tel:+919891521090" style={{ flex: '0 0 auto', padding: '13px 16px', background: '#fff', color: DARK, border: `2px solid ${ACC}`, borderRadius: 10, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap' }}>
-                <Phone style={{ width: 13, height: 13 }} /> CALL
-              </a>
+              
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={{ flex: 1, background: DARK, color: '#fff', padding: '13px 12px', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 4px 14px rgba(15,17,23,0.25)', minWidth: 0 }}>
                 <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>ENQUIRE ON WHATSAPP</span>
               </a>

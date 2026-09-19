@@ -9,7 +9,6 @@ import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star } from 
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 import { getReviewStats } from '../../../../lib/product-reviews';
-import ExperienceRibbon from '../../../../components/ExperienceRibbon';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
@@ -73,7 +72,6 @@ function Gallery() {
             <Image src={src} alt={i === 0 ? PNAME : `${PNAME} — feature ${i}`} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority={i === 0} />
           </div>
         ))}
-        <ExperienceRibbon />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8, marginTop: 10 }}>
         {GALLERY.map((src, i) => (
@@ -337,6 +335,9 @@ export default function Jay1000PClient() {
               <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: ACC, color: '#fff' }}>
                 Flight Safe · FAA Approved
               </span>
+              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 4, background: '#EEF1F6', color: ACC, border: '1.5px solid #CBD5E0' }}>
+                25+ Years of Experience
+              </span>
             </div>
 
             <h1 style={{ fontSize: 'clamp(26px,3.5vw,48px)', fontWeight: 900, letterSpacing: '-0.02em', color: DARK, lineHeight: 1.05, marginBottom: 14 }}>
@@ -425,7 +426,7 @@ export default function Jay1000PClient() {
                 { icon: Truck,       title: 'Free Delivery',     sub: 'All over India' },
                 { icon: Package,     title: 'Delivery Time',     sub: '3–5 business days' },
                 { icon: RotateCcw,   title: 'Easy Returns',      sub: '7-Day Return Policy' },
-                { icon: ShieldCheck, title: '2-Year Warranty',   sub: '(1 Year on Batteries and Sieve Beds)' },
+                { icon: ShieldCheck, title: '2 Years Warranty',   sub: '(1 Year on Batteries and Sieve Beds)' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
                   <item.icon style={{ width: 14, height: 14, color: ACC, flexShrink: 0, marginTop: 2 }} />
@@ -447,7 +448,7 @@ export default function Jay1000PClient() {
           <div className="stats-row1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: 0 }}>
             {[
               { val: '25+',  lbl: 'Years of Experience',  sub: 'Longfian — established 1999' },
-              { val: '#1',   lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer" },
+              { val: '#1',   lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
             ].map((s, i) => (
               <div key={i} className="stat-cell" style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
                 <p style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
@@ -513,7 +514,7 @@ export default function Jay1000PClient() {
               <div style={{ fontSize: 28, marginBottom: 12 }}>🔋🔋</div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Up to 10 Hours of Battery Backup</h3>
               <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with 2 rechargeable lithium-ion batteries.</p>
-              <p style={{ fontSize: 11, color: GREY, lineHeight: 1.5, marginTop: 6, fontStyle: 'italic' }}>(Battery backup time varies with the flow setting)</p>
+              <p style={{ fontSize: 11, color: GREY, lineHeight: 1.5, marginTop: 6, fontStyle: 'italic' }}>(Battery backup time varies as per flow settings)</p>
             </BenefitCard>
 
             <BenefitCard>
@@ -556,7 +557,7 @@ export default function Jay1000PClient() {
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <H2 light>BATTERY BACKUP TIME</H2>
             <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8 }}>
-              Backup time varies with the pulse flow setting. Two batteries are included in the box.
+              Backup time varies with the pulse flow setting.<br />Two batteries are included in the box.
             </p>
           </div>
           <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.12)' }}>
@@ -678,7 +679,7 @@ export default function Jay1000PClient() {
           {/* Shorts — vertical, kept smaller than the landscape videos */}
           <div style={{ marginBottom: 32 }}>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Shorts</p>
-            <div className="shorts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, maxWidth: 780, margin: '0 auto' }}>
+            <div className="shorts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, maxWidth: 1040, margin: '0 auto' }}>
               {['/videos/short-1.mp4', '/videos/short-2.mp4', '/videos/short-3.mp4'].map((src) => (
                 <LocalVideo key={src} src={src} vertical />
               ))}
@@ -701,7 +702,7 @@ export default function Jay1000PClient() {
           <div>
             <Label text="Warranty Coverage" />
             <h2 style={{ fontSize: 'clamp(22px,3vw,36px)', fontWeight: 900, color: '#fff', lineHeight: 1.1, marginBottom: 12, letterSpacing: '-0.02em' }}>
-              2-Year Warranty<br />Backed by Sachdeva Medline
+              2 Years Warranty<br />Backed by Sachdeva Medline
             </h2>
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.8 }}>
               As the exclusive importer and authorised service partner, we back every JAY-1000P with a comprehensive warranty — so you buy with total confidence.
@@ -767,9 +768,6 @@ export default function Jay1000PClient() {
       {/* ──── MOBILE STICKY CTA ──── */}
       <div className="mob-cta" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: '2px solid #E5E7EB', padding: '10px 12px', zIndex: 500, boxShadow: '0 -4px 16px rgba(0,0,0,0.08)', display: 'none' }}>
         <div style={{ display: 'flex', gap: 8, maxWidth: 600, margin: '0 auto' }}>
-          <button onClick={doAdd} disabled={adding} style={{ flex: '0 0 auto', padding: '13px 14px', background: '#fff', color: DARK, border: `2px solid ${ACC}`, borderRadius: 10, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}>
-            {adding ? '✓ ADDED' : 'ADD TO CART'}
-          </button>
           <button onClick={doBuy} disabled={buying} style={{ flex: 1, background: DARK, color: '#fff', padding: '13px 12px', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(15,17,23,0.25)', minWidth: 0 }}>
             <Zap style={{ width: 13, height: 13, flexShrink: 0 }} />
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -797,7 +795,7 @@ export default function Jay1000PClient() {
           .box-grid          { grid-template-columns: repeat(2, 1fr) !important; }
           .trust-grid        { grid-template-columns: 1fr 1fr !important; }
           .more-grid         { grid-template-columns: 1fr 1fr !important; }
-          .shorts-grid       { grid-template-columns: 1fr !important; gap: 20px !important; max-width: 72% !important; }
+          .shorts-grid       { grid-template-columns: 1fr !important; gap: 20px !important; max-width: 92% !important; }
           .highlights-grid   { grid-template-columns: 1fr 1fr !important; }
           /* landscape videos go edge-to-edge on mobile so they look bigger */
           .video-wide        { margin-left: calc(50% - 50vw) !important; margin-right: calc(50% - 50vw) !important; }
@@ -809,7 +807,7 @@ export default function Jay1000PClient() {
           .box-grid       { grid-template-columns: 1fr !important; }
           .trust-grid     { grid-template-columns: 1fr !important; }
           .more-grid      { grid-template-columns: 1fr !important; }
-          .shorts-grid    { grid-template-columns: 1fr !important; gap: 20px !important; max-width: 72% !important; }
+          .shorts-grid    { grid-template-columns: 1fr !important; gap: 20px !important; max-width: 92% !important; }
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
           .stat-cell { border-right: none !important; }
           .stats-row1 .stat-cell + .stat-cell { border-top: 1px solid rgba(255,255,255,0.1); }

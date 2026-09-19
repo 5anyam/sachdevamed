@@ -64,7 +64,7 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'What warranty and after-sales service do I get?',
     answer:
-      'The unit carries a 2-year warranty on the main concentrator, and 1 year on the batteries and molecular sieve beds. Sachdeva Medline is the exclusive importer and authorised service partner for Longfian in India, with 15+ service centres across the country. For any support, call or WhatsApp us on +91 98915 21090.',
+      'The main concentrator is covered by a warranty of 2 years, and the batteries and molecular sieve beds by 1 year. Sachdeva Medline is the exclusive importer and authorised service partner for Longfian in India, with 15+ service centres across the country. For any support, call or WhatsApp us on +91 98915 21090.',
   },
   {
     question: 'How is it delivered, and do you offer Cash on Delivery?',

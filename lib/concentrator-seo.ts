@@ -45,7 +45,7 @@ export function buildConcentratorJsonLd(slug: string) {
     image: p.gallery.slice(0, 4).map((g) => `${SITE}${g}`),
     url: canonical,
     sku: `SM-${p.id}`,
-    mpn: p.name.replace('Longfian ', ''),
+    mpn: p.name.split(' ').pop(),
     brand: { '@type': 'Brand', name: 'Longfian' },
     manufacturer: { '@type': 'Organization', name: 'Longfian Scitech Co., Ltd', url: 'https://www.longfian.com' },
     seller: { '@type': 'Organization', name: 'Sachdeva Medline', url: SITE },
