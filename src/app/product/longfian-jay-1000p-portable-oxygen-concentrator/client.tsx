@@ -437,6 +437,17 @@ export default function Jay1000PClient() {
                 </div>
               ))}
             </div>
+
+            {/* Promo artwork — the two files have different aspect ratios and carry text to the
+                edges, so they share a width and keep their own heights rather than being cropped. */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
+              {[
+                { src: '/products/jay-1000p/promo-1.jpeg', w: 1254, h: 1254, alt: 'Longfian JAY-1000P — More breath, more life' },
+                { src: '/products/jay-1000p/promo-2.jpeg', w: 1448, h: 1086, alt: 'Longfian JAY-1000P — Flight approved, travel light' },
+              ].map((p) => (
+                <Image key={p.src} src={p.src} alt={p.alt} width={p.w} height={p.h} sizes="(max-width:900px) 100vw, 50vw" style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 12, border: '1.5px solid #E5E7EB' }} />
+              ))}
+            </div>
           </div>
         </div>
       </section>
