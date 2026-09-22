@@ -252,6 +252,7 @@ function LocalVideo({ src, vertical }: { src: string; vertical?: boolean }) {
       <video
         ref={ref}
         src={src}
+        poster={src.replace('.mp4', '.jpg')}
         loop
         playsInline
         controls
