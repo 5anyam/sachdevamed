@@ -17,7 +17,7 @@ export default function Footer() {
           {[...Array(2)].map((_, r) => (
             <span key={r} style={{ display: 'inline-flex' }}>
               {['AUTHORISED LONGFIAN DEALER', 'TRUSTED SINCE 1981', 'PAN-INDIA DELIVERY', 'GENUINE PRODUCTS ONLY', 'EXPERT AFTER-SALES SERVICE'].map((t) => (
-                <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 16, padding: '0 24px', fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
+                <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 16, padding: '0 24px', fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>
                   {t}
                   <span style={{ color: GREEN, fontSize: 6 }}>◆</span>
                 </span>
@@ -38,7 +38,7 @@ export default function Footer() {
                 <Image src="/sachdeva-logo.jpeg" alt="Sachdeva Medline" width={180} height={56} style={{ height: 46, width: 'auto', objectFit: 'contain', display: 'block' }} />
               </div>
             </Link>
-            <p style={{ fontSize: 13, fontWeight: 300, color: 'rgba(255,255,255,0.45)', lineHeight: 1.85, marginBottom: 24, maxWidth: 260 }}>
+            <p style={{ fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.75)', lineHeight: 1.85, marginBottom: 24, maxWidth: 260 }}>
               Authorised dealer for Longfian oxygen concentrators and medical equipment. Serving India since 1981 with genuine products and expert service.
             </p>
             <div style={{ display: 'flex', gap: 8 }}>
@@ -68,9 +68,9 @@ export default function Footer() {
                 { name: 'All Products', to: '/shop' },
               ].map(({ name, to }) => (
                 <li key={name}>
-                  <Link href={to} style={{ fontSize: 13, fontWeight: 400, color: 'rgba(255,255,255,0.45)', textDecoration: 'none', transition: 'color 0.2s' }}
+                  <Link href={to} style={{ fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.8)', textDecoration: 'none', transition: 'color 0.2s' }}
                     onMouseEnter={e => (e.currentTarget.style.color = GREEN)}
-                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.8)')}
                   >
                     {name}
                   </Link>
@@ -91,9 +91,9 @@ export default function Footer() {
                 { name: 'About Us', to: '/about' },
               ].map(({ name, to }) => (
                 <li key={name}>
-                  <Link href={to} style={{ fontSize: 13, fontWeight: 400, color: 'rgba(255,255,255,0.45)', textDecoration: 'none', transition: 'color 0.2s' }}
+                  <Link href={to} style={{ fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.8)', textDecoration: 'none', transition: 'color 0.2s' }}
                     onMouseEnter={e => (e.currentTarget.style.color = GREEN)}
-                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.8)')}
                   >
                     {name}
                   </Link>
@@ -110,11 +110,21 @@ export default function Footer() {
                 { label: 'Email', val: 'info@sachdevamedline.com' },
                 { label: 'Phone', val: '+91 98915 21090' },
                 { label: 'WhatsApp', val: '+91 98915 21090' },
-                { label: 'Address', val: 'Sultanpuri, Delhi – 110041' },
+                { label: 'Address', val: 'C-8/70, Sector 8, Rohini, Delhi – 110085', href: 'https://maps.google.com/maps?q=28.7040653%2C77.1280131&z=17&hl=en' },
               ].map((item) => (
                 <li key={item.label}>
-                  <span style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', display: 'block', marginBottom: 2 }}>{item.label}</span>
-                  <span style={{ fontSize: 13, fontWeight: 300, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>{item.val}</span>
+                  <span style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: 3 }}>{item.label}</span>
+                  {'href' in item && item.href ? (
+                    <Link href={item.href} target="_blank" rel="noopener noreferrer"
+                      style={{ fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.9)', lineHeight: 1.6, textDecoration: 'none' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.9)')}
+                    >
+                      {item.val}
+                    </Link>
+                  ) : (
+                    <span style={{ fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.9)', lineHeight: 1.6 }}>{item.val}</span>
+                  )}
                 </li>
               ))}
             </ul>
@@ -123,11 +133,11 @@ export default function Footer() {
       </div>
 
       {/* ── Bottom bar ── */}
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', padding: '18px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
-        <p style={{ fontSize: 11, letterSpacing: '0.06em', color: 'rgba(255,255,255,0.2)' }}>
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', padding: '18px 32px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: '8px 28px', textAlign: 'center' }}>
+        <p style={{ fontSize: 12, letterSpacing: '0.06em', color: 'rgba(255,255,255,0.7)' }}>
           © {new Date().getFullYear()} Sachdeva Medline. All rights reserved.
         </p>
-        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.22)', letterSpacing: '0.04em' }}>
+        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.04em' }}>
           Developed by{' '}
           <Link
             href="https://proshala.com"
@@ -140,7 +150,7 @@ export default function Footer() {
             Proshala
           </Link>
         </p>
-        <p style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: `rgba(255,255,255,0.2)` }}>
+        <p style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: `rgba(255,255,255,0.6)` }}>
           AUTHORISED DEALER · SINCE 1981 ◆
         </p>
       </div>

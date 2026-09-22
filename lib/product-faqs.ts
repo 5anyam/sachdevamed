@@ -49,7 +49,7 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'How noisy is it? Can I use it at night or in an office?',
     answer:
-      'The unit operates at under 48 dB, which is quieter than a normal conversation and roughly comparable to a library. It is discreet enough to use in an office, a place of worship, on a flight or in a bedroom without disturbing people around you.',
+      'The unit operates at under 45 dB, which is quieter than a normal conversation and roughly comparable to a library. It is discreet enough to use in an office, a place of worship, on a flight or in a bedroom without disturbing people around you.',
   },
   {
     question: 'Which certifications and approvals does it carry?',

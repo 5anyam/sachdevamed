@@ -371,36 +371,6 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
         </div>
       </section>
 
-      {/* ──── WARRANTY ──── */}
-      <section style={{ background: ACC, padding: 'clamp(28px,5vw,48px) 0' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto', padding: `0 ${PAD}`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'center' }} className="warranty-grid">
-          <div>
-            <Label text="Warranty Coverage" />
-            <h2 style={{ fontSize: 'clamp(22px,3vw,36px)', fontWeight: 900, color: '#fff', lineHeight: 1.1, marginBottom: 12, letterSpacing: '-0.02em' }}>
-              Backed by<br />Sachdeva Medline
-            </h2>
-            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.8 }}>
-              As the exclusive importer and authorised service partner, we back every {product.name} with a comprehensive warranty and support from 15+ service centres across India.
-            </p>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {[
-              { period: 'Warranty', item: 'Main Concentrator Unit', note: 'Full parts & service coverage' },
-              { period: 'Service', item: '15+ Centres in India', note: 'Pan-India after-sales support' },
-              { period: 'Support', item: 'Setup & Usage Guidance', note: 'Call or WhatsApp +91 98915 21090' },
-            ].map((w, i) => (
-              <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 16px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10 }}>
-                <span style={{ fontSize: 11, fontWeight: 900, color: '#fff', background: 'rgba(255,255,255,0.15)', padding: '4px 10px', borderRadius: 4, whiteSpace: 'nowrap', flexShrink: 0 }}>{w.period}</span>
-                <div>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 2 }}>{w.item}</p>
-                  <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)' }}>{w.note}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ──── WHAT'S IN THE BOX ──── */}
       <section style={{ background: BG, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>

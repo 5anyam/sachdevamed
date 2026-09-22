@@ -231,11 +231,15 @@ const videoPlayer = (() => {
 function LocalVideo({ src, vertical }: { src: string; vertical?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [needsTap, setNeedsTap] = useState(false);
+  const [buffering, setBuffering] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const sync = () => setNeedsTap(!el.paused && el.muted && videoPlayer.isAutoMuted(el));
-    const events = ['play', 'pause', 'volumechange'];
+    const sync = () => {
+      setNeedsTap(!el.paused && el.muted && videoPlayer.isAutoMuted(el));
+      setBuffering(!el.paused && el.readyState < 3);
+    };
+    const events = ['play', 'pause', 'volumechange', 'waiting', 'playing', 'canplay', 'stalled'];
     events.forEach((t) => el.addEventListener(t, sync));
     const unregister = videoPlayer.register(el);
     return () => {
@@ -244,16 +248,20 @@ function LocalVideo({ src, vertical }: { src: string; vertical?: boolean }) {
     };
   }, []);
   return (
-    <div style={{ position: 'relative', width: '100%', paddingBottom: vertical ? '177.78%' : '56.25%', borderRadius: vertical ? 12 : 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)', background: '#000' }}>
+    <div style={{ position: 'relative', width: '100%', paddingBottom: vertical ? '177.78%' : '65%', borderRadius: vertical ? 12 : 14, overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)', background: '#000' }}>
       <video
         ref={ref}
         src={src}
         loop
         playsInline
         controls
-        preload="metadata"
+        preload="none"
         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
       />
+      {buffering && (
+        <span aria-hidden style={{ position: 'absolute', top: '50%', left: '50%', width: 34, height: 34, marginTop: -17, marginLeft: -17, borderRadius: '50%', border: '3px solid rgba(255,255,255,0.25)', borderTopColor: '#fff', animation: 'vid-spin 0.8s linear infinite', pointerEvents: 'none' }} />
+      )}
+      <style>{`@keyframes vid-spin { to { transform: rotate(360deg); } }`}</style>
       {needsTap && (
         <button
           onClick={() => { if (ref.current) ref.current.muted = false; }}
@@ -444,6 +452,7 @@ export default function Jay1000PClient() {
               {[
                 { src: '/products/jay-1000p/promo-1.jpeg', w: 1254, h: 1254, alt: 'Longfian JAY-1000P — More breath, more life' },
                 { src: '/products/jay-1000p/promo-2.jpeg', w: 1448, h: 1086, alt: 'Longfian JAY-1000P — Flight approved, travel light' },
+                { src: '/products/jay-1000p/promo-3.jpeg', w: 1122, h: 1402, alt: 'Longfian JAY-1000P — Makes life and travel easy' },
               ].map((p) => (
                 <Image key={p.src} src={p.src} alt={p.alt} width={p.w} height={p.h} sizes="(max-width:900px) 100vw, 50vw" style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 12, border: '1.5px solid #E5E7EB' }} />
               ))}
@@ -459,7 +468,7 @@ export default function Jay1000PClient() {
           <div className="stats-row1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: 0 }}>
             {[
               { val: '25+',  lbl: 'Years of Experience',  sub: 'Longfian — established 1999' },
-              { val: '#1',   lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
+              { val: '#1',   lbl: 'Oxygen Concentrators Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
             ].map((s, i) => (
               <div key={i} className="stat-cell" style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
                 <p style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
@@ -471,8 +480,8 @@ export default function Jay1000PClient() {
           {/* row 2: oxygen purity + noise */}
           <div className="stats-row2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
             {[
-              { val: '93% ± 3%', lbl: 'Oxygen Purity',  sub: 'Medical-grade PSA technology' },
-              { val: '≤48 dB',   lbl: 'Noise Level',     sub: 'Quieter than a conversation' },
+              { val: '93% ± 3%', lbl: 'Oxygen Concentration Purity',  sub: 'Medical-grade PSA technology' },
+              { val: '≤45 dB',   lbl: 'Noise Level',     sub: 'Quieter than a conversation' },
             ].map((s, i) => (
               <div key={i} className="stat-cell" style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                 <p style={{ fontSize: 'clamp(22px,3vw,40px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
@@ -523,7 +532,7 @@ export default function Jay1000PClient() {
 
             <BenefitCard>
               <div style={{ fontSize: 28, marginBottom: 12 }}>🔋🔋</div>
-              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Up to 10 Hours of Battery Backup</h3>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Up to 10 Hours of Total Combined Battery Backup</h3>
               <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Comes with 2 rechargeable lithium-ion batteries.</p>
               <p style={{ fontSize: 11, color: GREY, lineHeight: 1.5, marginTop: 6, fontStyle: 'italic' }}>(Battery backup time varies as per flow settings)</p>
             </BenefitCard>
@@ -537,7 +546,7 @@ export default function Jay1000PClient() {
             <BenefitCard>
               <div style={{ fontSize: 28, marginBottom: 12 }}>🔇</div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Whisper Quiet</h3>
-              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>At under 48 dB, it is quieter than a normal conversation and close to library-quiet.</p>
+              <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>At under 45 dB, it is quieter than a normal conversation and close to library-quiet.</p>
             </BenefitCard>
 
             <BenefitCard>
@@ -604,7 +613,7 @@ export default function Jay1000PClient() {
             *Values are approximate and may vary based on usage pattern and battery age.
           </p>
           <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.9)', textAlign: 'center', marginTop: 12 }}>
-            Battery Full Charge Time — Approx. 2 hours
+            Battery Full Charging Time — Approx. 2 hours
           </p>
         </div>
       </section>
@@ -626,10 +635,10 @@ export default function Jay1000PClient() {
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>Performance</span>
               </div>
               {[
-                ['Oxygen Purity',   '93% ± 3%'],
+                ['Oxygen Concentration',   '93% ± 3%'],
                 ['Flow Settings',   '1–5 Levels (Pulse Dose)'],
                 ['Technology',      'PSA Molecular Sieve'],
-                ['Noise Level',     '≤ 48 dB'],
+                ['Noise Level',     '≤ 45 dB'],
               ].map(([lbl, val], i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '13px 18px', background: i % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
                   <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}>{lbl}</span>
@@ -703,36 +712,6 @@ export default function Jay1000PClient() {
             <div className="video-wide">
               <LocalVideo src="/videos/overview.mp4" />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ──── WARRANTY ──── */}
-      <section style={{ background: ACC, padding: 'clamp(28px,5vw,48px) 0' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto', padding: `0 ${PAD}`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'center' }} className="warranty-grid">
-          <div>
-            <Label text="Warranty Coverage" />
-            <h2 style={{ fontSize: 'clamp(22px,3vw,36px)', fontWeight: 900, color: '#fff', lineHeight: 1.1, marginBottom: 12, letterSpacing: '-0.02em' }}>
-              2 Years Warranty<br />Backed by Sachdeva Medline
-            </h2>
-            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.8 }}>
-              As the exclusive importer and authorised service partner, we back every JAY-1000P with a comprehensive warranty — so you buy with total confidence.
-            </p>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {[
-              { period: '2 Years', item: 'Main Concentrator Unit',  note: 'Full parts & service coverage' },
-              { period: '1 Year',  item: 'Rechargeable Batteries',  note: 'Both batteries included in the box' },
-              { period: '1 Year',  item: 'Molecular Sieve Beds',    note: 'Core filtration component' },
-            ].map((w, i) => (
-              <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '14px 16px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10 }}>
-                <span style={{ fontSize: 11, fontWeight: 900, color: '#fff', background: 'rgba(255,255,255,0.15)', padding: '4px 10px', borderRadius: 4, whiteSpace: 'nowrap', flexShrink: 0 }}>{w.period}</span>
-                <div>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 2 }}>{w.item}</p>
-                  <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)' }}>{w.note}</p>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
