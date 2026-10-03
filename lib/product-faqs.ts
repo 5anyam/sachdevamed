@@ -9,12 +9,12 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'What is a portable oxygen concentrator and how is it different from a home concentrator?',
     answer:
-      'A portable oxygen concentrator (POC) draws in room air, filters out nitrogen through a molecular sieve and delivers concentrated oxygen — the same principle as a home unit, but in a device you can carry. The Longfian JAY-1000P weighs just 1.98 kg and runs on rechargeable batteries, so it works away from a power socket. A home concentrator is larger, heavier, mains-powered only, and delivers a continuous flow, whereas the JAY-1000P is a pulse-dose unit that releases oxygen in sync with your breath.',
+      'A portable oxygen concentrator (POC) draws in air, filters out nitrogen through a molecular sieve and delivers concentrated oxygen — the same principle as a home unit, but in a device which you can carry. The Longfian JAY-1000P weighs just 1.98 kg and runs on rechargeable batteries, so it works away from a power socket. A home concentrator is larger, heavier, mains-powered only, and delivers a continuous flow, whereas the JAY-1000P is a pulse-dose unit that releases oxygen in sync with your breath.',
   },
   {
     question: 'Is the JAY-1000P a flight approved oxygen concentrator? Can I carry it on a plane?',
     answer:
-      'Yes. The JAY-1000P is an FAA approved oxygen concentrator, which means it meets the US Federal Aviation Administration standards for use on board an aircraft and is permitted on commercial flights worldwide, including domestic Indian airlines. As a flight approved oxygen concentrator it can be carried into the cabin as a medical device. Airlines usually ask for prior intimation (typically 48 hours before departure) and a doctor\'s fitness-to-fly certificate, and require you to carry enough charged batteries for roughly 1.5 times the flight duration — so please inform your airline while booking.',
+      'Yes. The JAY-1000P is an FAA approved oxygen concentrator, which means it meets the US Federal Aviation Administration standards for use on board an aircraft and is permitted on commercial flights worldwide, including domestic Indian airlines. As a flight approved oxygen concentrator it can be carried into the cabin as a medical device. Airlines usually ask for prior intimation (typically 48 hours before departure) and require you to carry enough charged batteries for roughly 1.5 times the flight duration — so please inform your airline while booking tickets.',
   },
   {
     question: 'How long does the battery last on a single charge?',
@@ -29,17 +29,12 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'Can I use it while travelling by car, train or bus?',
     answer:
-      'Yes — this is exactly what a portable oxygen concentrator for travel is built for. The JAY-1000P comes with a DC car charger so it can run continuously from a vehicle socket on long road trips, and it fits in the supplied air-vented shoulder bag for train and bus journeys. Because it is a battery operated oxygen concentrator for travelling, you are not dependent on finding a power point along the way.',
+      'Yes — this is exactly what a portable oxygen concentrator for travel is built for. The JAY-1000P also comes with a DC car charger so it can run continuously from a vehicle socket on long road trips, and it fits in the supplied air-vented shoulder bag for train and bus journeys. Because it is a battery operated oxygen concentrator for travelling, you are not dependent on finding a power point along the way.',
   },
   {
     question: 'What is pulse dose, and which flow setting should I use?',
     answer:
-      'A pulse dose model senses when you begin to inhale and releases a measured bolus of oxygen at that moment, rather than flowing continuously. This makes the oxygen supply far more efficient, which is what allows the device to be this small and light. The JAY-1000P offers settings 1 to 5. Your flow setting must be decided by your treating doctor — please do not change it on your own.',
-  },
-  {
-    question: 'Do I need a doctor\'s prescription to buy it?',
-    answer:
-      'Yes. An oxygen concentrator is a prescription medical device and should be used only under the guidance of a qualified physician. Your doctor will confirm whether pulse-dose delivery is appropriate for you and specify the flow setting and duration of use. Patients who need a fixed continuous flow (for example during sleep, or at higher oxygen requirements) may be advised to use a stationary home concentrator instead.',
+      'A pulse dose model senses when you begin to inhale and releases a measured bolus of oxygen at that moment, rather than flowing continuously. This makes the oxygen supply far more efficient. This allows the device to be small and light. The JAY-1000P offers settings 1 to 5. Your flow setting must be decided by your treating doctor — please do not change it on your own.',
   },
   {
     question: 'What oxygen purity does it deliver?',
@@ -59,17 +54,34 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'What is included in the box?',
     answer:
-      'Every JAY-1000P ships with the concentrator unit, 2 rechargeable batteries, AC power adapter, DC car charger, nasal cannula, shoulder carry bag, 2 spare filters and the user manual. The warranty is registered by Sachdeva Medline, the exclusive importer for Longfian in India.',
+      'Every JAY-1000P ships with the concentrator unit, 2 rechargeable batteries, AC power adapter, DC car charger, nasal cannula, shoulder carry bag, 2 spare filters and the user manual. The warranty is provided by Sachdeva Medline, the exclusive importer for Longfian in India.',
   },
   {
     question: 'What warranty and after-sales service do I get?',
     answer:
-      'The main concentrator is covered by a warranty of 2 years, and the batteries and molecular sieve beds by 1 year. Sachdeva Medline is the exclusive importer and authorised service partner for Longfian in India, with 15+ service centres across the country. For any support, call or WhatsApp us on +91 98915 21090.',
+      'The main concentrator is covered by a warranty of 2 years, and the batteries and molecular sieve beds by 1 year. Sachdeva Medline is the exclusive importer and authorised service partner for Longfian in India, with 15+ service centres across the country. For any support, kindly call or WhatsApp us on +91 98915 21090.',
   },
   {
     question: 'How is it delivered, and do you offer Cash on Delivery?',
     answer:
-      'We offer free delivery across India, usually dispatched within 24 hours and delivered in 3–5 business days. Please note we do not offer a COD (Cash on Delivery) option on this product — payment is made online at checkout. Returns are accepted within 7 days of delivery for damaged, defective or incorrect items.',
+      'We offer free delivery across India, usually dispatched within 24 hours and delivered in 3–5 business days. Please note we do not offer a COD (Cash on Delivery) option on this product — payment has to be made online at checkout using any suitable payment method.',
+  },
+  {
+    question: 'What is your return policy?',
+    answer:
+      'Returns are accepted within 7 days of delivery for damaged, defective or incorrect items.',
+  },
+  {
+    question: 'When to change filters?',
+    answer: 'Kindly change the filters after every 100 hours of operation.',
+  },
+  {
+    question: 'Can I purchase more batteries if required?',
+    answer: 'Yes, you can purchase as many batteries as you want. We always have enough stock.',
+  },
+  {
+    question: 'What is the watt-hour rating of the batteries?',
+    answer: '99Wh.',
   },
 ];
 

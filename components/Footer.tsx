@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
-import { PRODUCTS } from '../lib/products-data';
+import { CATEGORIES } from '../lib/categories';
 
 const GREEN = '#2D3748';
 const DARK = '#0F1117';
@@ -16,7 +16,7 @@ export default function Footer() {
         <div style={{ display: 'inline-flex', whiteSpace: 'nowrap', animation: 'mq-fwd 24s linear infinite' }}>
           {[...Array(2)].map((_, r) => (
             <span key={r} style={{ display: 'inline-flex' }}>
-              {['AUTHORISED LONGFIAN DEALER', 'TRUSTED SINCE 1981', 'PAN-INDIA DELIVERY', 'GENUINE PRODUCTS ONLY', 'EXPERT AFTER-SALES SERVICE'].map((t) => (
+              {['EXCLUSIVE LONGFIAN IMPORTER', 'TRUSTED SINCE 1981', 'PAN-INDIA DELIVERY', 'GENUINE PRODUCTS ONLY', 'EXPERT AFTER-SALES SERVICE'].map((t) => (
                 <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 16, padding: '0 24px', fontSize: 11, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>
                   {t}
                   <span style={{ color: GREEN, fontSize: 6 }}>◆</span>
@@ -39,7 +39,7 @@ export default function Footer() {
               </div>
             </Link>
             <p style={{ fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.75)', lineHeight: 1.85, marginBottom: 24, maxWidth: 260 }}>
-              Authorised dealer for Longfian oxygen concentrators and medical equipment. Serving India since 1981 with genuine products and expert service.
+              Exclusive importer partner for Longfian oxygen concentrators in India. Serving India since 1981 with genuine products and expert service with more than 15 service centres all over India.
             </p>
             <div style={{ display: 'flex', gap: 8 }}>
               {[
@@ -61,10 +61,10 @@ export default function Footer() {
 
           {/* Products */}
           <div>
-            <h4 style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREEN, marginBottom: 20, fontWeight: 700 }}>PRODUCTS</h4>
+            <h4 style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREEN, marginBottom: 20, fontWeight: 700 }}>CATEGORIES</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                ...PRODUCTS.map((p) => ({ name: p.name, to: `/product/${p.slug}` })),
+                ...CATEGORIES.map((c) => ({ name: c.name, to: `/category/${c.slug}` })),
                 { name: 'All Products', to: '/shop' },
               ].map(({ name, to }) => (
                 <li key={name}>
@@ -151,7 +151,7 @@ export default function Footer() {
           </Link>
         </p>
         <p style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: `rgba(255,255,255,0.6)` }}>
-          AUTHORISED DEALER · SINCE 1981 ◆
+          EXCLUSIVE IMPORTER · SINCE 1981 ◆
         </p>
       </div>
 

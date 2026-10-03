@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { PRODUCTS } from '../../lib/products-data';
+import { CATEGORIES } from '../../lib/categories';
 
 export const revalidate = 3600;
 
@@ -26,5 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...productPages];
+  const categoryPages: MetadataRoute.Sitemap = CATEGORIES.map((c) => ({
+    url: `${SITE}/category/${c.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...categoryPages, ...productPages];
 }

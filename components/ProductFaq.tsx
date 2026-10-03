@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDownIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { getFAQsForProduct } from '../lib/product-faqs';
 
 interface ProductFAQProps {
   productSlug: string;
-  productName: string;
+  productName?: string;
 }
 
-const ProductFAQ: React.FC<ProductFAQProps> = ({ productSlug, productName }) => {
+const ProductFAQ: React.FC<ProductFAQProps> = ({ productSlug }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = getFAQsForProduct(productSlug);
@@ -20,16 +20,6 @@ const ProductFAQ: React.FC<ProductFAQProps> = ({ productSlug, productName }) => 
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-      {/* The page section already carries the "Frequently Asked Questions" heading. */}
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-center gap-2">
-          <QuestionMarkCircleIcon className="h-5 w-5 text-emerald-600 flex-shrink-0" />
-          <p className="text-gray-600 text-center text-sm lg:text-base">
-            Everything you need to know about {productName}
-          </p>
-        </div>
-      </div>
-
       <div className="divide-y divide-gray-200">
         {faqs.map((faq, index) => {
           const isOpen = openIndex === index;

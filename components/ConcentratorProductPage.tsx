@@ -392,17 +392,6 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
         </div>
       </section>
 
-      {/* ──── REVIEWS ──── */}
-      <div ref={reviewsRef} style={{ background: BG, padding: `${VPAD} 0`, scrollMarginTop: 96 }}>
-        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ textAlign: 'center', marginBottom: 36 }}>
-            <Label text="Verified Reviews" />
-            <H2>WHAT CUSTOMERS ARE SAYING</H2>
-          </div>
-          <ProductReviews productId={product.id} productName={product.name} />
-        </div>
-      </div>
-
       {/* ──── FAQ ──── */}
       <div style={{ background: '#fff', padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
@@ -413,6 +402,17 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
           <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <ProductFAQ productSlug={product.slug} productName={product.name} />
           </div>
+        </div>
+      </div>
+
+      {/* ──── REVIEWS ──── */}
+      <div ref={reviewsRef} style={{ background: BG, padding: `${VPAD} 0`, scrollMarginTop: 96 }}>
+        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
+          <div style={{ textAlign: 'center', marginBottom: 36 }}>
+            <Label text="Verified Reviews" />
+            <H2>WHAT CUSTOMERS ARE SAYING</H2>
+          </div>
+          <ProductReviews productId={product.id} productName={product.name} />
         </div>
       </div>
 

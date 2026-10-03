@@ -97,7 +97,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     tagline: 'Reliable, quiet 5 litre oxygen concentrator for round-the-clock home therapy',
     stats: [
       { val: '25+', lbl: 'Years of Experience', sub: 'Longfian — established 1999' },
-      { val: '#1', lbl: 'Oxygen Concentrators Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
+      { val: '#1', lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
       { val: '93%+', lbl: 'Oxygen Concentration Purity', sub: 'At all flow rates' },
       { val: '<42 dB', lbl: 'Noise Level', sub: 'Quiet enough for bedroom use' },
     ],
@@ -201,7 +201,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     tagline: 'The latest 5 litre Longfian model — now with a nebulizer outlet and full lithium sieve beds',
     stats: [
       { val: '25+', lbl: 'Years of Experience', sub: 'Longfian — established 1999' },
-      { val: '#1', lbl: 'Oxygen Concentrators Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
+      { val: '#1', lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
       { val: '93%+', lbl: 'Oxygen Concentration Purity', sub: 'Medical-grade PSA technology' },
       { val: '25,000 hrs', lbl: 'Product Life', sub: 'Built for years of daily use' },
     ],
@@ -307,7 +307,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     tagline: 'High-purity oxygen for home and clinical use — with live purity readout, HEPA filter and nebuliser',
     stats: [
       { val: '25+', lbl: 'Years of Experience', sub: 'Longfian — established 1999' },
-      { val: '#1', lbl: 'Oxygen Concentrators Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
+      { val: '#1', lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
       { val: '93% ± 3%', lbl: 'Oxygen Concentration Purity', sub: 'At every flow rate' },
       { val: '<39 dB', lbl: 'Noise Level', sub: 'Quieter than a library' },
     ],
@@ -412,7 +412,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     tagline: 'Designed for stable, long-duration oxygen therapy in home and clinical settings',
     stats: [
       { val: '25+', lbl: 'Years of Experience', sub: 'Longfian — established 1999' },
-      { val: '#1', lbl: 'Oxygen Concentrators Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
+      { val: '#1', lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
       { val: '93%+', lbl: 'Oxygen Concentration Purity', sub: 'Above 93% concentration always' },
       { val: '<42 dB', lbl: 'Noise Level', sub: 'Oil-free compressor' },
     ],
@@ -514,7 +514,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     tagline: 'The smallest and lightest Longfian concentrator — for home, outdoor and travel use',
     stats: [
       { val: '25+', lbl: 'Years of Experience', sub: 'Longfian — established 1999' },
-      { val: '#1', lbl: 'Oxygen Concentrators Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
+      { val: '#1', lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
       { val: '6.3 kg', lbl: 'Net Weight', sub: 'Lightest in the Longfian range' },
       { val: '90W', lbl: 'Power Draw', sub: 'Inverter- and generator-friendly' },
     ],

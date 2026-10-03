@@ -5,10 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star } from 'lucide-react';
+import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star, FileDown } from 'lucide-react';
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 import { getReviewStats } from '../../../../lib/product-reviews';
+import ExperienceBadge from '../../../../components/ExperienceBadge';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
@@ -24,6 +25,7 @@ const DISC  = Math.round(((MRP - PRICE) / MRP) * 100);
 const PID   = 4;
 const PNAME = 'Longfian JAY-1000P';
 const PSLUG = 'longfian-jay-1000p-portable-oxygen-concentrator';
+const FAA_REPORT = '/docs/longfian-jay-1000p-faa-test-report.pdf';
 
 const GALLERY = [
   '/products/jay-1000p/main.jpg',
@@ -70,6 +72,11 @@ function Gallery() {
         {GALLERY.map((src, i) => (
           <div key={src} style={{ position: 'absolute', inset: 8, opacity: main === i ? 1 : 0, transition: 'opacity 0.15s ease', pointerEvents: 'none' }}>
             <Image src={src} alt={i === 0 ? PNAME : `${PNAME} — feature ${i}`} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority={i === 0} />
+            {i === 0 && (
+              <div className="xp-badge" style={{ position: 'absolute', top: 4, right: 4, zIndex: 1 }}>
+                <ExperienceBadge size={92} />
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -447,6 +454,11 @@ export default function Jay1000PClient() {
               ))}
             </div>
 
+            <a href={FAA_REPORT} download="Longfian JAY-1000P FAA Test Report.pdf" target="_blank" rel="noopener noreferrer" style={{ marginTop: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '14px 20px', background: '#EEF1F6', color: ACC, border: `2px solid ${ACC}`, borderRadius: 10, fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none' }}>
+              <FileDown style={{ width: 16, height: 16, flexShrink: 0 }} />
+              Download the FAA Test Report
+            </a>
+
             {/* Promo artwork — the two files have different aspect ratios and carry text to the
                 edges, so they share a width and keep their own heights rather than being cropped. */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
@@ -469,7 +481,7 @@ export default function Jay1000PClient() {
           <div className="stats-row1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: 0 }}>
             {[
               { val: '25+',  lbl: 'Years of Experience',  sub: 'Longfian — established 1999' },
-              { val: '#1',   lbl: 'Oxygen Concentrators Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
+              { val: '#1',   lbl: 'Oxygen Concentrator Manufacturer in the World', sub: "Longfian is the world's biggest manufacturer of oxygen concentrators" },
             ].map((s, i) => (
               <div key={i} className="stat-cell" style={{ textAlign: 'center', padding: 'clamp(16px,3vw,28px) clamp(12px,2vw,24px)', borderRight: i === 0 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
                 <p style={{ fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 6 }}>{s.val}</p>
@@ -512,7 +524,7 @@ export default function Jay1000PClient() {
 
             <BenefitCard>
               <div style={{ marginBottom: 12 }}>
-                <Image src="/longfianlogo.jpeg" alt="Longfian" width={162} height={30} style={{ height: 30, width: 'auto', objectFit: 'contain' }} />
+                <Image src="/longfian-logo.png" alt="Longfian" width={150} height={30} style={{ height: 30, width: 'auto', objectFit: 'contain' }} />
               </div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Over 25 Years of Experience</h3>
               <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Longfian is the world&apos;s biggest manufacturer of oxygen concentrators with decades of experience.</p>
@@ -686,12 +698,11 @@ export default function Jay1000PClient() {
       <section style={{ background: DARK, padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
           <div style={{ textAlign: 'center', marginBottom: 28 }}>
-            <h2 style={{ fontSize: 'clamp(20px,2.5vw,30px)', fontWeight: 900, letterSpacing: '-0.01em', color: '#fff', lineHeight: 1.1 }}>VIDEOS</h2>
+            <h2 style={{ fontSize: 'clamp(30px,4.5vw,52px)', fontWeight: 900, letterSpacing: '-0.01em', color: '#fff', lineHeight: 1.1 }}>VIDEOS</h2>
           </div>
 
           {/* Featured — big landscape (full-bleed on mobile) */}
           <div style={{ marginBottom: 32 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Official Product Video</p>
             <div className="video-wide">
               <LocalVideo src="/videos/official.mp4" />
             </div>
@@ -699,7 +710,6 @@ export default function Jay1000PClient() {
 
           {/* Shorts — vertical, kept smaller than the landscape videos */}
           <div style={{ marginBottom: 32 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>Shorts</p>
             <div className="shorts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, maxWidth: 1040, margin: '0 auto' }}>
               {['/videos/short-1.mp4', '/videos/short-2.mp4', '/videos/short-3.mp4'].map((src) => (
                 <LocalVideo key={src} src={src} vertical />
@@ -709,7 +719,6 @@ export default function Jay1000PClient() {
 
           {/* Second — big landscape (full-bleed on mobile) */}
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>More Videos</p>
             <div className="video-wide">
               <LocalVideo src="/videos/overview.mp4" />
             </div>
@@ -732,17 +741,6 @@ export default function Jay1000PClient() {
         </div>
       </section>
 
-      {/* ──── REVIEWS ──── */}
-      <div ref={reviewsRef} style={{ background: BG, padding: `${VPAD} 0`, scrollMarginTop: 96 }}>
-        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
-          <div style={{ textAlign: 'center', marginBottom: 36 }}>
-            <Label text="Verified Reviews" />
-            <H2>WHAT CUSTOMERS ARE SAYING</H2>
-          </div>
-          <ProductReviews productId={PID} productName={PNAME} />
-        </div>
-      </div>
-
       {/* ──── FAQ ──── */}
       <div style={{ background: '#fff', padding: `${VPAD} 0` }}>
         <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
@@ -753,6 +751,17 @@ export default function Jay1000PClient() {
           <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <ProductFAQ productSlug={PSLUG} productName={PNAME} />
           </div>
+        </div>
+      </div>
+
+      {/* ──── REVIEWS ──── */}
+      <div ref={reviewsRef} style={{ background: BG, padding: `${VPAD} 0`, scrollMarginTop: 96 }}>
+        <div style={{ maxWidth: W, margin: '0 auto', padding: `0 ${PAD}` }}>
+          <div style={{ textAlign: 'center', marginBottom: 36 }}>
+            <Label text="Verified Reviews" />
+            <H2>WHAT CUSTOMERS ARE SAYING</H2>
+          </div>
+          <ProductReviews productId={PID} productName={PNAME} />
         </div>
       </div>
 
@@ -802,6 +811,7 @@ export default function Jay1000PClient() {
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
           .stat-cell { border-right: none !important; }
           .stats-row1 .stat-cell + .stat-cell { border-top: 1px solid rgba(255,255,255,0.1); }
+          .xp-badge svg   { width: 64px !important; height: auto !important; }
         }
       `}</style>
     </div>

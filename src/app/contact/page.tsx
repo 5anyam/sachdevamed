@@ -6,6 +6,13 @@ import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 const GREEN = '#3DAA35';
 const DARK = '#0F1117';
 const BG = '#F5FAF4';
+const ACC = '#2D3748';
+const GREY = '#6B7280';
+
+const ADDRESS = 'C-8/70, Sector 8, Rohini,\nDelhi – 110085';
+const GPS = '28.7040653,77.1280131';
+const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${GPS}`;
+const MAP_EMBED = `https://maps.google.com/maps?q=${GPS}&z=17&hl=en&output=embed`;
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -45,7 +52,8 @@ export default function ContactPage() {
             GET IN<br /><span style={{ color: GREEN }}>TOUCH.</span>
           </h1>
           <p style={{ fontSize: 15, fontWeight: 300, color: 'rgba(255,255,255,0.55)', maxWidth: 500, margin: '0 auto', lineHeight: 1.85 }}>
-            Have a question about our products or delivery, or need expert guidance on choosing the right equipment? We&apos;d love to hear from you.
+            Have a question about our products or delivery, or need expert guidance on choosing the right equipment?
+            <span style={{ display: 'block', marginTop: 10 }}>We&apos;d love to hear from you.</span>
           </p>
         </div>
       </section>
@@ -55,21 +63,22 @@ export default function ContactPage() {
         {/* Contact Cards */}
         <section className="contact-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginBottom: 64 }}>
           {[
-            { icon: <Phone size={22} />, title: 'CALL US', sub: 'Mon – Sat · 9 AM – 7 PM', value: '+91 98915 21090', href: 'tel:+919891521090', sub2: '+91 99110 06187', href2: 'tel:+919911006187' },
-            { icon: <Mail size={22} />, title: 'EMAIL US', sub: 'Response within 24 hours', value: 'info@sachdevamedline.com', href: 'mailto:info@sachdevamedline.com', sub2: null, href2: null },
-            { icon: <MapPin size={22} />, title: 'VISIT US', sub: 'Near Railway Crossing, Sultanpuri', value: 'House No. 9B/4, Friends Enclave,\nSultanpuri, Delhi – 110041', href: null, sub2: null, href2: null },
+            { icon: <Phone size={22} />, title: 'CALL US', sub: '24 hours support · All 7 days', lines: [{ text: '+91 98915 21090', href: 'tel:+919891521090' }, { text: '+91 99110 06187', href: 'tel:+919911006187' }] },
+            { icon: <Mail size={22} />, title: 'EMAIL US', sub: 'Response within 24 hours', lines: [{ text: 'info@sachdevamedline.com', href: 'mailto:info@sachdevamedline.com' }] },
+            { icon: <MapPin size={22} />, title: 'VISIT US', sub: 'Sector 8, Rohini, Delhi', address: ADDRESS, lines: [{ text: 'Get Directions →', href: MAPS_URL, external: true }] },
           ].map((card, i) => (
-            <div key={i} style={{ background: i === 0 ? DARK : '#fff', border: `1.5px solid ${i === 0 ? 'transparent' : '#e8f0e8'}`, borderRadius: 16, padding: '36px 28px', textAlign: 'center', boxShadow: i === 0 ? `0 6px 24px rgba(61,170,53,0.2)` : '0 2px 10px rgba(61,170,53,0.06)' }}>
-              <div style={{ width: 56, height: 56, background: `rgba(61,170,53,${i === 0 ? '0.15' : '0.1'})`, border: `1.5px solid rgba(61,170,53,0.25)`, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', color: GREEN }}>
+            <div key={i} style={{ background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 16, padding: '36px 28px', textAlign: 'center', boxShadow: '0 2px 10px rgba(15,17,23,0.05)' }}>
+              <div style={{ width: 56, height: 56, background: '#EEF1F6', border: '1.5px solid #CBD5E0', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', color: ACC }}>
                 {card.icon}
               </div>
-              <h3 style={{ fontSize: 15, fontWeight: 800, letterSpacing: '0.1em', color: i === 0 ? GREEN : DARK, marginBottom: 6 }}>{card.title}</h3>
-              <p style={{ fontSize: 12, color: i === 0 ? 'rgba(255,255,255,0.4)' : 'rgba(15,17,23,0.4)', marginBottom: 14 }}>{card.sub}</p>
-              {card.href
-                ? <><a href={card.href} style={{ display: 'block', fontSize: 14, fontWeight: 700, color: GREEN, textDecoration: 'none', marginBottom: 4 }}>{card.value}</a>
-                  {card.href2 && <a href={card.href2} style={{ display: 'block', fontSize: 14, fontWeight: 700, color: GREEN, textDecoration: 'none' }}>{card.sub2}</a>}</>
-                : <address style={{ fontSize: 13, color: i === 0 ? 'rgba(255,255,255,0.55)' : 'rgba(15,17,23,0.6)', fontStyle: 'normal', lineHeight: 1.7, whiteSpace: 'pre-line' }}>{card.value}</address>
-              }
+              <h3 style={{ fontSize: 15, fontWeight: 800, letterSpacing: '0.1em', color: DARK, marginBottom: 6 }}>{card.title}</h3>
+              <p style={{ fontSize: 12, color: GREY, marginBottom: 14 }}>{card.sub}</p>
+              {card.address && (
+                <address style={{ fontSize: 13, color: '#374151', fontStyle: 'normal', lineHeight: 1.7, whiteSpace: 'pre-line', marginBottom: 8 }}>{card.address}</address>
+              )}
+              {card.lines.map((l) => (
+                <a key={l.text} href={l.href} {...('external' in l ? { target: '_blank', rel: 'noopener noreferrer' } : {})} style={{ display: 'block', fontSize: 14, fontWeight: 700, color: ACC, textDecoration: 'none', marginBottom: 4 }}>{l.text}</a>
+              ))}
             </div>
           ))}
         </section>
@@ -81,7 +90,7 @@ export default function ContactPage() {
           <div style={{ background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(61,170,53,0.06)' }}>
             <div style={{ padding: '18px 28px', borderBottom: `1px solid #e8f0e8`, background: BG }}>
               <h2 style={{ fontSize: 18, fontWeight: 800, color: DARK, letterSpacing: '-0.01em' }}>Send Us a Message</h2>
-              <p style={{ fontSize: 12, color: 'rgba(15,17,23,0.45)', marginTop: 4 }}>We usually respond within a few hours during business days.</p>
+              <p style={{ fontSize: 12, color: 'rgba(15,17,23,0.45)', marginTop: 4 }}>We usually respond within a few hours.</p>
             </div>
             <div style={{ padding: 28 }}>
               <div className="contact-form-inner" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
@@ -142,10 +151,10 @@ export default function ContactPage() {
               </div>
               <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 22 }}>
                 {[
-                  { icon: <MapPin size={16} />, label: 'Address', content: 'House No. 9B/4, Friends Enclave,\nNear Railway Crossing,\nSultanpuri, Delhi – 110041' },
+                  { icon: <MapPin size={16} />, label: 'Address', content: ADDRESS },
                   { icon: <Phone size={16} />, label: 'Phone', content: '+91 98915 21090\n+91 99110 06187' },
                   { icon: <Mail size={16} />, label: 'Email', content: 'info@sachdevamedline.com' },
-                  { icon: <Clock size={16} />, label: 'Business Hours', content: 'Mon – Sat: 9:00 AM – 7:00 PM\nSunday: Closed' },
+                  { icon: <Clock size={16} />, label: 'Business Hours', content: 'Open all 7 days\n24 hours support on calls and messages' },
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
                     <div style={{ width: 34, height: 34, background: `rgba(61,170,53,0.1)`, border: `1.5px solid rgba(61,170,53,0.2)`, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: GREEN }}>
@@ -160,18 +169,21 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Map embed placeholder */}
-            <div style={{ background: DARK, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '36px 24px', flex: 1, boxShadow: `0 4px 16px rgba(61,170,53,0.12)` }}>
-              <div style={{ textAlign: 'center' }}>
-                <MapPin size={36} style={{ color: GREEN, marginBottom: 14 }} />
-                <h4 style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 8 }}>Sultanpuri, Delhi</h4>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>House No. 9B/4, Friends Enclave<br />Near Railway Crossing, Delhi – 110041</p>
-                <a href="https://maps.google.com?q=Sultanpuri+Delhi+110041" target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'inline-block', marginTop: 16, fontSize: 11, fontWeight: 700, color: GREEN, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderBottom: `1px solid rgba(61,170,53,0.4)`, paddingBottom: 2 }}
-                >
-                  Get Directions →
-                </a>
-              </div>
+            {/* Map — Sector 8 office */}
+            <div style={{ background: '#fff', border: '1.5px solid #e8f0e8', borderRadius: 16, overflow: 'hidden', flex: 1, minHeight: 280, display: 'flex', flexDirection: 'column', boxShadow: '0 2px 10px rgba(15,17,23,0.05)' }}>
+              <iframe
+                title="Sachdeva Medline — Sector 8, Rohini, Delhi"
+                src={MAP_EMBED}
+                style={{ border: 0, width: '100%', flex: 1, minHeight: 220, display: 'block' }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer"
+                style={{ display: 'block', textAlign: 'center', padding: '14px 16px', fontSize: 11, fontWeight: 700, color: ACC, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderTop: '1px solid #e8f0e8' }}
+              >
+                Get Directions →
+              </a>
             </div>
           </div>
         </section>
@@ -184,9 +196,9 @@ export default function ContactPage() {
           </div>
           <div className="contact-faq-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             {[
-              { q: 'How quickly will I receive a response?', a: 'We typically respond to emails within 24 hours. Phone calls are answered Mon–Sat between 9 AM and 7 PM.' },
+              { q: 'How quickly will I receive a response?', a: 'We typically respond to emails within 24 hours. Support on calls and messages is available 24 hours, all 7 days.' },
               { q: 'Do you deliver outside Delhi?', a: 'Yes — we deliver pan-India to 500+ cities. All orders are dispatched within 24 hours of confirmation.' },
-              { q: 'Do your products come with a warranty?', a: 'All Longfian oxygen concentrators come with a full manufacturer’s warranty. We assist with claims from day one.' },
+              { q: 'Do your products come with a warranty?', a: 'All our products come with warranty. We assist with claims from day one.' },
               { q: 'Can I get a bulk / institutional quote?', a: 'Yes. Select "Bulk / Institutional Order" in the contact form or call us directly for customised pricing.' },
             ].map((faq, i) => (
               <div key={i} style={{ background: '#fff', border: `1.5px solid #e8f0e8`, borderRadius: 12, padding: '24px 28px', boxShadow: '0 2px 8px rgba(61,170,53,0.05)' }}>
@@ -206,7 +218,7 @@ export default function ContactPage() {
               CALL US<br /><span style={{ color: GREEN }}>TODAY.</span><br />WE&apos;RE READY.
             </h2>
             <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', maxWidth: 460, margin: '0 auto 36px', lineHeight: 1.85 }}>
-              Our team is available Monday to Saturday, 9 AM to 7 PM, to guide you to the right equipment for your needs.
+              Our team is available 24 hours a day, all 7 days, on calls and messages to guide you to the right equipment for your needs.
             </p>
             <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="tel:+919891521090"

@@ -15,7 +15,7 @@ interface Props {
   products: StaticProduct[];
 }
 
-function ProductCard({ product }: { product: StaticProduct }) {
+export function ProductCard({ product }: { product: StaticProduct }) {
   const cardStats = getReviewStats(product.id);
   const discount = Math.round(((product.regularPrice - product.price) / product.regularPrice) * 100);
   return (
