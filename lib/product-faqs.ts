@@ -14,7 +14,7 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'Is the JAY-1000P a flight approved oxygen concentrator? Can I carry it on a plane?',
     answer:
-      'Yes. The JAY-1000P is an FAA approved oxygen concentrator, which means it meets the US Federal Aviation Administration standards for use on board an aircraft and is permitted on commercial flights worldwide, including domestic Indian airlines. As a flight approved oxygen concentrator it can be carried into the cabin as a medical device. Airlines usually ask for prior intimation (typically 48 hours before departure) and require you to carry enough charged batteries for roughly 1.5 times the flight duration — so please inform your airline while booking tickets.',
+      'Yes. The JAY-1000P is FAA approved, which means it meets the US Federal Aviation Administration standards for use on board an aircraft and is permitted on commercial flights worldwide, including domestic Indian airlines. As a flight approved oxygen concentrator it can be carried into the cabin as a medical device. Airlines usually ask for prior intimation (typically 48 hours before departure) and require you to carry enough charged batteries for roughly 1.5 times the flight duration — so please inform your airline while booking tickets.',
   },
   {
     question: 'How long does the battery last on a single charge?',
@@ -34,7 +34,7 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'What is pulse dose, and which flow setting should I use?',
     answer:
-      'A pulse dose model senses when you begin to inhale and releases a measured bolus of oxygen at that moment, rather than flowing continuously. This makes the oxygen supply far more efficient. This allows the device to be small and light. The JAY-1000P offers settings 1 to 5. Your flow setting must be decided by your treating doctor — please do not change it on your own.',
+      'A pulse dose model senses when you begin to inhale and releases a measured bolus of oxygen at that moment, rather than flowing continuously. This makes the oxygen supply far more efficient. This allows the device to be small and light. The JAY-1000P offers settings 1 to 5.',
   },
   {
     question: 'What oxygen purity does it deliver?',
@@ -49,7 +49,7 @@ const portableOxygenConcentrator: FAQ[] = [
   {
     question: 'Which certifications and approvals does it carry?',
     answer:
-      'The JAY-1000P is CE certified, ISO 9001 manufactured, US FDA 510(k) cleared (K243833), CDSCO registered for import and sale in India, and FAA approved for in-flight use. Longfian is the world\'s largest manufacturer of oxygen concentrators with over 25 years of experience.',
+      'The JAY-1000P is CE, ISO, FDA, CDSCO and FAA approved. Longfian is the world\'s largest manufacturer of oxygen concentrators with over 25 years of experience.',
   },
   {
     question: 'What is included in the box?',
@@ -81,7 +81,7 @@ const portableOxygenConcentrator: FAQ[] = [
   },
   {
     question: 'What is the watt-hour rating of the batteries?',
-    answer: '99Wh.',
+    answer: '99Wh',
   },
 ];
 

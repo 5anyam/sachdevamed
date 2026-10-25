@@ -28,20 +28,20 @@ export const CATEGORIES: Category[] = [
         productSlugs: ['longfian-jay-1000p-portable-oxygen-concentrator'],
       },
       {
-        id: '2l',
-        name: '2L Model for Home and Car',
+        id: 'mini',
+        name: 'Longfian Oxygen Concentrator - Mini',
         models: ['B-1'],
         productSlugs: ['longfian-b-1-oxygen-concentrator'],
       },
       {
         id: '3l',
-        name: '3L Model for Home',
+        name: 'Longfian Oxygen Concentrator - 3 Litres',
         models: ['JAY-3EW'],
         productSlugs: [],
       },
       {
         id: '5l',
-        name: '5L Models for Home',
+        name: 'Longfian Oxygen Concentrator - 5 Litres',
         models: ['JAY-5', 'JAY-5AW', 'JAY-5CW', 'JAY-5HW'],
         productSlugs: [
           'longfian-jay-5-5-litres-medical-grade-oxygen-concentrator',
@@ -52,8 +52,21 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: '10l',
-        name: '10L Model for Home',
+        name: 'Longfian Oxygen Concentrator - 10 Litres',
         models: ['JAY-10'],
+        productSlugs: [],
+      },
+    ],
+  },
+  {
+    slug: 'bipap-cpap',
+    name: 'BiPAP CPAP',
+    intro: 'BiPAP and CPAP machines for sleep apnea and respiratory support at home.',
+    subcategories: [
+      {
+        id: 'bipap-cpap',
+        name: 'BiPAP & CPAP Machines',
+        models: ['BiPAP', 'CPAP'],
         productSlugs: [],
       },
     ],

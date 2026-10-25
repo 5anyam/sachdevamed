@@ -9,7 +9,6 @@ import { ShieldCheck, Truck, RotateCcw, Package, Zap, ChevronRight, Star, FileDo
 import { useCart } from '../../../../lib/cart';
 import { toast } from '../../../../hooks/use-toast';
 import { getReviewStats } from '../../../../lib/product-reviews';
-import ExperienceBadge from '../../../../components/ExperienceBadge';
 
 const ProductReviews = dynamic(() => import('../../../../components/ProductReviews'), { ssr: false });
 const ProductFAQ = dynamic(() => import('../../../../components/ProductFaq'), { ssr: false });
@@ -29,13 +28,13 @@ const FAA_REPORT = '/docs/longfian-jay-1000p-faa-test-report.pdf';
 
 const GALLERY = [
   '/products/jay-1000p/main.jpg',
-  '/products/jay-1000p/lightweight.jpg',
+  '/products/jay-1000p/most-selling.jpeg',
   '/products/jay-1000p/flights-travel.jpg',
   '/products/jay-1000p/features.jpg',
   '/products/jay-1000p/fly-with-confidence.jpg',
   '/products/jay-1000p/suitable-for.jpg',
   '/products/jay-1000p/battery-backup.jpg',
-  '/products/jay-1000p/stay-active.jpg',
+  '/products/jay-1000p/portable-pulse.jpeg',
   '/products/jay-1000p/emergencies.jpg',
   '/products/jay-1000p/in-the-box.jpg',
 ];
@@ -53,30 +52,34 @@ function StarRow({ r }: { r: number }) {
   );
 }
 
+/* Auto-advances every 6s. Hovering pauses it; once the visitor taps or clicks the
+   gallery it stops for good and stays on the image they chose. */
 function Gallery() {
   const [main, setMain] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const startTimer = () => {
+  const stoppedRef = useRef(false);
+  const stopTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setMain(m => (m + 1) % GALLERY.length), 4000);
+    timerRef.current = null;
+  };
+  const startTimer = () => {
+    stopTimer();
+    if (stoppedRef.current) return;
+    timerRef.current = setInterval(() => setMain(m => (m + 1) % GALLERY.length), 6000);
   };
   useEffect(() => {
     startTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    return stopTimer;
   }, []);
-  const pick = (i: number) => { setMain(i); startTimer(); };
+  const hold = () => { stoppedRef.current = true; stopTimer(); };
+  const pick = (i: number) => { hold(); setMain(i); };
   return (
     <div>
       {/* 970×600 landscape frame — all gallery images share this ratio, so no letterboxing */}
-      <div style={{ position: 'relative', width: '100%', paddingBottom: '61.86%', background: '#fff', borderRadius: 14, overflow: 'hidden', border: '2px solid #E5E7EB', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+      <div onPointerDown={hold} onMouseEnter={stopTimer} onMouseLeave={startTimer} style={{ position: 'relative', width: '100%', paddingBottom: '61.86%', background: '#fff', borderRadius: 14, overflow: 'hidden', border: '2px solid #E5E7EB', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
         {GALLERY.map((src, i) => (
           <div key={src} style={{ position: 'absolute', inset: 8, opacity: main === i ? 1 : 0, transition: 'opacity 0.15s ease', pointerEvents: 'none' }}>
             <Image src={src} alt={i === 0 ? PNAME : `${PNAME} — feature ${i}`} fill style={{ objectFit: 'contain' }} sizes="(max-width:768px) 100vw, 50vw" priority={i === 0} />
-            {i === 0 && (
-              <div className="xp-badge" style={{ position: 'absolute', top: 4, right: 4, zIndex: 1 }}>
-                <ExperienceBadge size={92} />
-              </div>
-            )}
           </div>
         ))}
       </div>
@@ -524,7 +527,7 @@ export default function Jay1000PClient() {
 
             <BenefitCard>
               <div style={{ marginBottom: 12 }}>
-                <Image src="/longfian-logo.png" alt="Longfian" width={150} height={30} style={{ height: 30, width: 'auto', objectFit: 'contain' }} />
+                <Image src="/longfian-logo-clear.png" alt="Longfian" width={150} height={24} style={{ height: 30, width: 'auto', objectFit: 'contain' }} />
               </div>
               <h3 style={{ fontSize: 15, fontWeight: 800, color: DARK, marginBottom: 6 }}>Over 25 Years of Experience</h3>
               <p style={{ fontSize: 13, color: GREY, lineHeight: 1.7 }}>Longfian is the world&apos;s biggest manufacturer of oxygen concentrators with decades of experience.</p>
@@ -811,7 +814,6 @@ export default function Jay1000PClient() {
           .stats-row1, .stats-row2 { grid-template-columns: 1fr !important; }
           .stat-cell { border-right: none !important; }
           .stats-row1 .stat-cell + .stat-cell { border-top: 1px solid rgba(255,255,255,0.1); }
-          .xp-badge svg   { width: 64px !important; height: auto !important; }
         }
       `}</style>
     </div>

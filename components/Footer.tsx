@@ -121,6 +121,7 @@ export default function Footer() {
                       onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.9)')}
                     >
                       {item.val}
+                      <span style={{ display: 'block', marginTop: 4, fontSize: 12, fontWeight: 600, letterSpacing: '0.06em', color: 'rgba(255,255,255,0.6)' }}>📍 View on Google Maps →</span>
                     </Link>
                   ) : (
                     <span style={{ fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.9)', lineHeight: 1.6 }}>{item.val}</span>

@@ -11,7 +11,7 @@ const GREY = '#6B7280';
 
 const ADDRESS = 'C-8/70, Sector 8, Rohini,\nDelhi – 110085';
 const GPS = '28.7040653,77.1280131';
-const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${GPS}`;
+const MAPS_URL = 'https://maps.google.com/maps?q=28.7040653%2C77.1280131&z=17&hl=en';
 const MAP_EMBED = `https://maps.google.com/maps?q=${GPS}&z=17&hl=en&output=embed`;
 
 export default function ContactPage() {

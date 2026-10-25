@@ -77,7 +77,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                 </div>
               ) : (
                 <div style={{ background: '#fff', border: '1.5px dashed #CBD5E0', borderRadius: 12, padding: '28px 24px', textAlign: 'center' }}>
-                  <p style={{ fontSize: 15, fontWeight: 700, color: DARK, marginBottom: 6 }}>Longfian {sub.models.join(', ')}</p>
+                  <p style={{ fontSize: 15, fontWeight: 700, color: DARK, marginBottom: 6 }}>{cat.slug === 'oxygen-concentrators' ? `Longfian ${sub.models.join(', ')}` : sub.name}</p>
                   <p style={{ fontSize: 13, color: GREY, marginBottom: 16 }}>Call or WhatsApp us for price and availability.</p>
                   <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
                     <a href="tel:+919891521090" style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: DARK, border: `2px solid ${ACC}`, borderRadius: 8, padding: '10px 18px', textDecoration: 'none' }}>Call Us</a>

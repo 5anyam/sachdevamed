@@ -54,7 +54,7 @@ const jsonLd = {
     'FDA cleared, FAA approved, CDSCO registered portable oxygen concentrator. 1.98 kg, 93%±3% oxygen purity, up to 10 hours battery. CE and ISO certified.',
   image: [
     'https://sachdevamedline.com/products/jay-1000p/main.jpg',
-    'https://sachdevamedline.com/products/jay-1000p/lightweight.jpg',
+    'https://sachdevamedline.com/products/jay-1000p/most-selling.jpeg',
     'https://sachdevamedline.com/products/jay-1000p/flights-travel.jpg',
     'https://sachdevamedline.com/products/jay-1000p/features.jpg',
   ],
