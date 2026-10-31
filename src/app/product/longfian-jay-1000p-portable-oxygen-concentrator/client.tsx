@@ -28,13 +28,13 @@ const FAA_REPORT = '/docs/longfian-jay-1000p-faa-test-report.pdf';
 
 const GALLERY = [
   '/products/jay-1000p/main.jpg',
-  '/products/jay-1000p/most-selling.jpeg',
+  '/products/jay-1000p/lightweight.jpg',
   '/products/jay-1000p/flights-travel.jpg',
   '/products/jay-1000p/features.jpg',
   '/products/jay-1000p/fly-with-confidence.jpg',
   '/products/jay-1000p/suitable-for.jpg',
   '/products/jay-1000p/battery-backup.jpg',
-  '/products/jay-1000p/portable-pulse.jpeg',
+  '/products/jay-1000p/on-grass.jpg',
   '/products/jay-1000p/emergencies.jpg',
   '/products/jay-1000p/in-the-box.jpg',
 ];
@@ -462,10 +462,12 @@ export default function Jay1000PClient() {
               Download the FAA Test Report
             </a>
 
-            {/* Promo artwork — the two files have different aspect ratios and carry text to the
+            {/* Promo artwork — the files have different aspect ratios and carry text to the
                 edges, so they share a width and keep their own heights rather than being cropped. */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
               {[
+                { src: '/products/jay-1000p/most-selling.jpeg', w: 1159, h: 1356, alt: 'Longfian JAY-1000P — Most selling portable oxygen concentrator in India' },
+                { src: '/products/jay-1000p/portable-pulse.jpeg', w: 1254, h: 1254, alt: 'Longfian JAY-1000P — Portable pulse oxygen concentrator' },
                 { src: '/products/jay-1000p/promo-1.jpeg', w: 1254, h: 1254, alt: 'Longfian JAY-1000P — More breath, more life' },
                 { src: '/products/jay-1000p/promo-2.jpeg', w: 1448, h: 1086, alt: 'Longfian JAY-1000P — Flight approved, travel light' },
                 { src: '/products/jay-1000p/promo-3.jpeg', w: 1122, h: 1402, alt: 'Longfian JAY-1000P — Makes life and travel easy' },

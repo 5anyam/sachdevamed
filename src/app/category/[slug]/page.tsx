@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CATEGORIES, getCategoryBySlug, getSubCategoryProducts } from '../../../../lib/categories';
 import { ProductCard } from '../../shop/shopPageClient';
@@ -32,6 +33,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
   const [first, ...rest] = cat.name.toUpperCase().split(' ');
   const showNav = cat.subcategories.length > 1;
+  const parent = cat.parent ? getCategoryBySlug(cat.parent) : undefined;
 
   return (
     <div style={{ minHeight: '100vh', background: BG }}>
@@ -39,7 +41,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       {/* Hero */}
       <section style={{ background: DARK, padding: '64px 32px', borderBottom: `4px solid ${ACC}` }}>
         <div style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
-          <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: 16 }}>◆ Category</span>
+          {parent ? (
+            <Link href={`/category/${parent.slug}`} style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: 16, textDecoration: 'none' }}>← {parent.name}</Link>
+          ) : (
+            <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: 16 }}>◆ Category</span>
+          )}
           <h1 style={{ fontSize: 'clamp(44px,8vw,96px)', fontWeight: 900, color: '#fff', lineHeight: 0.92, marginBottom: 16, letterSpacing: '-0.02em' }}>
             {first}{rest.length > 0 && <><br /><span style={{ color: 'rgba(255,255,255,0.6)' }}>{rest.join(' ')}.</span></>}
           </h1>
@@ -65,7 +71,14 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           return (
             <section key={sub.id} id={sub.id} style={{ marginBottom: 56, scrollMarginTop: 96 }}>
               <div style={{ borderBottom: '2px solid #E5E7EB', paddingBottom: 12, marginBottom: 24 }}>
-                <h2 style={{ fontSize: 'clamp(20px,2.6vw,28px)', fontWeight: 900, color: DARK, letterSpacing: '-0.01em', lineHeight: 1.15 }}>{sub.name}</h2>
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+                  <h2 style={{ fontSize: 'clamp(20px,2.6vw,28px)', fontWeight: 900, color: DARK, letterSpacing: '-0.01em', lineHeight: 1.15 }}>
+                    {sub.page ? <Link href={`/category/${sub.page}`} style={{ color: 'inherit', textDecoration: 'none' }}>{sub.name}</Link> : sub.name}
+                  </h2>
+                  {sub.page && (
+                    <Link href={`/category/${sub.page}`} style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACC, textDecoration: 'none', whiteSpace: 'nowrap' }}>View All →</Link>
+                  )}
+                </div>
                 <p style={{ fontSize: 12, fontWeight: 600, color: GREY, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 6 }}>
                   {sub.models.join(' · ')}
                 </p>

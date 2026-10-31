@@ -2,6 +2,8 @@ import { PRODUCTS, type StaticProduct } from './products-data';
 
 export interface SubCategory {
   id: string;
+  /** Slug of a dedicated category page for this sub-category, if one exists. */
+  page?: string;
   name: string;
   /** Model names shown when no product page exists yet. */
   models: string[];
@@ -10,6 +12,8 @@ export interface SubCategory {
 
 export interface Category {
   slug: string;
+  /** Set on sub-category pages; these stay out of the footer's top-level list. */
+  parent?: string;
   name: string;
   intro: string;
   subcategories: SubCategory[];
@@ -41,6 +45,7 @@ export const CATEGORIES: Category[] = [
       },
       {
         id: '5l',
+        page: 'longfian-oxygen-concentrator-5-litres',
         name: 'Longfian Oxygen Concentrator - 5 Litres',
         models: ['JAY-5', 'JAY-5AW', 'JAY-5CW', 'JAY-5HW'],
         productSlugs: [
@@ -55,6 +60,25 @@ export const CATEGORIES: Category[] = [
         name: 'Longfian Oxygen Concentrator - 10 Litres',
         models: ['JAY-10'],
         productSlugs: [],
+      },
+    ],
+  },
+  {
+    slug: 'longfian-oxygen-concentrator-5-litres',
+    parent: 'oxygen-concentrators',
+    name: 'Longfian Oxygen Concentrator 5 Litres',
+    intro: 'All Longfian 5 litre home oxygen concentrators — JAY-5, JAY-5AW, JAY-5CW and JAY-5HW.',
+    subcategories: [
+      {
+        id: '5l-models',
+        name: '5 Litre Models for Home',
+        models: ['JAY-5', 'JAY-5AW', 'JAY-5CW', 'JAY-5HW'],
+        productSlugs: [
+          'longfian-jay-5-5-litres-medical-grade-oxygen-concentrator',
+          'longfian-jay-5aw-5-litres-medical-grade-oxygen-concentrator',
+          'longfian-jay-5cw-oxygen-concentrator',
+          'longfian-jay-5hw-oxygen-concentrator',
+        ],
       },
     ],
   },

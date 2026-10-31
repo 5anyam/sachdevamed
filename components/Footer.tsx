@@ -64,7 +64,7 @@ export default function Footer() {
             <h4 style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREEN, marginBottom: 20, fontWeight: 700 }}>CATEGORIES</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                ...CATEGORIES.map((c) => ({ name: c.name, to: `/category/${c.slug}` })),
+                ...CATEGORIES.filter((c) => !c.parent).map((c) => ({ name: c.name, to: `/category/${c.slug}` })),
                 { name: 'All Products', to: '/shop' },
               ].map(({ name, to }) => (
                 <li key={name}>
