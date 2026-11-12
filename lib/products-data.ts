@@ -57,7 +57,7 @@ export const PRODUCTS: StaticProduct[] = [
     howToUse:
       'Place on a flat surface with at least 20 cm clearance on all sides. Connect the nasal cannula or mask. Set the prescribed flow rate using the dial. Use as directed by your physician. Clean the external filter every 2 weeks with mild soap and allow to dry completely before reinserting.',
     category: 'Oxygen Concentrator',
-    badge: 'Best Seller',
+    badge: '5L',
     capsules: 0,
   },
   {
@@ -90,7 +90,7 @@ export const PRODUCTS: StaticProduct[] = [
     howToUse:
       'Fill the humidifier bottle with distilled water to the marked fill line. Connect nasal cannula or mask to the outlet port. Set the flow rate as prescribed. Use the wheel handle to move between rooms. Clean the filter every 2 weeks — wash gently and allow to fully dry before reinserting.',
     category: 'Oxygen Concentrator',
-    badge: 'Most Convenient',
+    badge: '5L',
     capsules: 0,
   },
   {
@@ -165,7 +165,7 @@ export const PRODUCTS: StaticProduct[] = [
     howToUse:
       'Press the power button to switch on. Use the + / – buttons to select your prescribed flow level (1–5). Attach the nasal cannula to the oxygen outlet port and breathe normally — the device delivers a pulse of oxygen automatically with each inhalation. For travel, keep the device in the included shoulder bag (the bag has built-in air vents so it can operate while inside). To charge, connect the AC adapter and allow 2 hours for a full charge; the car charger can also be used for vehicle charging. Replace the air filter at home as needed; contact Sachdeva Medline for molecular sieve maintenance.',
     category: 'Portable Oxygen Concentrator',
-    badge: 'Flight Safe',
+    badge: 'FAA Approved',
     capsules: 0,
     videos: [
       { id: '15m-J_sUB_MMHmnJSG399tm6tYW9oJZCj', title: 'JAY-1000P Product Video (HD)' },
@@ -192,9 +192,9 @@ export const PRODUCTS: StaticProduct[] = [
     price: 0,
     regularPrice: 0,
     images: [
+      '/products/jay-5cw/03.jpg',
       '/products/jay-5cw/01.jpg',
       '/products/jay-5cw/02.jpg',
-      '/products/jay-5cw/03.jpg',
     ],
     benefits: [
       'Above 93% oxygen concentration at up to 5 litres per minute',
@@ -213,7 +213,7 @@ export const PRODUCTS: StaticProduct[] = [
     howToUse:
       'Place on a flat surface with at least 20 cm clearance on all sides. Fill the humidifier bottle to the marked line with distilled water. Connect the nasal cannula and set the prescribed flow rate on the flowmeter. Clean the external filter every 2 weeks and allow it to dry fully before reinserting.',
     category: 'Oxygen Concentrator',
-    badge: 'Latest Model',
+    badge: '5L',
     capsules: 0,
   },
   {
@@ -225,6 +225,7 @@ export const PRODUCTS: StaticProduct[] = [
     price: 0,
     regularPrice: 0,
     images: [
+      '/products/jay-5hw/05.jpg',
       '/products/jay-5hw/09.png',
       '/products/jay-5hw/01.jpg',
       '/products/jay-5hw/02.jpg',
@@ -246,7 +247,7 @@ export const PRODUCTS: StaticProduct[] = [
     howToUse:
       'Place on a flat surface with at least 20 cm clearance on all sides. Fill the humidifier bottle with distilled water. Connect the nasal cannula and set the prescribed flow rate. The display shows live oxygen purity so you can confirm therapy at a glance. Clean the filter every 2 weeks.',
     category: 'Oxygen Concentrator',
-    badge: 'Purity On Display',
+    badge: '5L',
     capsules: 0,
   },
   {
@@ -258,6 +259,7 @@ export const PRODUCTS: StaticProduct[] = [
     price: 0,
     regularPrice: 0,
     images: [
+      '/products/b-1/card.jpg',
       '/products/b-1/08.jpg',
       '/products/b-1/07.jpg',
       '/products/b-1/01.jpg',
@@ -279,7 +281,7 @@ export const PRODUCTS: StaticProduct[] = [
     howToUse:
       'Place on a firm, flat surface with clear space around the air intake. Connect the nasal cannula to the outlet port and set the flow using the control dial as prescribed by your doctor. Oxygen concentration is highest at the lower flow settings. Clean the filter every 2 weeks.',
     category: 'Oxygen Concentrator',
-    badge: 'Most Compact',
+    badge: '2L',
     capsules: 0,
   },
 ];

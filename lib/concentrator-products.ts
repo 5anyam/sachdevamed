@@ -182,7 +182,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     mrp: 0, // TODO: MRP in ₹
     badge: 'Latest Model',
     frame: 'square',
-    gallery: g('jay-5cw', ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '05.jpg']),
+    gallery: g('jay-5cw', ['03.jpg', '01.jpg', '02.jpg', '04.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '05.jpg']),
     highlights: [
       { icon: '💨', title: '0.5 – 5 L/min Flow', sub: 'Above 93% oxygen concentration at all flow rates' },
       { icon: '⚖️', title: 'Only 16 kg', sub: 'Smaller size, easier to carry' },
@@ -287,7 +287,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     mrp: 0, // TODO: MRP in ₹
     badge: 'Purity On Display',
     frame: 'square',
-    gallery: g('jay-5hw', ['09.png', '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '08.jpg', '07.jpg']),
+    gallery: g('jay-5hw', ['05.jpg', '09.png', '01.jpg', '02.jpg', '03.jpg', '04.jpg', '06.jpg', '08.jpg', '07.jpg']),
     highlights: [
       { icon: '💨', title: '0.5 – 5 L/min Flow', sub: 'Above 93% purity at all flow rates' },
       { icon: '📟', title: 'Purity & Flow On Display', sub: 'Live oxygen concentration readout' },
@@ -496,7 +496,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     subtitle: 'Compact Adjustable-Flow Oxygen Concentrator',
     price: 0, // TODO: selling price in ₹
     mrp: 0, // TODO: MRP in ₹
-    badge: 'Most Compact',
+    badge: '2 Litres',
     frame: 'square',
     gallery: g('b-1', ['08.jpg', '07.jpg', '01.jpg', '04.jpg', '02.jpg', '05.jpg', '06.jpg', '03.jpg']),
     highlights: [

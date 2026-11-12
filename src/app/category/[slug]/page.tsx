@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { CATEGORIES, getCategoryBySlug, getSubCategoryProducts } from '../../../../lib/categories';
+import { CATEGORIES, getCategoryBySlug, getCategoryItems } from '../../../../lib/categories';
 import { ProductCard } from '../../shop/shopPageClient';
 
 const ACC = '#2D3748';
@@ -32,21 +31,15 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   if (!cat) notFound();
 
   const [first, ...rest] = cat.name.toUpperCase().split(' ');
-  const showNav = cat.subcategories.length > 1;
-  const parent = cat.parent ? getCategoryBySlug(cat.parent) : undefined;
+  const items = getCategoryItems(cat);
 
   return (
     <div style={{ minHeight: '100vh', background: BG }}>
 
       {/* Hero */}
-      <section style={{ background: DARK, padding: '64px 32px', borderBottom: `4px solid ${ACC}` }}>
+      <section style={{ background: DARK, padding: 'clamp(44px,8vw,64px) 16px', borderBottom: `4px solid ${ACC}` }}>
         <div style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
-          {parent ? (
-            <Link href={`/category/${parent.slug}`} style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: 16, textDecoration: 'none' }}>← {parent.name}</Link>
-          ) : (
-            <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: 16 }}>◆ Category</span>
-          )}
-          <h1 style={{ fontSize: 'clamp(44px,8vw,96px)', fontWeight: 900, color: '#fff', lineHeight: 0.92, marginBottom: 16, letterSpacing: '-0.02em' }}>
+          <h1 style={{ fontSize: 'clamp(34px,8vw,96px)', fontWeight: 900, color: '#fff', lineHeight: 0.95, marginBottom: 16, letterSpacing: '-0.02em', overflowWrap: 'anywhere' }}>
             {first}{rest.length > 0 && <><br /><span style={{ color: 'rgba(255,255,255,0.6)' }}>{rest.join(' ')}.</span></>}
           </h1>
           <p style={{ fontSize: 14, fontWeight: 300, color: 'rgba(255,255,255,0.55)', maxWidth: 520, margin: '0 auto', lineHeight: 1.85 }}>{cat.intro}</p>
@@ -54,53 +47,31 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       </section>
 
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: 'clamp(32px,5vw,48px) clamp(16px,4vw,32px)' }}>
-
-        {/* Sub-category jump links */}
-        {showNav && (
-          <nav style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 48 }}>
-            {cat.subcategories.map((sub) => (
-              <a key={sub.id} href={`#${sub.id}`} style={{ fontSize: 12, fontWeight: 700, color: ACC, background: '#fff', border: '1.5px solid #CBD5E0', borderRadius: 999, padding: '8px 16px', textDecoration: 'none' }}>
-                {sub.name}
-              </a>
-            ))}
-          </nav>
-        )}
-
-        {cat.subcategories.map((sub) => {
-          const items = getSubCategoryProducts(sub);
-          return (
-            <section key={sub.id} id={sub.id} style={{ marginBottom: 56, scrollMarginTop: 96 }}>
-              <div style={{ borderBottom: '2px solid #E5E7EB', paddingBottom: 12, marginBottom: 24 }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-                  <h2 style={{ fontSize: 'clamp(20px,2.6vw,28px)', fontWeight: 900, color: DARK, letterSpacing: '-0.01em', lineHeight: 1.15 }}>
-                    {sub.page ? <Link href={`/category/${sub.page}`} style={{ color: 'inherit', textDecoration: 'none' }}>{sub.name}</Link> : sub.name}
-                  </h2>
-                  {sub.page && (
-                    <Link href={`/category/${sub.page}`} style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACC, textDecoration: 'none', whiteSpace: 'nowrap' }}>View All →</Link>
-                  )}
+        <div className="cat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+          {items.map((item) =>
+            'product' in item ? (
+              <ProductCard key={item.product.id} product={item.product} />
+            ) : (
+              <div key={item.upcoming.name} style={{ display: 'flex', flexDirection: 'column', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 10px rgba(45,55,72,0.07)' }}>
+                <div style={{ position: 'relative', aspectRatio: '4/3', background: '#F8F9FA', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ position: 'absolute', top: 12, left: 12, background: ACC, color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', padding: '4px 10px', borderRadius: 4 }}>{item.upcoming.badge}</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: GREY, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Images coming soon</span>
                 </div>
-                <p style={{ fontSize: 12, fontWeight: 600, color: GREY, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 6 }}>
-                  {sub.models.join(' · ')}
-                </p>
-              </div>
-
-              {items.length > 0 ? (
-                <div className="cat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
-                  {items.map((p) => <ProductCard key={p.id} product={p} />)}
-                </div>
-              ) : (
-                <div style={{ background: '#fff', border: '1.5px dashed #CBD5E0', borderRadius: 12, padding: '28px 24px', textAlign: 'center' }}>
-                  <p style={{ fontSize: 15, fontWeight: 700, color: DARK, marginBottom: 6 }}>{cat.slug === 'oxygen-concentrators' ? `Longfian ${sub.models.join(', ')}` : sub.name}</p>
-                  <p style={{ fontSize: 13, color: GREY, marginBottom: 16 }}>Call or WhatsApp us for price and availability.</p>
-                  <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <a href="tel:+919891521090" style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: DARK, border: `2px solid ${ACC}`, borderRadius: 8, padding: '10px 18px', textDecoration: 'none' }}>Call Us</a>
-                    <a href="https://wa.me/919891521090" target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#fff', background: DARK, borderRadius: 8, padding: '10px 18px', textDecoration: 'none' }}>WhatsApp</a>
+                <div style={{ padding: '18px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <h3 style={{ fontSize: 18, fontWeight: 700, color: DARK, marginBottom: 6, lineHeight: 1.2, letterSpacing: '-0.01em' }}>{item.upcoming.name}</h3>
+                  <p style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: ACC, marginBottom: 12, fontWeight: 600 }}>{item.upcoming.category}</p>
+                  <div style={{ marginTop: 'auto' }}>
+                    <p style={{ fontSize: 17, fontWeight: 800, color: DARK, marginBottom: 12 }}>Price on Request</p>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <a href="tel:+919891521090" style={{ flex: 1, textAlign: 'center', fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: DARK, border: `2px solid ${ACC}`, borderRadius: 8, padding: '9px 12px', textDecoration: 'none' }}>Call Us</a>
+                      <a href="https://wa.me/919891521090" target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#fff', background: ACC, borderRadius: 8, padding: '11px 12px', textDecoration: 'none' }}>WhatsApp</a>
+                    </div>
                   </div>
                 </div>
-              )}
-            </section>
-          );
-        })}
+              </div>
+            ),
+          )}
+        </div>
       </div>
 
       <style>{`

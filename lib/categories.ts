@@ -1,112 +1,51 @@
 import { PRODUCTS, type StaticProduct } from './products-data';
 
-export interface SubCategory {
-  id: string;
-  /** Slug of a dedicated category page for this sub-category, if one exists. */
-  page?: string;
+/** A model we sell that has no product page yet — shown as an enquiry card. */
+export interface UpcomingModel {
   name: string;
-  /** Model names shown when no product page exists yet. */
-  models: string[];
-  productSlugs: string[];
+  badge: string;
+  category: string;
 }
+
+export type CategoryItem = { product: StaticProduct } | { upcoming: UpcomingModel };
 
 export interface Category {
   slug: string;
-  /** Set on sub-category pages; these stay out of the footer's top-level list. */
-  parent?: string;
   name: string;
   intro: string;
-  subcategories: SubCategory[];
+  /** Product slugs and upcoming models, in display order. */
+  items: (string | UpcomingModel)[];
 }
 
 export const CATEGORIES: Category[] = [
   {
     slug: 'oxygen-concentrators',
     name: 'Oxygen Concentrators',
-    intro: 'Genuine Longfian oxygen concentrators for home, car and travel — from the exclusive importer partner in India.',
-    subcategories: [
-      {
-        id: 'portable',
-        name: 'Battery Operated Portable Oxygen Concentrator',
-        models: ['JAY-1000P'],
-        productSlugs: ['longfian-jay-1000p-portable-oxygen-concentrator'],
-      },
-      {
-        id: 'mini',
-        name: 'Longfian Oxygen Concentrator - Mini',
-        models: ['B-1'],
-        productSlugs: ['longfian-b-1-oxygen-concentrator'],
-      },
-      {
-        id: '3l',
-        name: 'Longfian Oxygen Concentrator - 3 Litres',
-        models: ['JAY-3EW'],
-        productSlugs: [],
-      },
-      {
-        id: '5l',
-        page: 'longfian-oxygen-concentrator-5-litres',
-        name: 'Longfian Oxygen Concentrator - 5 Litres',
-        models: ['JAY-5', 'JAY-5AW', 'JAY-5CW', 'JAY-5HW'],
-        productSlugs: [
-          'longfian-jay-5-5-litres-medical-grade-oxygen-concentrator',
-          'longfian-jay-5aw-5-litres-medical-grade-oxygen-concentrator',
-          'longfian-jay-5cw-oxygen-concentrator',
-          'longfian-jay-5hw-oxygen-concentrator',
-        ],
-      },
-      {
-        id: '10l',
-        name: 'Longfian Oxygen Concentrator - 10 Litres',
-        models: ['JAY-10'],
-        productSlugs: [],
-      },
-    ],
-  },
-  {
-    slug: 'longfian-oxygen-concentrator-5-litres',
-    parent: 'oxygen-concentrators',
-    name: 'Longfian Oxygen Concentrator 5 Litres',
-    intro: 'All Longfian 5 litre home oxygen concentrators — JAY-5, JAY-5AW, JAY-5CW and JAY-5HW.',
-    subcategories: [
-      {
-        id: '5l-models',
-        name: '5 Litre Models for Home',
-        models: ['JAY-5', 'JAY-5AW', 'JAY-5CW', 'JAY-5HW'],
-        productSlugs: [
-          'longfian-jay-5-5-litres-medical-grade-oxygen-concentrator',
-          'longfian-jay-5aw-5-litres-medical-grade-oxygen-concentrator',
-          'longfian-jay-5cw-oxygen-concentrator',
-          'longfian-jay-5hw-oxygen-concentrator',
-        ],
-      },
+    intro: 'Longfian oxygen concentrators for home, car and travel — from the exclusive importer partner in India.',
+    items: [
+      'longfian-jay-1000p-portable-oxygen-concentrator',
+      'longfian-b-1-oxygen-concentrator',
+      { name: 'Longfian JAY-3EW', badge: '3L', category: 'Oxygen Concentrator' },
+      'longfian-jay-5-5-litres-medical-grade-oxygen-concentrator',
+      'longfian-jay-5aw-5-litres-medical-grade-oxygen-concentrator',
+      'longfian-jay-5cw-oxygen-concentrator',
+      'longfian-jay-5hw-oxygen-concentrator',
+      { name: 'Longfian JAY-10', badge: '10L', category: 'Oxygen Concentrator' },
     ],
   },
   {
     slug: 'bipap-cpap',
     name: 'BiPAP CPAP',
     intro: 'BiPAP and CPAP machines for sleep apnea and respiratory support at home.',
-    subcategories: [
-      {
-        id: 'bipap-cpap',
-        name: 'BiPAP & CPAP Machines',
-        models: ['BiPAP', 'CPAP'],
-        productSlugs: [],
-      },
+    items: [
+      { name: 'BiPAP & CPAP Machines', badge: 'BiPAP · CPAP', category: 'Respiratory Care' },
     ],
   },
   {
     slug: 'patient-beds',
     name: 'Patient Beds',
     intro: 'Motorised recliner beds for comfortable home patient care.',
-    subcategories: [
-      {
-        id: 'recliner',
-        name: 'Recliner Beds',
-        models: ['Patient Recliner Bed'],
-        productSlugs: ['patient-recliner-bed'],
-      },
-    ],
+    items: ['patient-recliner-bed'],
   },
 ];
 
@@ -114,8 +53,10 @@ export function getCategoryBySlug(slug: string): Category | undefined {
   return CATEGORIES.find((c) => c.slug === slug);
 }
 
-export function getSubCategoryProducts(sub: SubCategory): StaticProduct[] {
-  return sub.productSlugs
-    .map((slug) => PRODUCTS.find((p) => p.slug === slug))
-    .filter((p): p is StaticProduct => Boolean(p));
+export function getCategoryItems(cat: Category): CategoryItem[] {
+  return cat.items.flatMap((item): CategoryItem[] => {
+    if (typeof item !== 'string') return [{ upcoming: item }];
+    const product = PRODUCTS.find((p) => p.slug === item);
+    return product ? [{ product }] : [];
+  });
 }

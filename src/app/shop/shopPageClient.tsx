@@ -35,9 +35,8 @@ export function ProductCard({ product }: { product: StaticProduct }) {
         )}
       </div>
       <div style={{ padding: '18px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <p style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREEN, marginBottom: 6, fontWeight: 600 }}>{product.category}</p>
         <h3 style={{ fontSize: 18, fontWeight: 700, color: DARK, marginBottom: 6, lineHeight: 1.2, letterSpacing: '-0.01em' }}>{product.name}</h3>
-        <p style={{ fontSize: 12, color: 'rgba(15,17,23,0.5)', marginBottom: 12, lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{product.tagline}</p>
+        <p style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREEN, marginBottom: 12, fontWeight: 600 }}>{product.category}</p>
         {cardStats.count > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
             <div style={{ display: 'flex', gap: 2 }}>
