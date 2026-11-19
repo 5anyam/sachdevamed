@@ -125,7 +125,7 @@ const homeOxygenConcentrator: FAQ[] = [
   {
     question: 'Is the warranty included?',
     answer:
-      "Yes. All Longfian oxygen concentrators sold by Sachdeva Medline come with the manufacturer's warranty covering manufacturing defects, and we assist with all warranty claims from day one. Please retain the warranty card included with your product.",
+      "Yes. All Longfian oxygen concentrators sold by Sachdeva Medline come with a warranty of 2 years or 8,000 working hours, whichever is earlier, and we assist with all warranty claims from day one. Please retain the warranty card included with your product.",
   },
   {
     question: 'Do you provide after-sales support and servicing?',

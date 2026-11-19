@@ -272,7 +272,7 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
                 { icon: Truck, title: 'Free Delivery', sub: 'All over India' },
                 { icon: Package, title: 'Delivery Time', sub: '3–5 business days' },
                 { icon: RotateCcw, title: 'Easy Returns', sub: '7-Day Return Policy' },
-                { icon: ShieldCheck, title: '2 Years Warranty', sub: 'Backed by Sachdeva Medline' },
+                { icon: ShieldCheck, title: '2 Years Warranty', sub: 'or 8,000 working hours, whichever is earlier' },
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 8 }}>
                   <item.icon style={{ width: 14, height: 14, color: ACC, flexShrink: 0, marginTop: 2 }} />
@@ -286,6 +286,32 @@ export default function ConcentratorProductPage({ product }: { product: Concentr
           </div>
         </div>
       </section>
+
+      {/* ──── KEY FEATURES (from the Amazon listing) ──── */}
+      {product.features && product.features.length > 0 && (
+        <section style={{ background: BG, padding: `${VPAD} 0` }}>
+          <div style={{ maxWidth: 960, margin: '0 auto', padding: `0 ${PAD}` }}>
+            <div style={{ textAlign: 'center', marginBottom: 36 }}>
+              <Label text="Product Features" />
+              <H2>KEY FEATURES</H2>
+            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {product.features.map((f) => {
+                const cut = f.indexOf(': ');
+                const head = cut > 0 && cut < 60 ? f.slice(0, cut) : null;
+                return (
+                  <li key={f} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '14px 18px', background: '#fff', border: '1.5px solid #E5E7EB', borderRadius: 10 }}>
+                    <span style={{ color: ACC, fontWeight: 900, flexShrink: 0, lineHeight: 1.6 }}>✓</span>
+                    <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.7 }}>
+                      {head ? <><strong style={{ color: DARK }}>{head}:</strong> {f.slice(cut + 2)}</> : f}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* ──── STATS STRIP ──── */}
       <section style={{ background: DARK, padding: 'clamp(28px,5vw,40px) 0' }}>
