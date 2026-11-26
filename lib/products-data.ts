@@ -299,7 +299,7 @@ export const PRODUCTS: StaticProduct[] = [
     tagline: 'Light weight 12 kg concentrator — 93% ± 3% oxygen from 1 to 3 litres, with nebuliser',
     price: 0,
     regularPrice: 0,
-    images: ['/product-bg.jpg'],
+    images: ['/products/jay-3ew/01.jpg'],
     benefits: [
       '93% ± 3% oxygen concentration from 1 to 3 litres per minute',
       'Adjustable flow meter from 0.5 to 5 litres per minute',
@@ -326,7 +326,7 @@ export const PRODUCTS: StaticProduct[] = [
     tagline: '10 litre dual flow concentrator — above 93% oxygen from 1 to 10 litres',
     price: 0,
     regularPrice: 0,
-    images: ['/product-bg.jpg'],
+    images: ['/products/jay-10/01.jpg'],
     benefits: [
       'Above 93% oxygen concentration at all flow levels from 1 to 10 litres',
       'Dual flow — 2 patients can use at the same time',

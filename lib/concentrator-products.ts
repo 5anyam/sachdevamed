@@ -637,7 +637,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     mrp: 0, // TODO: MRP in ₹
     badge: '3 Litres',
     frame: 'square',
-    gallery: ['/product-bg.jpg'], // TODO: replace with /products/jay-3ew/ images
+    gallery: g('jay-3ew', ['01.jpg']),
     highlights: [
       { icon: '💧', title: '93% ± 3% Oxygen', sub: 'From 1 to 3 litres per minute' },
       { icon: '⚖️', title: 'Only 12 kg', sub: 'Light weight model' },
@@ -724,7 +724,7 @@ export const CONCENTRATORS: ConcentratorProduct[] = [
     mrp: 0, // TODO: MRP in ₹
     badge: '10 Litres',
     frame: 'square',
-    gallery: ['/product-bg.jpg'], // TODO: replace with /products/jay-10/ images
+    gallery: g('jay-10', ['01.jpg']),
     highlights: [
       { icon: '💨', title: '0 – 10 L/min Flow', sub: 'Above 93% oxygen at all flow levels from 1 to 10 litres' },
       { icon: '👥', title: 'Dual Flow', sub: '2 patients can use at the same time' },
